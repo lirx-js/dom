@@ -1,0 +1,73 @@
+import { IHigherOrderObservableView } from '../../../../../rx-js-light/dist';
+import { defineCustomElement } from '../../../light-dom/custom-element/define-custom-element';
+import { TAG_NAME } from '../../../light-dom/node/create/element-node/custom-element/helpers/custom-element-constructor-tag-name.constant';
+import { HTMLElementConstructor } from '../../../light-dom/types/html-element-constructor.type';
+
+// export type IGenericHigherOrderObservableView = IHigherOrderObservableView<string, any>;
+//
+// export type InferHigherOrderObservableViewGPropertyName<GView extends IGenericHigherOrderObservableView> =
+//   GView extends IHigherOrderObservableView<infer GPropertyName, any>
+//     ? GPropertyName
+//     : never;
+//
+// export type IComponentWithInputsFactoryResult<GBaseClass extends HTMLElementConstructor, GViews extends IGenericHigherOrderObservableView> =
+//   GBaseClass
+//   & GViews;
+//
+
+
+export type IComponentInput<GName extends string, GType> = [
+  name: GName,
+  type: GType,
+];
+
+
+
+export function componentWithInputsFactory<GBaseClass extends HTMLElementConstructor, GViews extends IGenericHigherOrderObservableView>(
+  baseClass: GBaseClass,
+  names: ArrayLike<InferHigherOrderObservableViewGPropertyName<GViews>>,
+): IComponentWithInputsFactoryResult<GBaseClass, GViews> {
+  return class extends baseClass {
+    constructor(...args: any[]) {
+      super(...args);
+
+      // Object.getOwnPropertyDescriptors()
+    }
+  } as IComponentWithInputsFactoryResult<GBaseClass, GViews>;
+}
+
+
+export interface IGenerateComponentWithInputsFactoryResult<GBaseClass extends HTMLElementConstructor> {
+  <GViews extends IGenericHigherOrderObservableView>(
+    names: ArrayLike<InferHigherOrderObservableViewGPropertyName<GViews>>,
+  ): IComponentWithInputsFactoryResult<GBaseClass, GViews>;
+}
+
+export function generateComponentWithInputsFactory<GBaseClass extends HTMLElementConstructor>(
+  baseClass: GBaseClass,
+): IGenerateComponentWithInputsFactoryResult<GBaseClass> {
+  return <GViews extends IGenericHigherOrderObservableView>(
+    names: ArrayLike<InferHigherOrderObservableViewGPropertyName<GViews>>,
+  ): IComponentWithInputsFactoryResult<GBaseClass, GViews> => {
+    return componentWithInputsFactory<GBaseClass, GViews>(baseClass, names);
+  };
+}
+
+
+
+// type AProperties =
+//   IHigherOrderObservableView<'a', boolean>
+//   & IHigherOrderObservableView<'b', string>
+//   ;
+
+type B = InferHigherOrderObservableViewGPropertyName<AProperties>;
+
+const defaultComponentWithInputsFactory = generateComponentWithInputsFactory(HTMLElement);
+
+class A extends defaultComponentWithInputsFactory<AProperties>(['a', 'b']) {
+
+}
+
+
+const a = new A();
+

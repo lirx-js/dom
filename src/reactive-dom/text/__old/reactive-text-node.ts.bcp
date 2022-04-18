@@ -1,0 +1,18 @@
+import { IObservable } from '../../../../types';
+import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
+
+/**
+ * A Text Node with a value which changes according to a Observable
+ */
+export class ReactiveTextNode extends Text {
+  constructor(
+    subscribe: IObservable<string>,
+  ) {
+    super();
+    subscribeOnNodeConnectedTo<string>(this, subscribe, (value: string) => {
+      this.data = value;
+    });
+  }
+}
+
+

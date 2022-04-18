@@ -1,0 +1,22 @@
+{
+  "name": "@lirx/dom",
+  "version": "1.0.0",
+  "description": "Extremely fast framework to build web application",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lirx-js/dom"
+  },
+  "keywords": [
+    "front-end",
+    "framework",
+    "components",
+    "webapp"
+  ],
+  "author": "Valentin Richard",
+  "license": "MIT",
+  "access": "public",
+  "sideEffects": false,
+  "dependencies": {
+    "@lirx/core": "1.0.0"
+  }
+}

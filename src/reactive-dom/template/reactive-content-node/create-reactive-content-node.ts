@@ -11,12 +11,14 @@ import { IDocumentFragmentOrNull } from '../../../light-dom/node/type/document-f
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 import { createIncrementalUUID } from '../../../misc/uuid/incremental-uuid';
 
-export type IReactiveContent = IObservable<IDocumentFragmentOrNull>;
+export type IReactiveContent = IDocumentFragmentOrNull;
+
+export type IReactiveContentObservable = IObservable<IReactiveContent>;
 
 const INCREMENTAL_REACTIVE_CONTENT_UUID = createIncrementalUUID('REACTIVE-CONTENT');
 
 export function createReactiveContentNode(
-  subscribe: IReactiveContent,
+  subscribe: IReactiveContentObservable,
   transparent?: boolean,
 ): IReferenceNode {
   const referenceNode: IReferenceNode = createReferenceNode(INCREMENTAL_REACTIVE_CONTENT_UUID(), transparent);

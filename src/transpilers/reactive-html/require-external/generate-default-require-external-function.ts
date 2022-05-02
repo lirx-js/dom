@@ -20,6 +20,7 @@ import { REQUIRE_SET_REACTIVE_EVENT_LISTENER_CONSTANT } from './types/require-se
 import { REQUIRE_SET_REACTIVE_PROPERTY_CONSTANT } from './types/require-set-reactive-property.type';
 import { REQUIRE_SET_REACTIVE_STYLE_LIST_CONSTANT } from './types/require-set-reactive-style-list.type';
 import { REQUIRE_SET_REACTIVE_STYLE_CONSTANT } from './types/require-set-reactive-style.type';
+import { REQUIRE_SUBSCRIBE_ON_NODE_CONNECTED_TO } from './types/require-subscribe-on-node-connected-to.type';
 import { REQUIRE_TO_OBSERVABLE_CONSTANT } from './types/require-to-observable.type';
 
 export interface IGenerateDefaultRequireExternalFunctionCallback<GKey extends string, GReturn> {
@@ -48,6 +49,8 @@ export function generateDefaultRequireExternalFunction<GKey extends string, GRet
       // misc
       case REQUIRE_TO_OBSERVABLE_CONSTANT:
         return add('toObservableThrowIfUndefined');
+      case REQUIRE_SUBSCRIBE_ON_NODE_CONNECTED_TO:
+        return add('subscribeOnNodeConnectedTo');
       case REQUIRE_GET_NODE_MODIFIER_CONSTANT:
         return 'getNodeModifier';
       // dom manipulation

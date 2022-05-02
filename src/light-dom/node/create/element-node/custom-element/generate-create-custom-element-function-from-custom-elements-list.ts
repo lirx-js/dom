@@ -8,6 +8,8 @@ import { getCustomElementTagName } from '../../../../custom-element/get-custom-e
 import { isCustomElementDefined } from '../../../../custom-element/is-custom-element-defined';
 import { HTMLElementConstructor } from '../../../../types/html-element-constructor.type';
 import { createElement, ICreateElementOptions } from '../create-element';
+import { ICustomElementConstructorDetails } from './details/custom-element-constructor-details.type';
+import { getCustomElementConstructorDetailsOrThrow } from './details/get-custom-element-constructor-details-or-throw';
 import { ICreateCustomElementFunction } from './types/create-custom-element-function.type';
 import { ICustomElementConstructorOrView } from './types/custom-element-constructor-or-view.type';
 import { ICustomElementConstructor } from './types/custom-element-constructor.type';
@@ -68,12 +70,28 @@ export function generateCreateCustomElementFunctionFromCustomElementsList(
           throw createCustomElementNotDefinedRXDOMError(customElementName);
         }
       } else {
+        const details: ICustomElementConstructorDetails = getCustomElementConstructorDetailsOrThrow(customElementConstructor);
+
+        if (details.extends !== void 0) {
+          if (
+            (options === void 0)
+            || (options.is === void 0)
+          ) {
+            tagName = details.extends;
+            options = {
+              ...options,
+              is: details.name,
+            };
+          }
+        }
+
         customElementsMap.get(customElementName)!.resolve()
           .then((_customElementConstructor: ICustomElementConstructor): void => {
             if (_customElementConstructor !== customElementConstructor) {
               throw createDifferentConstructorsRXDOMError(customElementName);
             }
           });
+
         return createElement<GElement>(tagName, options);
       }
     } else {

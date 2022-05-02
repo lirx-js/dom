@@ -6,7 +6,7 @@ import { IDocumentFragmentOrNull } from '../../../light-dom/node/type/document-f
 import { isDocumentFragment } from '../../../light-dom/node/type/is-document-fragment';
 import { isDOMNode } from '../../../light-dom/node/type/is-dom-node';
 import { toObservableThrowIfUndefined } from '../../../misc/to-observable';
-import { IReactiveContent } from './create-reactive-content-node';
+import { IReactiveContentObservable } from './create-reactive-content-node';
 
 export type IToReactiveContentValue =
   string
@@ -39,22 +39,10 @@ export type IToReactiveContentInput =
 
 export function toReactiveContentObservable(
   input: IToReactiveContentInput,
-): IReactiveContent {
+): IReactiveContentObservable {
   return mapObservable<IToReactiveContentValue, IDocumentFragmentOrNull>(
     toObservableThrowIfUndefined(input),
-    (value: IToReactiveContentValue): IDocumentFragmentOrNull => {
-      if (value === null) {
-        return null;
-      } else if (typeof value === 'string') {
-        const fragment: DocumentFragment = createDocumentFragment();
-        nodeAppendChild(fragment, createTextNode(value));
-        return fragment;
-      } else if (isDOMNode(value) && isDocumentFragment(value)) {
-        return value;
-      } else {
-        throw new Error(`Invalid toReactiveContent value`);
-      }
-    },
+    toReactiveContent,
   );
 }
 

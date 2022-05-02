@@ -4,6 +4,7 @@ import { createElement } from '../../../light-dom/node/create/element-node/creat
 import { createMathMLElement } from '../../../light-dom/node/create/element-node/create-math-ml-element';
 import { createSVGElement } from '../../../light-dom/node/create/element-node/create-svg-element';
 import { nodeAppendChild } from '../../../light-dom/node/move/derived/dom-like/node/node-append-child';
+import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 import { toObservableThrowIfUndefined } from '../../../misc/to-observable';
 import { setReactiveAttribute } from '../../../reactive-dom/element/attribute/set-reactive-attribute';
 import { setReactiveClass } from '../../../reactive-dom/element/class/set-reactive-class';
@@ -25,6 +26,7 @@ import { createReactiveTextNode } from '../../../reactive-dom/text/create-reacti
 export const DEFAULT_REQUIRE_EXTERNAL_FUNCTION_CONSTANTS_TO_IMPORT = {
   // misc
   toObservableThrowIfUndefined,
+  subscribeOnNodeConnectedTo,
 
   // dom manipulation
   nodeAppendChild,

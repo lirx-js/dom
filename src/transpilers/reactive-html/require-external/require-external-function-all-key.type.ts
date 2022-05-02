@@ -19,6 +19,7 @@ import { IRequireSetReactiveEventListenerKey } from './types/require-set-reactiv
 import { IRequireSetReactivePropertyKey } from './types/require-set-reactive-property.type';
 import { IRequireSetReactiveStyleListKey } from './types/require-set-reactive-style-list.type';
 import { IRequireSetReactiveStyleKey } from './types/require-set-reactive-style.type';
+import { IRequireSubscribeOnNodeConnectedTo } from './types/require-subscribe-on-node-connected-to.type';
 import { IRequireToObservableKey } from './types/require-to-observable.type';
 
 export type IRequireExternalFunctionCreateElementKey =
@@ -47,5 +48,6 @@ export type IRequireExternalFunctionAllKey =
   | IRequireSetReactivePropertyKey
   | IRequireSetReactiveStyleKey
   | IRequireSetReactiveStyleListKey
+  | IRequireSubscribeOnNodeConnectedTo
   | IRequireToObservableKey
   ;

@@ -5,5 +5,7 @@
  *  - WARN: doesnt guaranty that the component is actually into the DOM !
  */
 export interface OnCreate<GData extends object> {
-  onCreate(): GData;
+  onCreate(
+    $content: DocumentFragment,
+  ): GData;
 }

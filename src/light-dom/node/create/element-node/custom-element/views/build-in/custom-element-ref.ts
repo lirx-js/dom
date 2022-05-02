@@ -1,4 +1,6 @@
-import { compareCustomElementConstructorTagNamesOrThrow } from '../../helpers/compare-custom-element-constructor-tag-names-or-throw';
+import {
+  compareCustomElementConstructorTagNamesOrThrow,
+} from '../../details/helpers/compare-custom-element-constructor-tag-names-or-throw';
 import { ICustomElementConstructor } from '../../types/custom-element-constructor.type';
 import { createCustomElementView } from '../create-custom-element-view';
 import { ICustomElementView } from '../custom-element-view.type';

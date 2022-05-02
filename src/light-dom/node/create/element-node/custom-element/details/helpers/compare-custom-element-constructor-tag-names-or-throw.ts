@@ -1,5 +1,5 @@
-import { createDifferentTagNameRXDOMError } from '../../../../../../misc/errors/rx-dom-error-4--different-tag-name';
-import { ICustomElementConstructor } from '../types/custom-element-constructor.type';
+import { createDifferentTagNameRXDOMError } from '../../../../../../../misc/errors/rx-dom-error-4--different-tag-name';
+import { ICustomElementConstructor } from '../../types/custom-element-constructor.type';
 import { getCustomElementConstructorTagNameOrThrow } from './get-custom-element-constructor-tag-name-or-throw';
 
 export function compareCustomElementConstructorTagNamesOrThrow(

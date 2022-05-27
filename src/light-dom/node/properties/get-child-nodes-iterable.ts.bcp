@@ -1,0 +1,5 @@
+export function * getChildNodesIterable<GChild extends ChildNode>(
+  node: Node,
+): Generator<GChild> {
+  return Array.from(node.childNodes) as GChild[];
+}

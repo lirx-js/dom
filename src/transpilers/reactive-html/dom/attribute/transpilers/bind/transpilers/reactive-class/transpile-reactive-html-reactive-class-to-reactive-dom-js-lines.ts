@@ -1,4 +1,4 @@
-import { isValidCSSIdentifier } from '../../../../../../../../misc/tokenizers/css';
+import { isValidCSSIdentifier } from '../../../../../../../../../../../rx-dom-vite-seed/src/misc/dom/tokenizers/css';
 import { ILinesOrNull } from '../../../../../../../types/lines.type';
 import { IRequireExternalFunction } from '../../../../../../require-external/require-external-function.type';
 import { IBindProperty } from '../../extract-bind-property-from-reactive-html-attribute';

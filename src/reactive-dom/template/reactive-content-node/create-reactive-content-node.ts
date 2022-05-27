@@ -32,10 +32,12 @@ export function createReactiveContentNode(
 
   subscribeOnNodeConnectedTo<IDocumentFragmentOrNull>(referenceNode, subscribe, (fragment: IDocumentFragmentOrNull) => {
     detachManyNodes(nodes);
+    // console.log('ref change', referenceNode, nodes.slice());
     nodes = attachOptionalDocumentFragmentToReferenceNode(
       fragment,
       referenceNode,
     );
+    // console.log('nodes', referenceNode, nodes.slice());
   });
 
   return referenceNode;

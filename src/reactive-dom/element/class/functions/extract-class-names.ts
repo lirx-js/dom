@@ -1,5 +1,5 @@
 import { INullish, IObservablePipe, isNullish, mapObservablePipe } from '@lirx/core';
-import { isValidCSSIdentifier } from '../../../../misc/tokenizers/css';
+import { isValidCSSIdentifier } from '../../../../../../../rx-dom-vite-seed/src/misc/dom/tokenizers/css';
 
 /** TYPES **/
 

@@ -1,0 +1,15 @@
+import { IReferenceNode } from './reference-node.type';
+
+const REFERENCE_NODE_REGISTER = new WeakSet<IReferenceNode>();
+
+export function registerReferenceNode(
+  node: IReferenceNode,
+): void {
+  REFERENCE_NODE_REGISTER.add(node);
+}
+
+export function isReferenceNode(
+  node: any,
+): node is IReferenceNode {
+  return REFERENCE_NODE_REGISTER.has(node);
+}

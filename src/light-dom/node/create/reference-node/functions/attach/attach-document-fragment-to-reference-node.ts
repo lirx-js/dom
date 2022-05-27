@@ -1,5 +1,4 @@
-import { attachDocumentFragment } from '../../../../move/node/attach/derived/fragment/attach-document-fragment';
-import { getChildNodes } from '../../../../properties/get-child-nodes';
+import { attachParentNodeChildrenWithNodes } from '../../../../move/node/attach/derived/parent-node-children/attach-parent-node-children';
 import { getNextSibling } from '../../../../properties/get-next-sibling';
 import { getParentNode, IParentNode } from '../../../../properties/get-parent-node';
 import { IReferenceNodeChildren } from '../../reference-node-children.type';
@@ -9,11 +8,9 @@ export function attachDocumentFragmentToReferenceNode(
   fragment: DocumentFragment,
   referenceNode: IReferenceNode,
 ): IReferenceNodeChildren {
-  const nodes: IReferenceNodeChildren = getChildNodes(fragment) as IReferenceNodeChildren;
-  attachDocumentFragment(
+  return attachParentNodeChildrenWithNodes(
     fragment,
     getParentNode(referenceNode) as IParentNode,
     getNextSibling(referenceNode),
-  );
-  return nodes;
+  ) as unknown as IReferenceNodeChildren;
 }

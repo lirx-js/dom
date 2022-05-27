@@ -35,6 +35,7 @@ export function transpileReactiveHTMLGenericElementToReactiveDOMJSLines(
 ): ILinesOrNull {
   const name: string = getTagName(node);
   const isAttribute: IAttributeValueOrNull = getAttributeValue(node, 'is');
+  // const namespaceURI: string = getNamespaceURI(node);
 
   const elementOptions: ICreateElementOptions | null = (isAttribute === null)
     ? null
@@ -42,6 +43,7 @@ export function transpileReactiveHTMLGenericElementToReactiveDOMJSLines(
       is: isAttribute,
     };
 
+  // const isCustomElement: boolean = isCustomElementCheckingNamespaceURI(node);
   const createElementKey: IRequireExternalFunctionCreateElementKey = getCreateElementFunctionNameForElement(node);
   const createElement: string = requireExternalFunction(createElementKey);
 

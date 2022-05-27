@@ -18,3 +18,30 @@ export function moveNodesWithReferenceNode(
     }
   });
 }
+
+
+// export function moveNodesWithReferenceNode(
+//   referenceNode: Node,
+//   listNodes: () => ArrayLike<ChildNode>,
+// ): IUnsubscribe {
+//   let moving: boolean = false;
+//
+//   const move = () => {
+//     if (moving) {
+//       console.warn('moving !');
+//       // setTimeout(move);
+//     } else {
+//       moving = true;
+//       const parentNode: IParentNode | null = getParentNode(referenceNode);
+//       console.log('moving', referenceNode, parentNode);
+//       if (parentNode === null) {
+//         detachManyNodes(listNodes());
+//       } else {
+//         attachManyNodes(listNodes(), parentNode, getNextSibling(referenceNode));
+//       }
+//       moving = false;
+//     }
+//   };
+//
+//   return onNodeParentChangeListener(referenceNode)(move);
+// }

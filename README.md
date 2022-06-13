@@ -30,7 +30,7 @@
 However, by design, it strongly outperforms React and Angular due to its unique architecture:
 when an Observable changes, it updates only the relevant DOM nodes, ensuring maximal efficiency.
 
-To simplify: you'll create some dynamic variables, and *`@lirx/dom` will take care to refresh the DOM,
+To simplify: you'll create some dynamic variables, and `@lirx/dom` will take care to refresh the DOM,
 with the precision of a surgeon and the speed of a rocket.
 
 
@@ -73,9 +73,9 @@ which strongly optimizes your components and generates very small bundles.
 
 It's light, fast, and simple ! Give it a try !
 
-- [Tutorial](src/documentation/tutorial/tutoral.md)
-- [How it works](./src/documentation/examples/how-it-works.md)
-- [Syntax](./src/documentation/syntax.md)
+- [Tutorial](documentation/tutorial/tutoral.md)
+- [How it works](documentation/examples/how-it-works.md)
+- [Syntax](documentation/syntax/00-toc.md)
 
 
 ## 📑 Example

@@ -1,2 +1,1 @@
-export * from './transpile-reactive-html-rx-script-to-reactive-dom-js-lines';
-
+export * from './transpile-reactive-html-rx-script-to-js-lines';

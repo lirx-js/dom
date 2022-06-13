@@ -1,6 +1,0 @@
-import { IComponentOptions } from '../component-options.type';
-
-export interface IShadowComponentOptions<GData extends object> extends IComponentOptions<GData> {
-
-}
-

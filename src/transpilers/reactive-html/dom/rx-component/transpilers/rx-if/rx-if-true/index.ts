@@ -1,1 +1,1 @@
-export * from './transpile-reactive-html-rx-if-true-to-reactive-dom-js-lines';
+export * from './transpile-reactive-html-rx-if-true-to-js-lines';

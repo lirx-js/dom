@@ -13,7 +13,7 @@ export function toObservableThrowIfUndefined<GValue>(
   value: IObservable<GValue> | GValue,
 ): IObservable<GValue> {
   if (value === void 0) {
-    throw new TypeError(`Not a subscribe function`);
+    throw new TypeError(`Not an observable`);
   } else {
     return toObservable(value);
   }
@@ -25,6 +25,6 @@ export function toObservableStrict<GValue>(
   if (isObservable(value)) {
     return value;
   } else {
-    throw new TypeError(`Not a subscribe function`);
+    throw new TypeError(`Not an observable`);
   }
 }

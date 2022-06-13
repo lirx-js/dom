@@ -1,4 +1,3 @@
+export * from './misc/index';
 export * from './reactive-html/index';
-export * from './helpers/index';
-export * from './types/index';
-
+export * from './reactive-style/index';

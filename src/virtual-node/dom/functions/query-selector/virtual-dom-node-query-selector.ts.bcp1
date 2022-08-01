@@ -1,6 +1,6 @@
-import { isElementNode } from '../../../misc/dom/is/is-element-node';
-import { VirtualDOMNode } from '../virtual-dom-node.class';
-import { getLinkedVirtualDOMNodeOfDOMNodeOrThrow } from './link/link-dom-node-with-virtual-dom-node';
+import { isElementNode } from '../../../../misc/dom/is/is-element-node';
+import { VirtualDOMNode } from '../../virtual-dom-node.class';
+import { getLinkedVirtualDOMNodeOfDOMNodeOrThrow } from '../link/link-dom-node-with-virtual-dom-node';
 
 export function virtualDOMNodeQuerySelectorElement<GElement extends HTMLElement>(
   node: VirtualDOMNode,

@@ -8,9 +8,9 @@ import { IComponentTemplate } from './component-template.type';
 import { InferComponentInitInterface } from './infer-component-init-interface.type';
 
 export type ICreateComponentOptions<GConfig extends IComponentConfig> = {
-    template?: IComponentTemplate<InferComponentConfigData<GConfig>>;
-    styles?: readonly IComponentStyle[];
+    template?: IComponentTemplate<InferComponentConfigData<GConfig>> | undefined;
+    styles?: (readonly IComponentStyle[]) | undefined;
   }
-  & Pick<IVirtualCustomElementNodeOptions<GConfig>, 'name' | 'extends' | 'inputs' | 'outputs'>
+  & Omit<IVirtualCustomElementNodeOptions<GConfig>, 'slots'>
   & InferComponentInitInterface<GConfig>
   ;

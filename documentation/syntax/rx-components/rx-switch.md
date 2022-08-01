@@ -1,5 +1,23 @@
 ## Conditional switch template injection
 
+Preferred syntax:
+
+```html
+<rx-switch expression="observable">
+  <div *switch-case="valueA">
+    value A
+  </div>
+  <div *switch-case="valueB">
+    value B
+  </div>
+  <div *switch-default>
+    default
+  </div>
+</rx-switch>
+```
+
+Alternative:
+
 ```html
 <rx-switch
   expression="observable"
@@ -40,10 +58,14 @@ Attributes:
 It compiles to something similar to this:
 
 ```ts
-nodeAppendChild(parentNode, createReactiveSwitchNode(observable, new Map([
-  [valueA, templateReferenceA],
-  [valueB, templateReferenceB],
-]), templateReferenceC));
+new VirtualReactiveSwitchNode(
+  observable,
+  new Map([
+    [valueA, templateReferenceA],
+    [valueB, templateReferenceB],
+  ]),
+  templateReferenceC,
+).attach(parentNode);
 ```
 
 ### Example

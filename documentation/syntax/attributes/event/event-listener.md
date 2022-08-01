@@ -13,7 +13,7 @@ The type of the event is fixed by the value in the parentheses.
 It compiles to something similar to this:
 
 ```ts
-div.addEventListener('click', observer);
+node.addEventListener('click', observer);
 ```
 
 

@@ -8,6 +8,7 @@ import {
   IMappedAttributes,
 } from '../helpers/extract-rx-attributes-from-reactive-html-attribute';
 import { generateJSLinesForRXInjectSlot } from './generate-js-lines-for-rx-inject-slot';
+import { transpileReactiveHTMLRXInjectSlotChildNodesToLines } from './transpile-reactive-html-rx-inject-slot-child-nodes-to-lines';
 
 /*
 Syntax:
@@ -55,14 +56,10 @@ export function transpileReactiveHTMLRXInjectSlotToLines(
       throw new Error(`Missing attribute '${SLOT_NAME_ATTRIBUTE_NAME}'`);
     }
 
-    const defaultLines: ILinesOrNull = transpileReactiveHTMLNodesToJSLines({
+    return transpileReactiveHTMLRXInjectSlotChildNodesToLines({
       ...options,
-      nodes: node.childNodes,
-    });
-
-    return generateJSLinesForRXInjectSlot({
       slotName,
-      defaultLines,
+      nodes: node.childNodes,
     });
   } else if (node.hasAttribute(COMMAND_NAME)) {
     const slotName: string = node.getAttribute(COMMAND_NAME) as string;

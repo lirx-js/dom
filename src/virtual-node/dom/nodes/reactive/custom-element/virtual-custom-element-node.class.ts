@@ -5,6 +5,8 @@ import { ITypedSourcesMap } from '../../../../../misc/typed-sources-map/implemen
 import {
   ITypedSourcesMapEntriesTupleToEntriesTuple,
 } from '../../../../../misc/typed-sources-map/types/typed-sources-map-entries-tuple-to-entries-tuple.infer';
+import { ITypedSourcesMapEntriesTuple } from '../../../../../misc/typed-sources-map/types/typed-sources-map-entries-tuple.type';
+import { IGenericTypedSourcesMapEntry } from '../../../../../misc/typed-sources-map/types/typed-sources-map-entry.type';
 import { VirtualReactiveElementNode } from '../element/virtual-reactive-element-node.class';
 import { IVirtualCustomElementNodeSlotsMap } from './slots/virtual-custom-element-node-slots-map.type';
 import { InferVirtualCustomElementNodeConfigElement } from './types/config/infer-virtual-custom-element-node-config-element.type';
@@ -44,13 +46,14 @@ export class VirtualCustomElementNode<GConfig extends IVirtualCustomElementNodeC
     {
       name,
       extends: _extends,
+      namespaceURI = HTML_NAMESPACE_URI_CONSTANT,
       slots,
       inputs = [] as unknown as InferVirtualCustomElementNodeOptionsInputs<GConfig>,
       outputs = [] as unknown as InferVirtualCustomElementNodeOptionsOutputs<GConfig>,
     }: IVirtualCustomElementNodeOptions<GConfig>,
   ) {
     super(
-      HTML_NAMESPACE_URI_CONSTANT,
+      namespaceURI,
       (_extends === void 0)
         ? name
         : _extends,
@@ -58,11 +61,6 @@ export class VirtualCustomElementNode<GConfig extends IVirtualCustomElementNodeC
     this._name = name;
     this._extends = _extends;
     this._slots = slots;
-
-    verifyInterfacesIntegrity(
-      inputs,
-      outputs,
-    );
 
     this._inputs = createTypedSourcesMap<InferVirtualCustomElementNodeConfigInputs<GConfig>>(inputs);
     this._outputs = createTypedSourcesMap<InferVirtualCustomElementNodeConfigOutputs<GConfig>>(
@@ -144,7 +142,9 @@ export class VirtualCustomElementNode<GConfig extends IVirtualCustomElementNodeC
         ? this._outputs.get$<GKey>(key)
         : this._inputs.get$<GKey>(key)
     ) as IObservable<GValue>;
-    return this.onConnected$(observable$)($value);
+    // return this.onConnected$(observable$)($value);
+    // this.onConnected$ is not required because observable$ is a source
+    return observable$($value);
   }
 
   setCaseInsensitiveReactiveOutput<GKey extends string>(
@@ -165,37 +165,50 @@ export class VirtualCustomElementNode<GConfig extends IVirtualCustomElementNodeC
 
 // export type IGenericGenericVirtualCustomElementNode = VirtualCustomElementNode<HTMLElement, ITypedSourcesMapEntriesTuple>;
 // export type IGenericGenericVirtualCustomElementNode = VirtualCustomElementNode<IVirtualCustomElementNodeConfig>;
-export type IGenericGenericVirtualCustomElementNode = VirtualCustomElementNode<any>;
+export type IGenericVirtualCustomElementNode = VirtualCustomElementNode<any>;
 
 /*-------------------*/
 
 // type IGenericIO = readonly [string, ...any[]][];
 
-function verifyInterfacesIntegrity<GConfig extends IVirtualCustomElementNodeConfig>(
-  inputs: InferVirtualCustomElementNodeOptionsInputs<GConfig>,
-  outputs: InferVirtualCustomElementNodeOptionsOutputs<GConfig>,
-): void {
-  const interfacesSet = new Set<string>();
+// function verifyInputsIntegrity(
+//   inputs: ITypedSourcesMapEntriesTuple,
+// ): void {
+//   const set = new Set<string>();
+//
+//   for (let i = 0, l = inputs.length; i < l; i++) {
+//     const [name]: IGenericTypedSourcesMapEntry = inputs[i];
+//     if (set.has(name)) {
+//       throw new Error(`Input '${name}' already exists`);
+//     }
+//   }
+// }
 
-  const addInterface = (
-    name: string,
-    context: string,
-  ): void => {
-    if (interfacesSet.has(name)) {
-      throw new Error(`Interface '${name}' of '${context}' already exists`);
-    } else {
-      interfacesSet.add(name);
-    }
-  };
-
-  (inputs as unknown as readonly [string][]).forEach(([name]: [string]): void => {
-    addInterface(name, 'inputs');
-  });
-
-  (outputs as unknown as readonly string[]).forEach((name: string): void => {
-    addInterface(name, 'outputs');
-  });
-}
+// function verifyInterfacesIntegrity<GConfig extends IVirtualCustomElementNodeConfig>(
+//   inputs: InferVirtualCustomElementNodeOptionsInputs<GConfig>,
+//   outputs: InferVirtualCustomElementNodeOptionsOutputs<GConfig>,
+// ): void {
+//   const interfacesSet = new Set<string>();
+//
+//   const addInterface = (
+//     name: string,
+//     context: string,
+//   ): void => {
+//     if (interfacesSet.has(name)) {
+//       throw new Error(`Interface '${name}' of '${context}' already exists`);
+//     } else {
+//       interfacesSet.add(name);
+//     }
+//   };
+//
+//   (inputs as unknown as readonly [string][]).forEach(([name]: [string]): void => {
+//     addInterface(name, 'inputs');
+//   });
+//
+//   (outputs as unknown as readonly string[]).forEach((name: string): void => {
+//     addInterface(name, 'outputs');
+//   });
+// }
 
 /*-----------------*/
 

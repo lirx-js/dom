@@ -46,4 +46,5 @@ export class VirtualRootNode<GRootNode extends ParentNode> extends VirtualDOMNod
   }
 }
 
+export type IGenericVirtualRootNode = VirtualRootNode<any>;
 

@@ -6,16 +6,17 @@ It may be compiled to plain javascript with the function `compileReactiveHTMLAsC
 
 ### Example
 
-[//]: # (TODO)
-
 ```ts
-@Component({
+interface IAppHelloWorldComponentConfig {
+  element: HTMLElement;
+}
+
+export const AppHelloWorldComponent = createComponent<IAppHelloWorldComponentConfig>({
   name: 'app-hello-world',
   template: compileReactiveHTMLAsComponentTemplate({
-    html: 'Hellow world !',
+    html: `Hellow world !`,
   }),
-})
-export class AppHelloWorldComponent extends HTMLElement {}
+});
 ```
 
 

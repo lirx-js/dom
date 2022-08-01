@@ -1,56 +1,3 @@
-
-[comment]: <> (### Reference: #reference-name &#40;EXPERIMENTAL&#41;)
-
-[comment]: <> (```html)
-
-[comment]: <> (<div)
-
-[comment]: <> (  #my-div)
-
-[comment]: <> (></div>)
-
-[comment]: <> (```)
-
-[comment]: <> (Creates a reference on an Element.)
-
-[comment]: <> (It compiles to something similar to this:)
-
-[comment]: <> (```ts)
-
-[comment]: <> (setNodeReference&#40;'my-div', div&#41;;)
-
-[comment]: <> (```)
-
-[comment]: <> (**ℹ️ INFO:** you can retrieve a reference to a Node with `getNodeReference&#40;'my-div'&#41;`.)
-
-[comment]: <> (**ℹ️ INFO:** you may set a value to this ref attribute. In this case, the value will be used as the reference's name:)
-
-[comment]: <> (```html)
-
-[comment]: <> (<div)
-
-[comment]: <> (  #ref="my-div")
-
-[comment]: <> (></div>)
-
-[comment]: <> (```)
-
-[comment]: <> (##### alternative syntax)
-
-[comment]: <> (```html)
-
-[comment]: <> (<div)
-
-[comment]: <> (  ref-my-div)
-
-[comment]: <> (></div>)
-
-[comment]: <> (```)
-
-[comment]: <> (---)
-
-
-
 ### Promise based template injection: rx-async
 
 [//]: # (TODO update syntax)
@@ -160,5 +107,3 @@ Which is equivalent to:
   </rx-rejected>
 </rx-async>
 ```
-
-

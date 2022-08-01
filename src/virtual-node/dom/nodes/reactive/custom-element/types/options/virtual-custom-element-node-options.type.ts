@@ -6,6 +6,7 @@ import { InferVirtualCustomElementNodeOptionsOutputsInterface } from './infer-vi
 export type IVirtualCustomElementNodeOptions<GConfig extends IVirtualCustomElementNodeConfig> = {
     name: string;
     extends?: string;
+    namespaceURI?: string,
     slots: IVirtualCustomElementNodeSlotsMap;
   }
   & InferVirtualCustomElementNodeOptionsInputsInterface<GConfig>

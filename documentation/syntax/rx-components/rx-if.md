@@ -37,14 +37,11 @@ It has the following attributes:
 It compiles to something similar to this:
 
 ```ts
-nodeAppendChild(
-  parentNode,
-  createReactiveIfNode(
-    conditionObservable,
-    templateReferenceTrue,
-    templateReferenceFalse,
-  )
-);
+new VirtualReactiveIfNode(
+  conditionObservable,
+  templateReferenceTrue,
+  templateReferenceFalse,
+).attach(parentNode);
 ```
 
 ### Example

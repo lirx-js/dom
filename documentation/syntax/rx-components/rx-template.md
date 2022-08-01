@@ -20,7 +20,7 @@ It has the following attributes:
 It compiles to something similar to this:
 
 ```ts
-const templateReference = <GParentNode extends Node>(parentNode: GParentNode, { var1, var2 }): GParentNode => content;
+const templateReference = <GParentNode extends Node>(parentNode: GParentNode, { var1, var2 }): void => content.attach(parentNode);
 ```
 
 **ℹ️ INFO:**️ You can retrieve a reference to a Template as a variable by prefixing its name with `template_`

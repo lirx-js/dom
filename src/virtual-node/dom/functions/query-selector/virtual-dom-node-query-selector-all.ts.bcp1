@@ -56,6 +56,56 @@ export function* virtualDDOMNodeQuerySelectorAll<GElement extends HTMLElement>(
   }
 }
 
+
+/*----------------------*/
+
+function ensureNodeIsElementForScope(
+  node: Node,
+): asserts node is Element {
+  if (!isElementNode(node)) {
+    throw new Error(`cannot patch :scope on a non Element node`);
+  }
+}
+
+interface ICallback<GReturn> {
+  (
+    selector: string,
+  ): GReturn
+}
+
+function querySelectorWithScope<GReturn>(
+  getParentNodes: () => readonly Element[],
+  selector: string,
+  callback: ICallback<GReturn>,
+): GReturn {
+  const hasScope: boolean = selector.includes(':scope');
+  let parentNodes!: readonly Element[];
+  let id!: string;
+
+  if (hasScope) {
+    parentNodes = getParentNodes();
+    id = `scope-${Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(16)}`;
+    for (let i = 0, l = parentNodes.length; i < l; i++) {
+      parentNodes[i].setAttribute(id, '');
+    }
+    selector = selector.replace(':scope', `[${id}]`);
+  }
+
+  const result: GReturn = callback(
+    selector,
+  );
+
+  if (hasScope) {
+    for (let i = 0, l = parentNodes.length; i < l; i++) {
+      parentNodes[i].removeAttribute(id);
+    }
+  }
+
+  return result;
+}
+
+
+
 // * querySelector(
 //   selector: string,
 // ): Generator<VirtualDOMNode> {

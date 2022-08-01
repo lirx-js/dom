@@ -3,6 +3,7 @@
 Preferred syntax:
 
 ```html
+
 <tag-name *for="let item of itemsObservable; index as i; trackBy: trackByFn">
   ...content
 </tag-name>
@@ -11,6 +12,7 @@ Preferred syntax:
 Alternative:
 
 ```html
+
 <rx-for-loop
   items="itemsObservable"
   template="templateReference"
@@ -34,19 +36,17 @@ Attributes:
 It compiles to something similar to this:
 
 ```ts
-nodeAppendChild(
-  parentNode,
-  createReactiveForLoopNode(
-    itemsObservable,
-    templateReference,
-    { tackBy: trackByFunction },
-  ),
-);
+new VirtualReactiveForLoopNode(
+  itemsObservable,
+  templateReference,
+  { tackBy: trackByFunction },
+).attach(parentNode);
 ```
 
 ### Example
 
 ```html
+
 <div *for="let item of of('a', 'b', 'c'); index as i">
   #{{ i }} : {{ item }}
 </div>
@@ -55,6 +55,7 @@ nodeAppendChild(
 Output:
 
 ```html
+
 <div>
   #0 : a
 </div>
@@ -71,6 +72,7 @@ Output:
 ##### Using *for
 
 ```html
+
 <tag-name
   *for="let item of items; index as i; trackBy: trackByFn"
   ...otherAttributes
@@ -82,6 +84,7 @@ Output:
 Which is equivalent to:
 
 ```html
+
 <rx-template
   name="uuid"
   let-item="item"

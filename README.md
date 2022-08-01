@@ -73,8 +73,7 @@ which strongly optimizes your components and generates very small bundles.
 
 It's light, fast, and simple ! Give it a try !
 
-- [Tutorial](documentation/tutorial/tutoral.md)
-- [How it works](documentation/examples/how-it-works.md)
+- [Tutorial](documentation/tutorial/tutorial.md)
 - [Syntax](documentation/syntax/00-toc.md)
 
 
@@ -91,7 +90,11 @@ interface IData {
   readonly valid$: IObservable<boolean>;
 }
 
-@Component({
+interface IAppHelloWorldComponentConfig {
+  data: IData;
+}
+
+export const AppHelloWorldComponent = createComponent<IAppHelloWorldComponentConfig>({
   name: 'app-hello-world',
   template: compileReactiveHTMLAsComponentTemplate({
     html: `
@@ -109,7 +112,7 @@ interface IData {
       </div>
    `,
   }),
-  styles: [compileReactiveCSSAsComponentStyle(`
+  styles: [compileStyleAsComponentStyle(`
     :host {
       display: block;
     }
@@ -118,12 +121,7 @@ interface IData {
       color: red;
     }
   `)],
-})
-export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IData> {
-  protected readonly data: IData;
-
-  constructor() {
-    super();
+  init: (node: VirtualCustomElementNode<IAppHelloWorldComponentConfig>): IData => {
     // 'input' is a source which contains and emits the value of our input
     const { emit: $input, subscribe: input$ } = let$$('');
 
@@ -133,19 +131,14 @@ export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IDat
     // 'valid' is an observable whose value is true if 'remaining' is less than 10
     const valid$ = map$$(remaining$, (value: number) => (value <= 10));
 
-    this.data = {
+    return {
       $input,
       input$,
       remaining$,
       valid$,
     };
-  }
-
-  // onCreate is called when the component is created to retrieve the data to inject into the template
-  public onCreate(): IData {
-    return this.data;
-  }
-}
+  },
+});
 ```
 
 [//]: # (TODO update demo)

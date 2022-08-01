@@ -66,8 +66,13 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
 
   on$<GEvent extends Event>(
     type: string,
+    options?: boolean | AddEventListenerOptions,
   ): IObservable<GEvent> {
-    return fromEventTarget<string, GEvent>(this._elementNode as any, type);
+    return fromEventTarget<string, GEvent>(
+      this._elementNode as any,
+      type,
+      options,
+    );
   }
 
   /* PROPERTY */

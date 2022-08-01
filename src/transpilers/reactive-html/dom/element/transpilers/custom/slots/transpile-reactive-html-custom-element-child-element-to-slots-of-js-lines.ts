@@ -8,6 +8,9 @@ import {
   ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap,
 } from '../../../../../primary/transpilers/transpile-create-reactive-custom-element-node-to-js-lines.type';
 import { transpileReactiveHTMLNodesToJSLines } from '../../../../nodes/transpile-reactive-html-nodes-to-js-lines';
+import {
+  transpileReactiveHTMLRXInjectSlotChildNodesToLines,
+} from '../../../../rx-component/transpilers/rx-inject-slot/transpile-reactive-html-rx-inject-slot-child-nodes-to-lines';
 import { transpileReactiveHTMLElementToJSLines } from '../../../transpile-reactive-html-element-to-js-lines';
 
 export const RX_SLOT_TAG_NAME = 'rx-slot';
@@ -27,15 +30,37 @@ export function transpileReactiveHTMLCustomElementChildElementToSlotsOfJSLines(
 ): void {
   if (getElementTagName(node) === RX_SLOT_TAG_NAME) {
     const name: string | null = node.getAttribute('name');
+    const proxy: string | null = node.getAttribute('proxy');
+
     if (name === null) {
-      throw createMissingAttributeError('name', RX_SLOT_TAG_NAME);
+      if (proxy === null) {
+        throw createMissingAttributeError('name', RX_SLOT_TAG_NAME);
+      } else {
+        slots.set(proxy, transpileReactiveHTMLRXInjectSlotChildNodesToLines({
+          ...options,
+          slotName: proxy,
+          nodes: node.childNodes,
+        }));
+      }
     } else if (slots.has(name)) {
       throw createSlotAlreadyExistsError(name);
     } else {
-      slots.set(name, linesOrNullToLines(transpileReactiveHTMLNodesToJSLines({
-        ...options,
-        nodes: node.childNodes,
-      })));
+      if (proxy === null) {
+        slots.set(name, linesOrNullToLines(transpileReactiveHTMLNodesToJSLines({
+          ...options,
+          nodes: node.childNodes,
+        })));
+      } else {
+        const proxyName: string = (proxy === '')
+          ? name
+          : proxy;
+
+        slots.set(name, transpileReactiveHTMLRXInjectSlotChildNodesToLines({
+          ...options,
+          slotName: proxyName,
+          nodes: node.childNodes,
+        }));
+      }
     }
   } else {
     let name: string | null = node.getAttribute(RX_SLOT_COMMAND);

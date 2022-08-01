@@ -20,3 +20,7 @@ export interface IComponent<GConfig extends IVirtualCustomElementNodeConfig> {
 // export type IGenericComponent = IComponent<IVirtualCustomElementNodeConfig>;
 export type IGenericComponent = IComponent<any>;
 
+export type InferComponentGConfig<GComponent extends IGenericComponent> =
+  GComponent extends IComponent<infer GConfig>
+    ? GConfig
+    : never;

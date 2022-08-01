@@ -1,3 +1,5 @@
+import { indentLines } from '../../../../misc/lines/functions/indent-lines';
+import { linesOrNullToLines } from '../../../../misc/lines/functions/lines-or-null-to-lines';
 import { ILinesOrNull } from '../../../../misc/lines/lines-or-null.type';
 import { IHavingHostSelectorOptions } from '../../../types/having-host-selector-options';
 import {
@@ -9,9 +11,21 @@ export interface ITranspileReactiveStyleGenericCSSSupportsRuleToCSSLinesOptions 
 }
 
 export function transpileReactiveStyleGenericCSSSupportsRuleToCSSLines(
-  options: ITranspileReactiveStyleGenericCSSSupportsRuleToCSSLinesOptions,
+  {
+    rule,
+    ...options
+  }: ITranspileReactiveStyleGenericCSSSupportsRuleToCSSLinesOptions,
 ): ILinesOrNull {
-  return transpileReactiveStyleCSSGroupingRuleToCSSLines(options);
+  const lines: ILinesOrNull = transpileReactiveStyleCSSGroupingRuleToCSSLines({
+    ...options,
+    rule,
+  });
+
+  return [
+    `@supports ${rule.conditionText} {`,
+    ...indentLines(linesOrNullToLines(lines)),
+    `}`,
+  ];
 }
 
 

@@ -1,46 +1,29 @@
 ## Reactive output
 
-[//]: # (TODO)
-
 ```html
-<div
-  $(output)="observer"
-></div>
+<my-element
+  $(name)="observer"
+></my-element>
 ```
 
-To listen to events emitted by an element, sent to an `Observer<Event>`, enclose it in parentheses, `()`.
+To listen to values emitted by an element's **output**, sent to an `Observer<any>`, enclose it in parentheses prefixed by a dollar sign, `$()`.
 
-The type of the event is fixed by the value in the parentheses.
+When the output emits a value, the right-hand side (the Observer) receives this value.
 
 It compiles to something similar to this:
 
 ```ts
-div.addEventListener('click', observer);
-```
-
-
-### Example
-
-```html
-<div
-  (click)="(event) => console.log(event)"
-></div>
-```
-
-when the user clicks on the div -> output:
-
-```text
-MouseEvent
+node.setReactiveOutput('name', observer);
 ```
 
 ### Alternative syntax
 
 ```html
 <div
-  on-click="observer"
+  on-output-name="observer"
 ></div>
 ```
 
-Instead of using parentheses you may prefix the event's type with `on-`.
+Instead of using parentheses you may prefix the output's name with `on-output`.
 
 

@@ -111,9 +111,9 @@ export function transpileReactiveHTMLRXForLoopToJSLines(
 
     if (command.index !== void 0) {
       templateVariablesLines.push(
-        (command.index === 'index')
-          ? `index,`
-          : `index: ${command.index},`,
+        (command.index === 'index$')
+          ? `index$,`
+          : `index$: ${command.index},`,
       );
     }
 

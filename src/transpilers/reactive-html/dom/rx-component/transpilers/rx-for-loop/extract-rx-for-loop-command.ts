@@ -50,7 +50,7 @@ export function extractRXForLoopCommand(
       const variableName: string = match[1];
       const variableMappedName: string = match[2];
       switch (variableName) {
-        case 'index':
+        case 'index$':
           index = variableMappedName;
           break;
         default:

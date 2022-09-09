@@ -73,8 +73,8 @@ which strongly optimizes your components and generates very small bundles.
 
 It's light, fast, and simple ! Give it a try !
 
-- [Tutorial](documentation/tutorial/tutorial.md)
-- [Syntax](documentation/syntax/00-toc.md)
+- [Tutorial](website/docs/__pending/tutorial/tutorial.md)
+- [Syntax](website/docs/__pending/syntax/00-toc.md)
 
 
 ## 📑 Example

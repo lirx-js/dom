@@ -97,15 +97,15 @@ export abstract class VirtualDOMNode extends VirtualNode {
     return detached;
   }
 
-  getChildren(): Generator<VirtualDOMNode> {
+  override getChildren(): Generator<VirtualDOMNode> {
     return super.getChildren() as Generator<VirtualDOMNode>;
   }
 
-  getChildrenReversed(): Generator<VirtualDOMNode> {
+  override getChildrenReversed(): Generator<VirtualDOMNode> {
     return super.getChildrenReversed() as Generator<VirtualDOMNode>;
   }
 
-  getChildrenRecursive(): Generator<VirtualDOMNode> {
+  override getChildrenRecursive(): Generator<VirtualDOMNode> {
     return super.getChildrenRecursive() as Generator<VirtualDOMNode>;
   }
 

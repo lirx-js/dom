@@ -3,7 +3,11 @@ import { HTML_NAMESPACE_URI_CONSTANT } from '../../../../../misc/namespace-uri/h
 import { MATH_ML_NAMESPACE_URI_CONSTANT } from '../../../../../misc/namespace-uri/math-ml-namespace-uri.constant';
 import { SVG_NAMESPACE_URI_CONSTANT } from '../../../../../misc/namespace-uri/svg-namespace-uri.constant';
 import { IAttributeValue } from '../../static/element/attribute/attribute-value.type';
-import { ISetStyleProperty, ISetStylePropertyOrNull } from '../../static/element/style/style-property.type';
+import {
+  ISetStyleProperty,
+  ISetStylePropertyOrNull,
+  ISetStylePropertyOrStringOrNull,
+} from '../../static/element/style/style-property.type';
 import { ISetCaseInsensitivePropertyValue, VirtualElementNode } from '../../static/element/virtual-element-node.class';
 import { IClassNamesList } from './class/class-names-list.type';
 import { differClassNames } from './class/differ-class-names';
@@ -143,9 +147,9 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
 
   setReactiveStyleProperty(
     name: string,
-    styleProperty$: IObservable<ISetStyleProperty>,
+    styleProperty$: IObservable<ISetStylePropertyOrStringOrNull>,
   ): IUnsubscribe {
-    return this.onConnected$(styleProperty$)((styleProperty: ISetStyleProperty): void => {
+    return this.onConnected$(styleProperty$)((styleProperty: ISetStylePropertyOrStringOrNull): void => {
       this.setStyleProperty(name, styleProperty);
     });
   }

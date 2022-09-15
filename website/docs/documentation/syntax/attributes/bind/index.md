@@ -1,6 +1,5 @@
 # Bind
 
-
 **Bind attributes** are a category of attributes wrapped in square brackets, `[]`,
 whose right hand side (the attributes' value) is an Observable updating the "properties" of the Element.
 

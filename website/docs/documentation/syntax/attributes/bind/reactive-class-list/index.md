@@ -8,7 +8,7 @@
 
 To define the **css classes of an element** updated by an `Observable<Set<string>>`, write `[class...]`.
 
-Only the previously received classes are removed, and the new ones added, so it's possible to cumulate with `[class.my-class]`.
+Only the previously received classes are removed, and the new ones added, so it's possible to cumulate this bind with `[class.my-class]`.
 
 It's converted to something similar to this:
 
@@ -39,6 +39,12 @@ Output:
   class="enabled a b c"
 ></div>
 ```
+
+:::info
+
+To convert a "raw" list of class names into a Set of string, you may use the function [toClassNamesList](/docs/reference/to-class-names-list/).
+
+:::
 
 ---
 

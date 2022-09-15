@@ -72,6 +72,22 @@ const sidebars = {
             'documentation/syntax/attributes/modifier/index',
           ],
         },
+        {
+          type: 'category',
+          label: 'RX Components',
+          link: {
+            type: 'doc',
+            id: 'documentation/syntax/rx-components/index',
+          },
+          items: [
+            'documentation/syntax/rx-components/rx-container/index',
+            'documentation/syntax/rx-components/rx-template/index',
+            'documentation/syntax/rx-components/rx-inject-template/index',
+            'documentation/syntax/rx-components/rx-if/index',
+            'documentation/syntax/rx-components/rx-switch/index',
+            'documentation/syntax/rx-components/rx-for-loop/index',
+          ],
+        },
         'documentation/syntax/custom-element/index',
       ],
     },

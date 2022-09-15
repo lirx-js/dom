@@ -1,4 +1,4 @@
-<h1 align="center">LiRX / DOM - The fastest web developer's framework</h1>
+<h1 align="center">LiRX / DOM - The fastest web framework</h1>
 
 <p align="center">
   <img src="assets/lirx-dom-logo.png" alt="lirx-dom-logo" width="120px" height="120px"/>

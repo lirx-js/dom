@@ -6,7 +6,7 @@
 ></my-element>
 ```
 
-To listen to values emitted by a **custom element's output**, sent to an `Observer<any>`, enclose it in parentheses prefixed by a dollar sign, `$()`.
+To listen to values emitted by a **custom element's output**, sent to an `Observer<any>`, write `$(name)`, where `name` is the name of this output.
 
 When the output emits a value, the right-hand side (the Observer) receives this value.
 

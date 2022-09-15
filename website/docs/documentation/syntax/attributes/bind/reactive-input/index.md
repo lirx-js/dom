@@ -6,7 +6,8 @@
 ></my-element>
 ```
 
-To update a **custom element's input** whose value is updated by an `Observable<any>`, enclose it in square brackets prefixed by a dollar sign, `$[]`.
+To set a **custom element's input** whose value is updated by an `Observable<any>`, write `$[name]`, where `name` is the name of this input.
+
 When the right-hand side (the Observable) emits a value, the input is set with this value. 
 
 It's converted to something similar to this:

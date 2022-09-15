@@ -2,19 +2,19 @@
 
 ```html
 <div
-  [attr.aria-label]="observable$"
+  [attr.name]="observable$"
 ></div>
 ```
 
-To set an **element's attribute** whose value is updated by an `Observable<string | null>`, write `[attr.attribute-name]`,
-where `attribute-name` is the name of the attribute.
+To set an **element's attribute** whose value is updated by an `Observable<string | null>`, write `[attr.name]`,
+where `name` is the name of the attribute.
 
 If `null` is received, the attribute is removed. Else, if a `string` is received, the attribute is set to this value.
 
 It's converted to something similar to this:
 
 ```ts
-observable$((value) => div.setAttribute('aria-label', value));
+observable$((value) => div.setAttribute('name', value));
 ```
 
 # Example
@@ -39,7 +39,7 @@ Output:
 
 ```html
 <div
-  bind-attr-aria-label="observable$"
+  bind-attr-name="observable$"
 ></div>
 ```
 

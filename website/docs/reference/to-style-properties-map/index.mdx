@@ -1,0 +1,34 @@
+---
+tags: [FUNCTION, CLASS]
+---
+
+# toStylePropertiesMap
+
+### Types
+
+```ts
+function toStylePropertiesMap(
+  input: IStylePropertiesMapLike,
+): IStylePropertiesMap
+```
+
+### Definition
+
+Converts a `string` or an `Iterable<[string, string]>` into a `IStylePropertiesMap`.
+
+Useful when we have to cast a non-normalized value to a list of style properties.
+
+
+### Example
+
+```ts
+const stylePropertiesRaw$ = single([
+  ['font-size', '18px'],
+]);
+const styleProperties$ = map$$(stylePropertiesRaw$, toStylePropertiesMap);
+
+node.setReactiveStylePropertiesMap(styleProperties$);
+```
+
+
+

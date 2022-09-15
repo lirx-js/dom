@@ -2,18 +2,16 @@
 
 ```html
 <div
-  (click)="$observer"
+  (name)="$observer"
 ></div>
 ```
 
-To **listen to events** emitted by an element, sent to an `Observer<Event>`, enclose it in parentheses, `()`.
-
-The *type* of the event is fixed by the value in the parentheses.
+To **listen to events** emitted by an element, sent to an `Observer<Event>`, write `(name)`, where `name` is the type of this Event.
 
 It's converted to something similar to this:
 
 ```ts
-node.addEventListener('click', $observer);
+node.addEventListener('name', $observer);
 ```
 
 

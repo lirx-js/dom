@@ -40,6 +40,13 @@ Output:
 ></div>
 ```
 
+
+:::info
+
+To convert a "raw" list of style properties into a `IStylePropertiesMap`, you may use the function [toStylePropertiesMap](/docs/reference/to-style-properties-map/).
+
+:::
+
 ---
 
 #### Alternative syntax

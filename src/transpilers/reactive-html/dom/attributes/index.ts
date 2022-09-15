@@ -1,3 +1,2 @@
+export * from './transpile-reactive-html-attributes-to-js-lines';
 export * from './transpilers/index';
-export * from './transpile-reactive-html-attributes-to-reactive-dom-js-lines';
-

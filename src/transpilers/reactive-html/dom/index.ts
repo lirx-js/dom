@@ -5,4 +5,3 @@ export * from './node/index';
 export * from './nodes/index';
 export * from './rx-component/index';
 export * from './text-node/index';
-

@@ -1,2 +1,1 @@
-export * from './transpile-reactive-html-generic-node-to-reactive-dom-js-lines';
-
+export * from './transpile-reactive-html-generic-node-to-js-lines';

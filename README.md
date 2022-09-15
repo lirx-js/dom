@@ -1,4 +1,4 @@
-<h1 align="center">LiRX / DOM - The fastest web developer's framework</h1>
+<h1 align="center">LiRX / DOM - The fastest web framework</h1>
 
 <p align="center">
   <img src="assets/lirx-dom-logo.png" alt="lirx-dom-logo" width="120px" height="120px"/>
@@ -30,7 +30,7 @@
 However, by design, it strongly outperforms React and Angular due to its unique architecture:
 when an Observable changes, it updates only the relevant DOM nodes, ensuring maximal efficiency.
 
-To simplify: you'll create some dynamic variables, and *`@lirx/dom` will take care to refresh the DOM,
+To simplify: you'll create some dynamic variables, and `@lirx/dom` will take care to refresh the DOM,
 with the precision of a surgeon and the speed of a rocket.
 
 
@@ -73,9 +73,8 @@ which strongly optimizes your components and generates very small bundles.
 
 It's light, fast, and simple ! Give it a try !
 
-- [Tutorial](src/documentation/tutorial/tutoral.md)
-- [How it works](./src/documentation/examples/how-it-works.md)
-- [Syntax](./src/documentation/syntax.md)
+- [Tutorial](website/docs/__pending/tutorial/tutorial.md)
+- [Syntax](website/docs/__pending/syntax/00-toc.md)
 
 
 ## 📑 Example
@@ -91,7 +90,11 @@ interface IData {
   readonly valid$: IObservable<boolean>;
 }
 
-@Component({
+interface IAppHelloWorldComponentConfig {
+  data: IData;
+}
+
+export const AppHelloWorldComponent = createComponent<IAppHelloWorldComponentConfig>({
   name: 'app-hello-world',
   template: compileReactiveHTMLAsComponentTemplate({
     html: `
@@ -109,7 +112,7 @@ interface IData {
       </div>
    `,
   }),
-  styles: [compileReactiveCSSAsComponentStyle(`
+  styles: [compileStyleAsComponentStyle(`
     :host {
       display: block;
     }
@@ -118,12 +121,7 @@ interface IData {
       color: red;
     }
   `)],
-})
-export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IData> {
-  protected readonly data: IData;
-
-  constructor() {
-    super();
+  init: (node: VirtualCustomElementNode<IAppHelloWorldComponentConfig>): IData => {
     // 'input' is a source which contains and emits the value of our input
     const { emit: $input, subscribe: input$ } = let$$('');
 
@@ -133,19 +131,14 @@ export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IDat
     // 'valid' is an observable whose value is true if 'remaining' is less than 10
     const valid$ = map$$(remaining$, (value: number) => (value <= 10));
 
-    this.data = {
+    return {
       $input,
       input$,
       remaining$,
       valid$,
     };
-  }
-
-  // onCreate is called when the component is created to retrieve the data to inject into the template
-  public onCreate(): IData {
-    return this.data;
-  }
-}
+  },
+});
 ```
 
 [//]: # (TODO update demo)

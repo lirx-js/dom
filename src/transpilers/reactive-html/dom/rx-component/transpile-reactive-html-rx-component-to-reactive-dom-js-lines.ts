@@ -1,62 +1,31 @@
 import {
   createGenericToLinesIteratorTranspilerWithAsyncReference,
-} from '../../../helpers/iterator-transpiler/create-generic-to-lines-iterator-transpiler-with-async-reference';
-import { IRequireExternalFunction } from '../../require-external/require-external-function.type';
+} from '../../../misc/iterator-transpiler/create-generic-to-lines-iterator-transpiler-with-async-reference';
+import { IHavingPrimaryTranspilersOptions } from '../../primary/primary-transpilers.type';
+import { transpileReactiveHTMLRXContainerToJSLines } from './transpilers/rx-container/transpile-reactive-html-rx-container-to-js-lines';
+import { transpileReactiveHTMLRXForLoopToJSLines } from './transpilers/rx-for-loop/transpile-reactive-html-rx-for-loop-to-js-lines';
+import { transpileReactiveHTMLRXIfToJSLines } from './transpilers/rx-if/transpile-reactive-html-rx-if-to-js-lines';
+import { transpileReactiveHTMLRXInjectSlotToLines } from './transpilers/rx-inject-slot/transpile-reactive-html-rx-inject-slot-to-js-lines';
 import {
-  IRequireExternalFunctionKeyForTranspileReactiveHTMLRXAsyncToReactiveDOMJSLines,
-  transpileReactiveHTMLRXAsyncToReactiveDOMJSLines,
-} from './transpilers/rx-async/transpile-reactive-html-rx-async-to-reactive-dom-js-lines';
-import {
-  IRequireExternalFunctionKeyForTranspileReactiveHTMLRXContainerToReactiveDOMJSLines,
-  transpileReactiveHTMLRXContainerToReactiveDOMJSLines,
-} from './transpilers/rx-container/transpile-reactive-html-rx-container-to-reactive-dom-js-lines';
-import {
-  IRequireExternalFunctionKeyForTranspileReactiveHTMLRXForLoopToReactiveDOMJSLines,
-  transpileReactiveHTMLRXForLoopToReactiveDOMJSLines,
-} from './transpilers/rx-for-loop/transpile-reactive-html-rx-for-loop-to-reactive-dom-js-lines';
-import {
-  IRequireExternalFunctionKeyForTranspileReactiveHTMLRXIfToReactiveDOMJSLines,
-  transpileReactiveHTMLRXIfToReactiveDOMJSLines,
-} from './transpilers/rx-if/transpile-reactive-html-rx-if-to-reactive-dom-js-lines';
-import {
-  IRequireExternalFunctionKeyForTranspileReactiveHTMLRXInjectContentToReactiveDOMJSLines,
-  transpileReactiveHTMLRXInjectContentToReactiveDOMJSLines,
-} from './transpilers/rx-inject-content/transpile-reactive-html-rx-inject-content-to-reactive-dom-js-lines';
-import {
-  transpileReactiveHTMLRXInjectTemplateToReactiveDOMJSLines,
-} from './transpilers/rx-inject-template/transpile-reactive-html-rx-inject-template-to-reactive-dom-js-lines';
-import {
-  transpileReactiveHTMLRXScriptToReactiveDOMJSLines,
-} from './transpilers/rx-script/transpile-reactive-html-rx-script-to-reactive-dom-js-lines';
-import {
-  IRequireExternalFunctionKeyForTranspileReactiveHTMLRXSwitchToReactiveDOMJSLines,
-  transpileReactiveHTMLRXSwitchToReactiveDOMJSLines,
-} from './transpilers/rx-switch/transpile-reactive-html-rx-switch-to-reactive-dom-js-lines';
-import {
-  IRequireExternalFunctionKeyForTranspileReactiveHTMLRXTemplateToReactiveDOMJSLines,
-  transpileReactiveHTMLRXTemplateToReactiveDOMJSLines,
-} from './transpilers/rx-template/transpile-reactive-html-rx-template-to-reactive-dom-js-lines';
+  transpileReactiveHTMLRXInjectTemplateToLines,
+} from './transpilers/rx-inject-template/transpile-reactive-html-rx-inject-template-to-js-lines';
+import { transpileReactiveHTMLRXScriptToJSLines } from './transpilers/rx-script/transpile-reactive-html-rx-script-to-js-lines';
+import { transpileReactiveHTMLRXSwitchToJSLines } from './transpilers/rx-switch/transpile-reactive-html-rx-switch-to-js-lines';
+import { transpileReactiveHTMLRXTemplateToJSLines } from './transpilers/rx-template/transpile-reactive-html-rx-template-to-js-lines';
 
-export type IRequireExternalFunctionKeyForTranspileReactiveHTMLRXComponentToReactiveDOMJSLines =
-  | IRequireExternalFunctionKeyForTranspileReactiveHTMLRXTemplateToReactiveDOMJSLines
-  | IRequireExternalFunctionKeyForTranspileReactiveHTMLRXSwitchToReactiveDOMJSLines
-  | IRequireExternalFunctionKeyForTranspileReactiveHTMLRXIfToReactiveDOMJSLines
-  | IRequireExternalFunctionKeyForTranspileReactiveHTMLRXAsyncToReactiveDOMJSLines
-  | IRequireExternalFunctionKeyForTranspileReactiveHTMLRXForLoopToReactiveDOMJSLines
-  | IRequireExternalFunctionKeyForTranspileReactiveHTMLRXContainerToReactiveDOMJSLines
-  | IRequireExternalFunctionKeyForTranspileReactiveHTMLRXInjectContentToReactiveDOMJSLines
-  ;
+export interface ITranspileReactiveHTMLRXComponentToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
+  node: Element;
+}
 
-type IRequireExternalFunctionForTranspileReactiveHTMLRXComponentToReactiveDOMJSLines = IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLRXComponentToReactiveDOMJSLines>;
-
-export const transpileReactiveHTMLRXComponentToReactiveDOMJSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[Element, IRequireExternalFunctionForTranspileReactiveHTMLRXComponentToReactiveDOMJSLines]>(() => [
-  transpileReactiveHTMLRXTemplateToReactiveDOMJSLines,
-  transpileReactiveHTMLRXSwitchToReactiveDOMJSLines,
-  transpileReactiveHTMLRXIfToReactiveDOMJSLines,
-  transpileReactiveHTMLRXAsyncToReactiveDOMJSLines,
-  transpileReactiveHTMLRXForLoopToReactiveDOMJSLines,
-  transpileReactiveHTMLRXContainerToReactiveDOMJSLines,
-  transpileReactiveHTMLRXScriptToReactiveDOMJSLines,
-  transpileReactiveHTMLRXInjectContentToReactiveDOMJSLines,
-  transpileReactiveHTMLRXInjectTemplateToReactiveDOMJSLines,
+export const transpileReactiveHTMLRXComponentToJSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ITranspileReactiveHTMLRXComponentToJSLinesOptions]>(() => [
+  transpileReactiveHTMLRXTemplateToJSLines,
+  transpileReactiveHTMLRXSwitchToJSLines,
+  transpileReactiveHTMLRXIfToJSLines,
+  // transpileReactiveHTMLRXAsyncToJSLines,
+  transpileReactiveHTMLRXForLoopToJSLines,
+  transpileReactiveHTMLRXContainerToJSLines,
+  transpileReactiveHTMLRXScriptToJSLines,
+  // transpileReactiveHTMLRXInjectContentToJSLines,
+  transpileReactiveHTMLRXInjectTemplateToLines,
+  transpileReactiveHTMLRXInjectSlotToLines,
 ]);

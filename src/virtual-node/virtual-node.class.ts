@@ -1,9 +1,9 @@
 import {
+  createMulticastReplayLastSource,
   distinctObservable,
   empty,
   IMulticastReplayLastSource,
   IObservable,
-  let$$,
   mergeMapSingleObservable,
   shareObservable,
 } from '@lirx/core';
@@ -38,7 +38,7 @@ export abstract class VirtualNode {
     this._isRoot = isRoot;
     this._isLeaf = isLeaf;
 
-    this._$parentNode$ = let$$<IVirtualNodeOrNull>(null);
+    this._$parentNode$ = createMulticastReplayLastSource<IVirtualNodeOrNull>(null);
     this._previousNode = null;
     this._nextNode = null;
     this._firstChild = null;

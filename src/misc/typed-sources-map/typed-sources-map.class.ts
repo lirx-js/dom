@@ -1,4 +1,4 @@
-import { IMulticastReplayLastSource, IObservable, IObserver, let$$ } from '@lirx/core';
+import { createMulticastReplayLastSource, IMulticastReplayLastSource, IObservable, IObserver } from '@lirx/core';
 import { IGenericTypedMapEntry } from '../typed-map/types/typed-map-entry.type';
 import { InferTypedSourcesMapEntriesTupleKeys } from './types/infer-typed-sources-map-entries-tuple-keys.infer';
 import { InferTypedSourcesMapEntriesTupleValueFromKey } from './types/infer-typed-sources-map-entries-tuple-value-from-key.infer';
@@ -19,7 +19,7 @@ export class TypedSourcesMap<GTypedSourcesTuple extends ITypedSourcesMapEntriesT
       keys.map((name: string): IGenericTypedMapEntry => {
         return [
           name,
-          let$$<unknown>(),
+          createMulticastReplayLastSource<unknown>(),
         ];
       }),
     );

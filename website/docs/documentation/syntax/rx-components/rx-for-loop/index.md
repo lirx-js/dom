@@ -76,7 +76,7 @@ Output:
 ```html
 
 <tag-name
-  *for="let item of items; index$ as i; trackBy: trackByFn"
+  *for="let item of items$; index$ as i; trackBy: trackByFn"
   ...otherAttributes
 >
   ...content
@@ -100,7 +100,7 @@ Which is equivalent to:
 </rx-template>
 
 <rx-for-loop
-  items="items"
+  items="items$"
   template="uuid"
   track-by="trackByFn"
 ></rx-for-loop>

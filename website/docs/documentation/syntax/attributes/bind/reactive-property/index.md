@@ -20,14 +20,14 @@ observable$((value) => div.prop = value);
 
 ```html
 <div
-  [innerHTML]="single('abc')"
+  [innerHTML]="single('<strong>abc</strong>')"
 ></div>
 ```
 
 Output:
 
 ```html
-<div>abc</div>
+<div><strong>abc</strong></div>
 ```
 
 ---

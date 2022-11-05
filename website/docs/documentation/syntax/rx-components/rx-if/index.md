@@ -16,7 +16,9 @@ Short syntax:
 </tag-mame>
 ```
 
-Creates a virtual Node which:
+This is used to display **conditionally** an element or a node.
+
+Under the hoods, it creates a virtual Node which:
 
 - subscribes to `observable$`
 - and injects `templateReferenceTrue` if it received *true*
@@ -24,7 +26,7 @@ Creates a virtual Node which:
 
 :::note
 
-The previously injected template is removed, before the new one is appended to the DOM.
+The previously injected template is always removed from the DOM before the new one is appended.
 
 :::
 
@@ -61,12 +63,19 @@ new VirtualReactiveIfNode(
 Output:
 
 ```html
-Hello world !
+<div>
+  Hello world !
+</div>
 ```
+
+---
+
+**[Example file](https://github.com/lirx-js/dom-examples/tree/main/src/syntax/rx-if/component/rx-if-example.component.ts)**
+
 
 ### Alternative syntaxes
 
-##### Using *if
+##### Using \*if
 
 ```html
 <tag-mame
@@ -113,7 +122,7 @@ Which is equivalent to:
 ```
 
 
-##### Using *if-true and *if-false
+##### Using \*if-true and \*if-false
 
 ```html
 <rx-if

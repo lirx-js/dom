@@ -13,6 +13,12 @@ export function linkDOMNodeWithVirtualDOMNode(
   }
 }
 
+export function unlinkDOMNodeWithVirtualDOMNode(
+  domNode: Node,
+): void {
+  DOM_NODE_TO_DOM_VIRTUAL_NODE_MAP.delete(domNode);
+}
+
 export function getLinkedVirtualDOMNodeOfDOMNode(
   domNode: Node,
 ): VirtualDOMNode | null {
@@ -31,4 +37,4 @@ export function getLinkedVirtualDOMNodeOfDOMNodeOrThrow(
 }
 
 // TODO debug only
-(globalThis as any).node = getLinkedVirtualDOMNodeOfDOMNodeOrThrow;
+// (globalThis as any).node = getLinkedVirtualDOMNodeOfDOMNodeOrThrow;

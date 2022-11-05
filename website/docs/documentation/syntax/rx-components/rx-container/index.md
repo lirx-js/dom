@@ -6,9 +6,8 @@
 </rx-container>
 ```
 
-Creates a virtual node to wrap other nodes.
+An `rx-container` is a transparent wrapper to group many nodes or elements, with usually one or many a specifics `*commands`: like an `*if` or a `*for`.
 
-It only accepts `*command` attributes.
 
 ## Example
 

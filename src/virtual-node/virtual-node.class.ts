@@ -4,18 +4,24 @@ import {
   empty,
   IMulticastReplayLastSource,
   IObservable,
-  mergeMapSingleObservable,
+  switchMapObservable,
   shareObservable,
 } from '@lirx/core';
 import { nodeHasRootParentObservable } from './functions/node-has-root-parent-observable';
 
 export type IVirtualNodeOrNull = VirtualNode | null;
 
+/**
+ * The list of options to provide to a VirtualNode.
+ */
 export interface IVirtualNodeOptions {
   isRoot: boolean;
   isLeaf: boolean,
 }
 
+/**
+ * Represents an abstract Node in a Tree.
+ */
 export abstract class VirtualNode {
 
   protected readonly _isRoot: boolean;
@@ -47,38 +53,66 @@ export abstract class VirtualNode {
     this._isConnected$ = shareObservable(distinctObservable(nodeHasRootParentObservable(this)));
   }
 
+  /**
+   * Returns true if this node is a root.
+   */
   get isRoot(): boolean {
     return this._isRoot;
   }
 
+  /**
+   * Returns true if this node is a leaf.
+   */
   get isLeaf(): boolean {
     return this._isLeaf;
   }
 
+  /**
+   * Returns an Observable sending the parent of this node.
+   * This is useful to detect changes in the parent node.
+   */
   get parentNode$(): IObservable<IVirtualNodeOrNull> {
     return this._$parentNode$.subscribe;
   }
 
+  /**
+   * Returns the parent node of this node
+   */
   get parentNode(): IVirtualNodeOrNull {
     return this._$parentNode$.getValue();
   }
 
+  /**
+   * Returns the node before this node, or null if none.
+   */
   get previousNode(): IVirtualNodeOrNull {
     return this._previousNode;
   }
 
+  /**
+   * Returns the node after this node, or null if none.
+   */
   get nextNode(): IVirtualNodeOrNull {
     return this._nextNode;
   }
 
+  /**
+   * Returns the first child node of this node, or null if none.
+   */
   get firstChild(): IVirtualNodeOrNull {
     return this._firstChild;
   }
 
+  /**
+   * Returns the last child node of this node, or null if none.
+   */
   get lastChild(): IVirtualNodeOrNull {
     return this._lastChild;
   }
 
+  /**
+   * Returns true if this node is connected to a root node.
+   */
   get isConnected(): boolean {
     let node: IVirtualNodeOrNull = this;
     while (node !== null) {
@@ -91,21 +125,31 @@ export abstract class VirtualNode {
     return false;
   }
 
+  /**
+   * Returns an Observable sending "true" if this node is connected to a root node, or "false".
+   * This is useful to detect changes in the "connected state" of this node.
+   */
   get isConnected$(): IObservable<boolean> {
     return this._isConnected$;
   }
 
+  /**
+   * Returns an Observable sending the values of the provided Observable "observable", only when this node is connected to a root node.
+   */
   onConnected$<GValue>(
     observable: IObservable<GValue>,
   ): IObservable<GValue> {
     // or conditionalObservable
-    return mergeMapSingleObservable(this._isConnected$, (connected: boolean): IObservable<GValue> => {
+    return switchMapObservable(this._isConnected$, (connected: boolean): IObservable<GValue> => {
       return connected
         ? observable
         : empty<GValue>();
     });
   }
 
+  /**
+   * Returns true if this node contains "childNode".
+   */
   contains(
     childNode: VirtualNode,
   ): boolean {
@@ -122,6 +166,11 @@ export abstract class VirtualNode {
     return false;
   }
 
+  /**
+   * Attaches this node to "parentNode" before "referenceNode".
+   * Performs some internal verifications to ensure that this operation is possible.
+   * Returns true if attaching this node was necessary (the node had to move).
+   */
   attach(
     parentNode: VirtualNode,
     referenceNode: IVirtualNodeOrNull = null,
@@ -206,10 +255,18 @@ export abstract class VirtualNode {
     return true;
   }
 
+  /**
+   * Returns true if this node may be attached to "childNode".
+   * It is usually used to prevent invalid Tree to exist (we may think about a <button> containing an <input>)
+   */
   abstract canAttachChildNode(
     childNode: VirtualNode,
   ): boolean;
 
+  /**
+   * Detaches this node from its parent node.
+   * Returns true if this operation was necessary (the node had a parent node)
+   */
   detach(): boolean {
     if (this.isRoot) {
       throw new Error(`Cannot detach a root node`);
@@ -237,6 +294,9 @@ export abstract class VirtualNode {
     }
   }
 
+  /**
+   * Returns an Iterator on the list of direct child nodes of this node.
+   */
   * getChildren(): Generator<VirtualNode> {
     let node: IVirtualNodeOrNull = this._firstChild;
     while (node !== null) {
@@ -245,6 +305,10 @@ export abstract class VirtualNode {
     }
   }
 
+  /**
+   * Returns an Iterator on the list of direct child nodes of this node, in reverse order (starting from the last one).
+   * @see getChildren
+   */
   * getChildrenReversed(): Generator<VirtualNode> {
     let node: IVirtualNodeOrNull = this._lastChild;
     while (node !== null) {
@@ -253,6 +317,9 @@ export abstract class VirtualNode {
     }
   }
 
+  /**
+   * Returns an Iterator on the list of all child nodes of this node.
+   */
   * getChildrenRecursive(): Generator<VirtualNode> {
     const iterator: Iterator<VirtualNode> = this.getChildren();
     let result: IteratorResult<VirtualNode>;
@@ -263,6 +330,9 @@ export abstract class VirtualNode {
     }
   }
 
+  /**
+   * Detaches all the child nodes of this node.
+   */
   detachChildren(): void {
     let node: IVirtualNodeOrNull = this._firstChild;
     while (node !== null) {

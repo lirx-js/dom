@@ -1,9 +1,10 @@
-import { indentLines } from '../../../../../../misc/lines/functions/indent-lines';
 import { ILines } from '../../../../../../misc/lines/lines.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../../primary/primary-transpilers.type';
 import {
   ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap,
 } from '../../../../../primary/transpilers/transpile-create-reactive-custom-element-node-to-js-lines.type';
+import { generateJSLinesForRXTemplate } from '../../../../rx-component/transpilers/rx-template/generate-js-lines-for-rx-template';
+import { DEFAULT_SLOT_NAME_CONSTANT } from './default-slot-name.constant';
 import {
   transpileReactiveHTMLCustomElementChildElementToSlotsOfJSLines,
 } from './transpile-reactive-html-custom-element-child-element-to-slots-of-js-lines';
@@ -21,7 +22,8 @@ export function transpileReactiveHTMLCustomElementChildrenToSlotsOfJSLines(
     transpilers,
   }: ITranspileReactiveHTMLCustomElementChildrenToSlotsOfJSLinesOptions,
 ): ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap {
-  const slots: ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap = new Map<string, ILines>([['*', []]]);
+  const defaultSlotBodyLines: ILines = [];
+  const slots: ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap = new Map<string, ILines>();
 
   for (let i = 0; i < nodes.length; i++) {
     const node: Node = nodes[i];
@@ -29,7 +31,7 @@ export function transpileReactiveHTMLCustomElementChildrenToSlotsOfJSLines(
       case Node.TEXT_NODE:
         transpileReactiveHTMLCustomElementChildTextToSlotsOfJSLines({
           node: node as Text,
-          slots,
+          defaultSlotBodyLines,
           transpilers,
         });
         break;
@@ -38,6 +40,7 @@ export function transpileReactiveHTMLCustomElementChildrenToSlotsOfJSLines(
       case Node.ELEMENT_NODE:
         transpileReactiveHTMLCustomElementChildElementToSlotsOfJSLines({
           node: node as Element,
+          defaultSlotBodyLines,
           slots,
           transpilers,
         });
@@ -47,20 +50,10 @@ export function transpileReactiveHTMLCustomElementChildrenToSlotsOfJSLines(
     }
   }
 
-  const iterator: Iterator<[string, ILines]> = slots.entries();
-  let result: IteratorResult<[string, ILines]>;
-  while (!(result = iterator.next()).done) {
-    const [slotName, slotLines] = result.value;
-    if (slotLines.length === 0) {
-      slots.delete(slotName);
-    } else {
-      slots.set(slotName, [
-        `(parentNode) => {`,
-        ...indentLines(slotLines),
-        `}`,
-      ]);
-    }
-  }
+  slots.set(DEFAULT_SLOT_NAME_CONSTANT, generateJSLinesForRXTemplate({
+    argumentsLines: null,
+    bodyLines: defaultSlotBodyLines,
+  }));
 
   return slots;
 }

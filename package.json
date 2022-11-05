@@ -17,6 +17,6 @@
   "access": "public",
   "sideEffects": false,
   "dependencies": {
-    "@lirx/core": "1.0.0"
+    "@lirx/core": "1.1.0-beta.1"
   }
 }

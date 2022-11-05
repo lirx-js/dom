@@ -1,0 +1,24 @@
+---
+tags: [FUNCTION, COMPONENT, TEMPLATE]
+---
+
+# compileReactiveHTMLAsComponentTemplate
+
+TODO
+
+```ts
+function compileReactiveHTMLAsComponentTemplate<GData extends object>(
+  options: ICompileReactiveHTMLAsComponentTemplateOptions,
+): IComponentTemplate<GData>
+```
+
+
+With:
+
+```ts
+interface ICompileReactiveHTMLAsComponentTemplateOptions {
+  html: string;
+  customElements?: readonly IGenericComponent[];
+  modifiers?: readonly IGenericVirtualDOMNodeModifier[];
+}
+```

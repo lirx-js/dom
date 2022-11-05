@@ -1,12 +1,12 @@
 import {
-  createNotification,
+  createNotification, debounceMicrotask$$, debounceMicrotask$$$,
   defaultNotificationObserver,
   futureUnsubscribe,
   IDefaultNotificationsUnion,
   INotification,
   IObservable,
   IObserver,
-  IUnsubscribe,
+  IUnsubscribe, TInferNotificationGName,
 } from '@lirx/core';
 import {
   IGenericVirtualReactiveDOMNodeTemplateOrNull,
@@ -69,12 +69,12 @@ export class VirtualReactiveAsyncNode<GValue> extends VirtualContainerNode {
   ) {
     super();
 
-    const state$: IObservable<IVirtualReactiveAsyncNodeNotifications<GValue>> = defaultNotificationsObservableToVirtualReactiveAsyncNodeNotificationsObservable<GValue>(value$);
+    const state$: IObservable<IVirtualReactiveAsyncNodeNotifications<GValue>> = debounceMicrotask$$(
+      defaultNotificationsObservableToVirtualReactiveAsyncNodeNotificationsObservable<GValue>(value$),
+    );
 
     const getTemplate = (
-      {
-        name,
-      }: IVirtualReactiveAsyncNodeNotifications<GValue>,
+      name: TInferNotificationGName<IVirtualReactiveAsyncNodeNotifications<GValue>>,
     ): IGenericVirtualReactiveDOMNodeTemplateOrNull => {
       switch (name) {
         case 'pending':
@@ -86,13 +86,18 @@ export class VirtualReactiveAsyncNode<GValue> extends VirtualContainerNode {
       }
     };
 
-    this.onConnected$<IVirtualReactiveAsyncNodeNotifications<GValue>>(state$)((notification: IVirtualReactiveAsyncNodeNotifications<GValue>): void => {
+    this.onConnected$<IVirtualReactiveAsyncNodeNotifications<GValue>>(state$)((
+      {
+        name,
+        value,
+      }: IVirtualReactiveAsyncNodeNotifications<GValue>,
+    ): void => {
       this.detachChildren();
 
-      const template: IGenericVirtualReactiveDOMNodeTemplateOrNull = getTemplate(notification);
+      const template: IGenericVirtualReactiveDOMNodeTemplateOrNull = getTemplate(name);
       if (template !== null) {
         template(this, {
-          value: notification.value,
+          value,
         });
       }
     });

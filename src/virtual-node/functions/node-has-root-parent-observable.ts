@@ -1,4 +1,4 @@
-import { IObservable, mergeMapSingleObservable, single } from '@lirx/core';
+import { IObservable, switchMapObservable, single } from '@lirx/core';
 import { IVirtualNodeOrNull, VirtualNode } from '../virtual-node.class';
 
 export function nodeHasRootParentObservable(
@@ -7,7 +7,7 @@ export function nodeHasRootParentObservable(
   if (node.isRoot) {
     return single(true);
   } else {
-    return mergeMapSingleObservable(node.parentNode$, (parentNode: IVirtualNodeOrNull): IObservable<boolean> => {
+    return switchMapObservable(node.parentNode$, (parentNode: IVirtualNodeOrNull): IObservable<boolean> => {
       if (parentNode === null) {
         return single(false);
       } else if (parentNode.isRoot) {

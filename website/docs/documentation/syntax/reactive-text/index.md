@@ -24,3 +24,7 @@ Output:
 ```html
 Hello world !
 ```
+
+---
+
+**[Example file](https://github.com/lirx-js/dom-examples/tree/main/src/syntax/reactive-text/component/reactive-text-example.component.ts)**

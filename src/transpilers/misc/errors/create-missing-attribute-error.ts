@@ -1,6 +1,11 @@
+import { createErrorWithDOMContext } from './error-with-dom-context/create-error-with-dom-context';
+
 export function createMissingAttributeError(
   attributeName: string,
-  elementName: string,
+  node: Element,
 ): Error {
-  return new Error(`Missing attribute '${attributeName}' for '${elementName}'`);
+  return createErrorWithDOMContext({
+    message: `Missing attribute '${attributeName}'`,
+    node,
+  });
 }

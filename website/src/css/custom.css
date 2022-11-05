@@ -52,7 +52,7 @@ article:not([itemprop="blogPost"]) img {
     border-radius: var(--ifm-code-border-radius, 0.4rem);
     background-color: #fff;
     border: 1px solid var(--ifm-color-emphasis-300, #dadde1);
-    padding: 10px 0;
+    /*padding: 10px 0;*/
 }
 
 

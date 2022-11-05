@@ -15,7 +15,7 @@ const githubURL = `https://github.com/${organizationName}/${projectName}/`;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'LiRX/core',
+  title: 'LiRX/dom',
   tagline: 'The Reactive Programing Web Framework',
   url: 'https://dom.lirx.org',
   baseUrl: '/',

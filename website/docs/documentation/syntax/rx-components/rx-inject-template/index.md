@@ -20,7 +20,10 @@ It's converted to something similar to this:
 ```ts
 templateReference(
   parentNode,
-  { var1: data1, var2: data2 },
+  {
+    var1: data1,
+    var2: data2,
+  },
 );
 ```
 

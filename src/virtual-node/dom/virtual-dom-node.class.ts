@@ -3,6 +3,9 @@ import { VirtualNode } from '../virtual-node.class';
 
 export type IVirtualDOMNodeOrNull = VirtualDOMNode | null;
 
+/**
+ * Represents an abstract Node in an abstract DOM.
+ */
 export abstract class VirtualDOMNode extends VirtualNode {
 
   get parentNode$(): IObservable<IVirtualDOMNodeOrNull> {
@@ -109,12 +112,26 @@ export abstract class VirtualDOMNode extends VirtualNode {
     return super.getChildrenRecursive() as Generator<VirtualDOMNode>;
   }
 
+  /**
+   * Returns the list of the DOM Nodes that compose this node.
+   */
   abstract getSelfDOMNodes(): readonly Node[];
 
+  /**
+   * Returns a DOM Node as if this node was treated as a parent node.
+   * If this node cannot return such a DOM Node, it returns null instead.
+   */
   abstract getParentDOMNode(): ParentNode | null;
 
+  /**
+   * Returns a DOM Node as if this node was treated as a reference node.
+   * If this node cannot return such a DOM Node, it returns null instead.
+   */
   abstract getReferenceDOMNode(): Node | null;
 
+  /**
+   * Returns the "ReferenceDOMNode" of the next available Node
+   */
   getNextReferenceDOMNode(): Node | null {
     const getNextReferenceNode = (
       node: VirtualDOMNode,

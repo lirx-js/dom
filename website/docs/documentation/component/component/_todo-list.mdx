@@ -1,0 +1,189 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="html" label="HTML" default>
+
+```html title="todo-list/todo-list.component.html"
+<form
+  class="input-form"
+  (submit)="$.$onFormSubmit"
+>
+  <input
+    [value]="$.inputValue$"
+    (input)="$.$onInput"
+    placeholder="Enter task description"
+  />
+  <button type="submit">
+    Add
+  </button>
+</form>
+
+<div class="list">
+  <app-todo-list-item
+    *for="let item of $.items$"
+    $[message]="item.message"
+    $(remove)="() => $.removeItem(item)"
+  ></app-todo-list-item>
+</div>
+
+
+```
+
+  </TabItem>
+
+  <TabItem value="scss" label="SCSS">
+
+```scss title="todo-list/todo-list.component.scss"
+:host {
+  display: block;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+
+  & > .input-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+
+    & > * {
+      height: 36px;
+      border-radius: 4px;
+    }
+
+    & > input {
+      flex-grow: 1;
+      padding: 5px 5px;
+      border: 1px solid #a6a6a6;
+    }
+
+    & > button {
+      padding: 0 10px;
+      background-color: #e1e1e1;
+      border: 0;
+      text-transform: uppercase;
+      line-height: 36px;
+      cursor: pointer;
+    }
+  }
+
+  & > .list {
+    padding-top: 10px;
+
+    & > * {
+      margin: 5px 0;
+    }
+  }
+}
+```
+
+  </TabItem>
+
+  <TabItem value="ts" label="TS">
+
+```ts title="todo-list/todo-list.component.ts"
+import { $$map, IObservable, IObserver, let$$ } from '@lirx/core';
+import { compileReactiveHTMLAsComponentTemplate, compileStyleAsComponentStyle, createComponent } from '@lirx/dom';
+import { TodoListItemComponent } from '../todo-list-item/todo-list-item.component';
+
+// @ts-ignore
+import html from './todo-list.component.html?raw';
+// @ts-ignore
+import style from './todo-list.component.scss?inline';
+
+/**
+ * COMPONENT: 'app-todo-list'
+ **/
+
+interface ITodoListItem {
+  readonly message: string;
+}
+
+type ITodoListItemsList = readonly ITodoListItem[];
+
+interface IData {
+  readonly inputValue$: IObservable<string>;
+  readonly $onInput: IObserver<Event>;
+  readonly $onFormSubmit: IObserver<Event>;
+
+  readonly items$: IObservable<ITodoListItemsList>;
+
+  readonly removeItem: (item: ITodoListItem) => void;
+}
+
+interface ITodoListComponentConfig {
+  element: HTMLElement;
+  data: IData;
+}
+
+export const TodoListComponent = createComponent<ITodoListComponentConfig>({
+  name: 'app-todo-list',
+  template: compileReactiveHTMLAsComponentTemplate({
+    html,
+    customElements: [
+      TodoListItemComponent,
+    ],
+  }),
+  styles: [compileStyleAsComponentStyle(style)],
+  init: (): IData => {
+    const [$inputValue, inputValue$, getInputValue] = let$$<string>('');
+    const [$items, items$, getItems] = let$$<ITodoListItemsList>([]);
+
+    const addItem = (
+      message: string,
+    ): void => {
+      $items([
+        ...getItems(),
+        {
+          message,
+        },
+      ]);
+    };
+
+    const removeItem = (
+      item: ITodoListItem,
+    ): void => {
+      const items: ITodoListItemsList = getItems();
+      const index: number = items.indexOf(item);
+      if (index !== -1) {
+        $items([
+          ...items.slice(0, index),
+          ...items.slice(index + 1),
+        ]);
+      }
+    };
+
+    const $onInput = $$map($inputValue, (event: Event): string => (event.target as HTMLInputElement).value);
+
+    const $onFormSubmit = (
+      event: Event,
+    ): void => {
+      event.preventDefault();
+
+      const inputValue: string = getInputValue().trim();
+
+      if (inputValue !== '') {
+        addItem(inputValue);
+      }
+
+      $inputValue('');
+    };
+
+    addItem('Check this awesome tutorial');
+    addItem('Write your own components');
+
+    return {
+      inputValue$,
+      $onInput,
+      $onFormSubmit,
+      items$,
+      removeItem,
+    };
+  },
+});
+```
+
+  </TabItem>
+
+</Tabs>

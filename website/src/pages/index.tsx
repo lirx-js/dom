@@ -33,7 +33,7 @@ function HomepageHeader() {
         <p className="hero__subtitle">{siteConfig.tagline}</p>
 
         <div className={clsx(styles.heroBannerMessage)}>
-          Compose asynchronous data streams like a breeze, create complex data flow, and unleash the full potential of Reactive Programming.
+          Create fast and optimized web applications that scale !
         </div>
 
         <div className={styles.heroBannerButtons}>
@@ -43,7 +43,6 @@ function HomepageHeader() {
           >
             Get started !
           </Link>
-
         </div>
       </div>
     </header>

@@ -1,4 +1,5 @@
 import { toObservableThrowIfUndefined } from '../../../misc/to-observable';
+import { VirtualReactiveAsyncNode } from '../../../virtual-node/dom/nodes/reactive/async/virtual-reactive-async-node.class';
 import { VirtualReactiveElementNode } from '../../../virtual-node/dom/nodes/reactive/element/virtual-reactive-element-node.class';
 import { VirtualReactiveForLoopNode } from '../../../virtual-node/dom/nodes/reactive/for-loop/virtual-reactive-for-loop-node.class';
 import { VirtualReactiveIfNode } from '../../../virtual-node/dom/nodes/reactive/if/virtual-reactive-if-node.class';
@@ -13,5 +14,6 @@ export const DEFAULT_COMPONENT_TEMPLATE_VALUES_TO_IMPORT = {
   VirtualReactiveIfNode,
   VirtualReactiveSwitchNode,
   VirtualReactiveForLoopNode,
+  VirtualReactiveAsyncNode,
   toObservableThrowIfUndefined,
 };

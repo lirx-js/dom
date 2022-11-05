@@ -1,13 +1,13 @@
 import { getElementTagName } from '../../../../../../misc/dom/get-element-tag-name';
+import { createMissingAttributeError } from '../../../../../misc/errors/create-missing-attribute-error';
 import { ILinesOrNull } from '../../../../../misc/lines/lines-or-null.type';
+import { ILines } from '../../../../../misc/lines/lines.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
 import { transpileReactiveHTMLElementToJSLines } from '../../../element/transpile-reactive-html-element-to-js-lines';
-import { transpileReactiveHTMLNodesToJSLines } from '../../../nodes/transpile-reactive-html-nodes-to-js-lines';
 import {
-  extractRXAttributesFromReactiveHTMLAttribute,
-  IMappedAttributes,
-} from '../helpers/extract-rx-attributes-from-reactive-html-attribute';
-import { generateJSLinesForRXInjectSlot } from './generate-js-lines-for-rx-inject-slot';
+  extractRXAttributesAndLetPropertiesFromReactiveHTMLAttribute,
+} from '../helpers/extract-rx-attributes-and-let-properties-from-reactive-html-attribute';
+import { generateLetPropertyLinesForInjectTemplate } from '../rx-inject-template/generate-let-property-lines-for-inject-template';
 import { transpileReactiveHTMLRXInjectSlotChildNodesToLines } from './transpile-reactive-html-rx-inject-slot-child-nodes-to-lines';
 
 /*
@@ -46,20 +46,24 @@ export function transpileReactiveHTMLRXInjectSlotToLines(
 ): ILinesOrNull {
   const name: string = getElementTagName(node);
   if (name === TAG_NAME) {
-    const attributes: IMappedAttributes = extractRXAttributesFromReactiveHTMLAttribute(
+    const { attributes, letProperties } = extractRXAttributesAndLetPropertiesFromReactiveHTMLAttribute(
       node.attributes,
       ATTRIBUTE_NAMES,
     );
+
     const slotName: string | undefined = attributes.get(SLOT_NAME_ATTRIBUTE_NAME);
 
     if (slotName === void 0) {
-      throw new Error(`Missing attribute '${SLOT_NAME_ATTRIBUTE_NAME}'`);
+      throw createMissingAttributeError(SLOT_NAME_ATTRIBUTE_NAME, node);
     }
+
+    const letPropertiesLines: ILines = generateLetPropertyLinesForInjectTemplate(letProperties, node);
 
     return transpileReactiveHTMLRXInjectSlotChildNodesToLines({
       ...options,
       slotName,
       nodes: node.childNodes,
+      letPropertiesLines,
     });
   } else if (node.hasAttribute(COMMAND_NAME)) {
     const slotName: string = node.getAttribute(COMMAND_NAME) as string;
@@ -81,54 +85,3 @@ export function transpileReactiveHTMLRXInjectSlotToLines(
     return null;
   }
 }
-
-// export function transpileReactiveHTMLRXInjectSlotToLines(
-//   {
-//     node,
-//     ...options
-//   }: ITranspileReactiveHTMLRXInjectSlotToLinesOptions,
-// ): ILinesOrNull {
-//   const name: string = getElementTagName(node);
-//   if (name === TAG_NAME) {
-//     const attributes: IMappedAttributes = extractRXAttributesFromReactiveHTMLAttribute(
-//       node.attributes,
-//       ATTRIBUTE_NAMES,
-//     );
-//     const slotName: string | undefined = attributes.get(SLOT_NAME_ATTRIBUTE_NAME);
-//
-//     if (slotName === void 0) {
-//       throw new Error(`Missing attribute '${SLOT_NAME_ATTRIBUTE_NAME}'`);
-//     }
-//
-//     const defaultLines: ILinesOrNull = transpileReactiveHTMLNodesToJSLines({
-//       ...options,
-//       nodes: node.childNodes,
-//     });
-//
-//     return generateJSLinesForRXInjectSlot({
-//       slotName,
-//       defaultLines,
-//     });
-//   } else if (node.hasAttribute(COMMAND_NAME)) {
-//     const slotName: string = node.getAttribute(COMMAND_NAME) as string;
-//     node.removeAttribute(COMMAND_NAME);
-//
-//     // const defaultLines: ILinesOrNull = transpileReactiveHTMLElementToJSLines({
-//     //   ...options,
-//     //   node,
-//     // });
-//
-//     const defaultLines: ILinesOrNull = transpileReactiveHTMLNodesToJSLines({
-//       ...options,
-//       nodes: node.childNodes,
-//     });
-//
-//     return generateJSLinesForRXInjectSlot({
-//       slotName,
-//       defaultLines,
-//     });
-//   } else {
-//     return null;
-//   }
-// }
-

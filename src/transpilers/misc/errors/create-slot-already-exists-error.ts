@@ -1,5 +1,11 @@
+import { createErrorWithDOMContext } from './error-with-dom-context/create-error-with-dom-context';
+
 export function createSlotAlreadyExistsError(
   slotName: string,
+  node: Element,
 ): Error {
-  return new Error(`The slot '${slotName}' is already defined`);
+  return createErrorWithDOMContext({
+    message: `The slot '${slotName}' is already defined`,
+    node,
+  });
 }

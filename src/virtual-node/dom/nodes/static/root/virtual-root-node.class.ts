@@ -1,18 +1,24 @@
 import { linkDOMNodeWithVirtualDOMNode } from '../../../functions/link/link-dom-node-with-virtual-dom-node';
 import { VirtualDOMNode } from '../../../virtual-dom-node.class';
 
-let BODY_ROOT: VirtualRootNode<HTMLElement>;
+let BODY_ROOT: VirtualRootNode<HTMLBodyElement>;
 
+/**
+ * Represents an abstract Root Node in an abstract DOM.
+ */
 export class VirtualRootNode<GRootNode extends ParentNode> extends VirtualDOMNode {
 
-  static get body(): any {
+  /**
+   * Returns the VirtualRootNode of the <body> element.
+   */
+  static get body(): VirtualRootNode<HTMLBodyElement> {
     if (BODY_ROOT === void 0) {
-      BODY_ROOT = new VirtualRootNode<HTMLElement>(document.body);
+      BODY_ROOT = new VirtualRootNode<HTMLBodyElement>(document.body as HTMLBodyElement);
     }
     return BODY_ROOT;
   }
 
-  protected readonly _rootNode: GRootNode;
+  protected readonly _rootNode: GRootNode; // the associated DOM Node
   protected readonly _selfDOMNodes: [GRootNode]; // computed
 
   constructor(
@@ -29,6 +35,9 @@ export class VirtualRootNode<GRootNode extends ParentNode> extends VirtualDOMNod
     linkDOMNodeWithVirtualDOMNode(this._rootNode, this);
   }
 
+  /**
+   * Returns the associated DOM Node of this node.
+   */
   get rootNode(): GRootNode {
     return this._rootNode;
   }

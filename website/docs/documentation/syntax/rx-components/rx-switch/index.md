@@ -34,14 +34,16 @@ Short syntax:
 </rx-switch>
 ```
 
-Creates a virtual Node which:
+This is used to display **conditionally** an element or a node, **switching** on a specific value.
+
+Under the hoods, it creates a virtual Node which:
 
 - subscribes to `observable$`
 - and injects `templateReferenceA`, `templateReferenceB` or `templateReferenceC` according to the received value
 
 :::note
 
-The previously injected template is removed.
+The previously injected template is always removed from the DOM before the new one is appended.
 
 :::
 
@@ -97,7 +99,7 @@ Output:
 
 ### Alternative syntaxes
 
-##### Using *switch-case and *switch-default
+##### Using \*switch-case and \*switch-default
 
 ```html
 <rx-switch

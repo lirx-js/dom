@@ -1,13 +1,18 @@
 import { getElementTagName } from '../../../../../../misc/dom/get-element-tag-name';
 import { isElementNode } from '../../../../../../misc/dom/is/is-element-node';
 import { isTextNode } from '../../../../../../misc/dom/is/is-text-node';
+import { createInvalidElementFoundError } from '../../../../../misc/errors/create-invalid-element-found-error';
+import { createMissingAttributeError } from '../../../../../misc/errors/create-missing-attribute-error';
+import { createShouldNotContainTextNodeError } from '../../../../../misc/errors/create-should-not-contain-text-node-error';
+import { createSwitchDefaultAlreadyDefinedError } from '../../../../../misc/errors/create-switch-default-already-defined-error';
 import { ILinesOrNull } from '../../../../../misc/lines/lines-or-null.type';
 import { ILines } from '../../../../../misc/lines/lines.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
 import {
   extractRXAttributesFromReactiveHTMLAttribute,
-  IMappedAttributes,
+
 } from '../helpers/extract-rx-attributes-from-reactive-html-attribute';
+import { IMappedAttributes } from '../helpers/mapped-attributes.type';
 import { generateJSLinesForRXSwitch } from './generate-reactive-dom-js-lines-for-rx-switch';
 import { transpileReactiveHTMLRXSwitchCaseToJSLines } from './rx-switch-case/transpile-reactive-html-rx-switch-case-to-js-lines';
 import { transpileReactiveHTMLRXSwitchDefaultToJSLines } from './rx-switch-default/transpile-reactive-html-rx-switch-default-to-js-lines';
@@ -42,7 +47,7 @@ export function transpileReactiveHTMLRXSwitchToJSLines(
     const expression: string | undefined = attributes.get(EXPRESSION_ATTRIBUTE_NAME);
 
     if (expression === void 0) {
-      throw new Error(`Missing attribute '${EXPRESSION_ATTRIBUTE_NAME}'`);
+      throw createMissingAttributeError(EXPRESSION_ATTRIBUTE_NAME, node);
     }
 
     const existingSwitchCaseValues: Set<string> = new Set<string>();
@@ -67,10 +72,10 @@ export function transpileReactiveHTMLRXSwitchToJSLines(
             switchDefaultName: SWITCH_DEFAULT_NAME,
           });
           if (result === null) {
-            throw new Error(`Found invalid element '${getElementTagName(childNode)}'`);
+            throw createInvalidElementFoundError(childNode);
           } else {
             if (switchDefaultFound) {
-              throw new Error(`Switch - default already defined`);
+              throw createSwitchDefaultAlreadyDefinedError(node);
             } else {
               switchDefaultFound = true;
               childLines.push(...result);
@@ -80,7 +85,7 @@ export function transpileReactiveHTMLRXSwitchToJSLines(
           childLines.push(...result);
         }
       } else if (isTextNode(childNode) && (childNode.data.trim() !== '')) {
-        throw new Error(`The content of ${TAG_NAME} should not contain any Text Node`);
+        throw createShouldNotContainTextNodeError(node);
       }
     }
 

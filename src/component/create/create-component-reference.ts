@@ -1,3 +1,4 @@
+import { createNamesMismatchError } from '../../misc/errors/create-names-mismatch-error';
 import {
   IVirtualCustomElementNodeSlotsMap,
 } from '../../virtual-node/dom/nodes/reactive/custom-element/slots/virtual-custom-element-node-slots-map.type';
@@ -20,7 +21,7 @@ export function createComponentReference<GConfig extends IVirtualCustomElementNo
       if (_name === name) {
         return create(slots);
       } else {
-        throw new Error(`Names mismatch`);
+        throw createNamesMismatchError(name, _name);
       }
     },
   };

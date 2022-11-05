@@ -35,5 +35,3 @@ export function transpileReactiveHTMLToJSLines(
     nodes: document.body.childNodes,
   });
 }
-
-

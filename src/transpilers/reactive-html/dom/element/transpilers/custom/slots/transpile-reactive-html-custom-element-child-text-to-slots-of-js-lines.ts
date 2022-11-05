@@ -1,19 +1,17 @@
 import { ILinesOrNull } from '../../../../../../misc/lines/lines-or-null.type';
+import { ILines } from '../../../../../../misc/lines/lines.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../../primary/primary-transpilers.type';
-import {
-  ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap,
-} from '../../../../../primary/transpilers/transpile-create-reactive-custom-element-node-to-js-lines.type';
 import { transpileReactiveHTMLTextNodeToJSLines } from '../../../../text-node/transpile-reactive-html-text-node-to-js-lines';
 
 export interface ITranspileReactiveHTMLCustomElementChildTextToSlotsOfJSLinesOptions extends IHavingPrimaryTranspilersOptions {
   node: Text;
-  slots: ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap;
+  defaultSlotBodyLines: ILines; // mutable reference
 }
 
 export function transpileReactiveHTMLCustomElementChildTextToSlotsOfJSLines(
   {
     node,
-    slots,
+    defaultSlotBodyLines,
     ...options
   }: ITranspileReactiveHTMLCustomElementChildTextToSlotsOfJSLinesOptions,
 ): void {
@@ -22,6 +20,6 @@ export function transpileReactiveHTMLCustomElementChildTextToSlotsOfJSLines(
     node: node as Text,
   });
   if (lines !== null) {
-    slots.get('*')!.push(...lines);
+    defaultSlotBodyLines.push(...lines);
   }
 }

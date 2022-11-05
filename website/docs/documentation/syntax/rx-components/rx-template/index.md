@@ -10,7 +10,10 @@
 </rx-template>
 ```
 
-To create a reusable template to inject later, use `rx-template`.
+A template is a portion of html that can be re-used later. 
+It is usually provided to other `rx-` components to generate repetitive or conditional parts of the application.
+
+To create such a template, use `rx-template`.
 
 It has the following attributes:
 
@@ -20,7 +23,16 @@ It has the following attributes:
 It's converted to something similar to this:
 
 ```ts
-const templateReference = (parentNode: VirtualDOMNode, { var1, var2 }): void => content.attach(parentNode);
+const templateReference = (
+  parentNode: VirtualDOMNode,
+  {
+    var1,
+    var2
+  },
+): void => {
+  // here "content" represents the content of the template
+  return content.attach(parentNode);
+};
 ```
 
 :::info

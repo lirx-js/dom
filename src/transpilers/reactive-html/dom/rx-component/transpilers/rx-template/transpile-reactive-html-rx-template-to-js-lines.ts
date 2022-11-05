@@ -1,14 +1,15 @@
-import { dashCaseToCamelCase } from '../../../../../../misc/case-converters/dash-case';
 import { getElementTagName } from '../../../../../../misc/dom/get-element-tag-name';
-import { inlineLastLines } from '../../../../../misc/lines/functions/after-last-line';
+import { createDuplicateTemplateError } from '../../../../../misc/errors/create-duplicate-template-error';
+import { createInvalidAttributeFoundError } from '../../../../../misc/errors/create-invalid-attribute-found-error';
+import { createMissingAttributeError } from '../../../../../misc/errors/create-missing-attribute-error';
 import { indentLines } from '../../../../../misc/lines/functions/indent-lines';
-import { wrapLinesWithCurlyBrackets } from '../../../../../misc/lines/functions/wrap-lines-with-curly-brackets';
 import { ILinesOrNull } from '../../../../../misc/lines/lines-or-null.type';
 import { generateTemplateVariableName } from '../../../../../misc/templates/generate-template-variable-name';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
 import { transpileReactiveHTMLNodesToJSLines } from '../../../nodes/transpile-reactive-html-nodes-to-js-lines';
 import { extractLetPropertyFromReactiveHTMLAttribute, ILetProperty } from '../helpers/extract-let-property-from-reactive-html-attribute';
 import { generateJSLinesForRXTemplate } from './generate-js-lines-for-rx-template';
+import { generateLetPropertyLinesForTemplate } from './generate-let-property-lines-for-template';
 
 /*
 Syntax:
@@ -23,6 +24,8 @@ Syntax:
 
  */
 
+const TAG_NAME: string = 'rx-template';
+
 const TEMPLATE_NAME_ATTRIBUTE_NAME: string = 'name';
 
 export interface ITranspileReactiveHTMLRXTemplateToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
@@ -36,7 +39,8 @@ export function transpileReactiveHTMLRXTemplateToJSLines(
   }: ITranspileReactiveHTMLRXTemplateToJSLinesOptions,
 ): ILinesOrNull {
   const name: string = getElementTagName(node);
-  if (name === 'rx-template') {
+  if (name === TAG_NAME) {
+    // TODO use extractRXAttributesAndLetPropertiesFromReactiveHTMLAttribute
     let templateName!: string;
     const letProperties: ILetProperty[] = [];
 
@@ -47,13 +51,9 @@ export function transpileReactiveHTMLRXTemplateToJSLines(
       const letProperty: ILetProperty | null = extractLetPropertyFromReactiveHTMLAttribute(attribute);
       if (letProperty === null) {
         if (attribute.name === TEMPLATE_NAME_ATTRIBUTE_NAME) {
-          if (templateName === void 0) {
-            templateName = attribute.value;
-          } else {
-            throw new Error(`Found duplicate template name through attribute '${TEMPLATE_NAME_ATTRIBUTE_NAME}'`);
-          }
+          templateName = attribute.value;
         } else {
-          throw new Error(`Found invalid attribute '${attribute.name}'`);
+          throw createInvalidAttributeFoundError(attribute);
         }
       } else {
         letProperties.push(letProperty);
@@ -61,24 +61,10 @@ export function transpileReactiveHTMLRXTemplateToJSLines(
     }
 
     if (templateName === void 0) {
-      throw new Error(`Missing a name for this template`);
+      throw createMissingAttributeError(TEMPLATE_NAME_ATTRIBUTE_NAME, node);
     }
 
-    const letPropertiesLines: ILinesOrNull = (letProperties.length === 0)
-      ? null
-      : inlineLastLines(
-        wrapLinesWithCurlyBrackets(
-          letProperties.map((letProperty: ILetProperty): string => {
-            const name: string = dashCaseToCamelCase(letProperty.name);
-            const value: string = letProperty.value;
-            return ((value === name) || (value === ''))
-              ? `${name},`
-              : `${name}: ${value},`;
-          }),
-          false,
-        ),
-        [','],
-      );
+    const letPropertiesLines: ILinesOrNull = generateLetPropertyLinesForTemplate(letProperties);
 
     const transpiledChildren: ILinesOrNull = transpileReactiveHTMLNodesToJSLines({
       ...options,

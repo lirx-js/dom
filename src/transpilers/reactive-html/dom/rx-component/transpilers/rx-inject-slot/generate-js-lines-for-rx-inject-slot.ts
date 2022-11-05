@@ -4,12 +4,14 @@ import { ILines } from '../../../../../misc/lines/lines.type';
 
 export interface IGenerateJSLinesForRXInjectSlotOptions {
   slotName: string;
+  letPropertiesLines: ILines;
   defaultLines: ILinesOrNull;
 }
 
 export function generateJSLinesForRXInjectSlot(
   {
     slotName,
+    letPropertiesLines,
     defaultLines,
   }: IGenerateJSLinesForRXInjectSlotOptions,
 ): ILines {
@@ -25,7 +27,12 @@ export function generateJSLinesForRXInjectSlot(
     `// inject slot '${slotName}'`,
     `if (slots.has(${JSON.stringify(slotName)})) {`,
     ...indentLines([
-      `slots.get(${JSON.stringify(slotName)})(parentNode);`,
+      `slots.get(${JSON.stringify(slotName)})(`,
+      ...indentLines([
+        `parentNode,`,
+        ...letPropertiesLines,
+      ]),
+      `);`,
     ]),
     ...elseLines,
   ];

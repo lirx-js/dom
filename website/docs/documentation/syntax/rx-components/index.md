@@ -4,7 +4,7 @@
 **RX Components** are a category of elements having tag names starting with `rx-`.
 They are compiled into optimized javascript, with special behaviour.
 
-They look like this:
+The syntax looks like this:
 
 ```html
 <rx-if
@@ -13,6 +13,8 @@ They look like this:
   ...content
 </rx-if>
 ```
+
+Usually, they are used to create or manipulate many Elements in the DOM.
 
 
 

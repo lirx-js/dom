@@ -1,4 +1,4 @@
-import { ICustomError, ICustomErrorMessageOptionalOptions } from '@lirx/core';
+import { ICustomError, ICustomErrorMessageOptionalOptions } from '@lirx/utils';
 import { IErrorWithDOMContextName } from './error-with-dom-context-name.constant';
 
 export interface IErrorWithDOMContextOptions extends Required<ICustomErrorMessageOptionalOptions>, IErrorWithDOMContextProperties {

@@ -43,7 +43,7 @@ and [outputs](/docs/documentation/syntax/attributes/event/reactive-output/):
 
 ## Slotting - ak provide templates to our components
 
-Occasionally, we'll find some components requiring html content.
+Occasionally, we'll find some components **requiring html content**.
 They'll usually use and inject this content somewhere else in their personal template.
 
 We may think about an `<app-article>` component, requiring a header and a body,
@@ -55,7 +55,7 @@ This is a little complex to explain, but really easy to use:
 
 > A **slot** is simply an HTML template **with a specific name**, provided to a component.
 > This component may use directly this slot in its own template.
-> Moreover, it's possible to deliver many slots to a single component.
+> And, it's possible to transfer many slots to a single component.
 
 ### Named slot
 
@@ -95,10 +95,10 @@ Then, these slots are transmitted to the component `<app-child>`, and may be use
 </article>
 ```
 
-`rx-inject-slot` may contain some HTML in it, which is used as a placeholder if the parent didn't provide a slot with the corresponding name.
-In our case, because we omitted the `footer` slot, `No footer` will instead be displayed.
+An `rx-inject-slot` may contain some HTML in it. It is used as a placeholder if the parent didn't provide a slot with the corresponding name.
+In our case, we omitted the `footer` slot, so `No footer` will be displayed as a replacement.
 
-As a shortcut, we may replace the `rx-inject-slot` syntax with the command `*inject-slot="name"`, which is usually more convenient:
+We may swap the `rx-inject-slot` syntax with the command `*inject-slot="name"`, which is usually more convenient:
 
 ```html title="child/child.component.html"
 <article>
@@ -226,7 +226,7 @@ to `camelCase`. Example: `let-my-var="myNewVar"` => `{ myVar: myNewVar }`
 
 :::
 
-Then, we may use *let properties* too when injecting the slot from the child component:
+Then, we may set these *let properties* when injecting the slot from the child component:
 
 
 ```html title="child/child.component.html"

@@ -1,23 +1,22 @@
 import { getElementTagName } from '../../../../../../misc/dom/get-element-tag-name';
 import { isElementNode } from '../../../../../../misc/dom/is/is-element-node';
-import { isTextNode } from '../../../../../../misc/dom/is/is-text-node';
+import { isTextNodeWithNonWhiteSpaceCharacters } from '../../../../../../misc/dom/is/is-text-node-with-non-white-space-characters';
 import { createInvalidElementFoundError } from '../../../../../misc/errors/create-invalid-element-found-error';
 import { createMissingAttributeError } from '../../../../../misc/errors/create-missing-attribute-error';
 import { createShouldNotContainTextNodeError } from '../../../../../misc/errors/create-should-not-contain-text-node-error';
 import { createSwitchDefaultAlreadyDefinedError } from '../../../../../misc/errors/create-switch-default-already-defined-error';
 import { ILinesOrNull } from '../../../../../misc/lines/lines-or-null.type';
 import { ILines } from '../../../../../misc/lines/lines.type';
+import { NULL_TEMPLATE } from '../../../../../misc/templates/null-template.constant';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
 import {
-  extractRXAttributesFromReactiveHTMLAttribute,
-
-} from '../helpers/extract-rx-attributes-from-reactive-html-attribute';
-import { IMappedAttributes } from '../helpers/mapped-attributes.type';
+  ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap,
+} from '../../../../primary/transpilers/transpile-create-reactive-switch-node-to-js-lines.type';
+import { extractRXAttributesFromReactiveHTMLAttribute } from '../helpers/extract-attributes/extract-rx-attributes-from-reactive-html-attribute';
+import { IMappedAttributes } from '../helpers/extract-attributes/mapped-attributes.type';
 import { generateJSLinesForRXSwitch } from './generate-reactive-dom-js-lines-for-rx-switch';
 import { transpileReactiveHTMLRXSwitchCaseToJSLines } from './rx-switch-case/transpile-reactive-html-rx-switch-case-to-js-lines';
 import { transpileReactiveHTMLRXSwitchDefaultToJSLines } from './rx-switch-default/transpile-reactive-html-rx-switch-default-to-js-lines';
-import { SWITCH_DEFAULT_NAME } from './switch-default-name.constant';
-import { SWITCH_MAP_NAME } from './switch-map-name.constant';
 
 const TAG_NAME: string = 'rx-switch';
 
@@ -39,22 +38,26 @@ export function transpileReactiveHTMLRXSwitchToJSLines(
 ): ILinesOrNull {
   const name: string = getElementTagName(node);
   if (name === TAG_NAME) {
+    let expression!: string;
+    const templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap = new Map<string, ILines>();
+    let defaultTemplate!: ILinesOrNull;
+
     const attributes: IMappedAttributes = extractRXAttributesFromReactiveHTMLAttribute(
       node.attributes,
       ATTRIBUTE_NAMES,
     );
 
-    const expression: string | undefined = attributes.get(EXPRESSION_ATTRIBUTE_NAME);
+    /* EXPRESSION */
+    const expressionAttribute: string | undefined = attributes.get(EXPRESSION_ATTRIBUTE_NAME);
 
-    if (expression === void 0) {
+    if (expressionAttribute === void 0) {
       throw createMissingAttributeError(EXPRESSION_ATTRIBUTE_NAME, node);
+    } else {
+      expression = expressionAttribute;
     }
 
-    const existingSwitchCaseValues: Set<string> = new Set<string>();
-
+    // ANALYSE CHILD NODES -> TO extract templates
     const childNodes: ArrayLike<ChildNode> = node.childNodes;
-    const childLines: ILines = [];
-    let switchDefaultFound: boolean = false;
 
     for (let i = 0, l = childNodes.length; i < l; i++) {
       const childNode: ChildNode = childNodes[i];
@@ -62,39 +65,37 @@ export function transpileReactiveHTMLRXSwitchToJSLines(
         const result: ILinesOrNull = transpileReactiveHTMLRXSwitchCaseToJSLines({
           ...options,
           node: childNode,
-          switchMapName: SWITCH_MAP_NAME,
-          existingSwitchCaseValues,
+          templatesMap,
         });
         if (result === null) {
           const result: ILinesOrNull = transpileReactiveHTMLRXSwitchDefaultToJSLines({
             ...options,
             node: childNode,
-            switchDefaultName: SWITCH_DEFAULT_NAME,
           });
           if (result === null) {
             throw createInvalidElementFoundError(childNode);
           } else {
-            if (switchDefaultFound) {
-              throw createSwitchDefaultAlreadyDefinedError(node);
+            if (defaultTemplate === void 0) {
+              defaultTemplate = result;
             } else {
-              switchDefaultFound = true;
-              childLines.push(...result);
+              throw createSwitchDefaultAlreadyDefinedError(node);
             }
           }
-        } else {
-          childLines.push(...result);
         }
-      } else if (isTextNode(childNode) && (childNode.data.trim() !== '')) {
+      } else if (isTextNodeWithNonWhiteSpaceCharacters(childNode)) {
         throw createShouldNotContainTextNodeError(node);
       }
+    }
+
+    if (defaultTemplate === void 0) {
+      defaultTemplate = [NULL_TEMPLATE];
     }
 
     return generateJSLinesForRXSwitch({
       ...options,
       expression,
-      childLines,
-      switchMapName: SWITCH_MAP_NAME,
-      switchDefaultName: SWITCH_DEFAULT_NAME,
+      templatesMap,
+      defaultTemplate,
     });
   } else {
     return null;

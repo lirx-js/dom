@@ -125,7 +125,8 @@ Output:
 </tag-mame>
 ```
 
-Which is equivalent to:
+<details>
+  <summary>Which is equivalent to</summary>
 
 ```html
 
@@ -145,8 +146,9 @@ Which is equivalent to:
 ></rx-async>
 ```
 
+</details>
 
-##### Using rx-async-pending, rx-async-fulfilled and rx-async-rejected
+##### Using rx-async-pending, rx-async-fulfilled and rx-async-rejected with in-place template
 
 ```html
 <rx-async

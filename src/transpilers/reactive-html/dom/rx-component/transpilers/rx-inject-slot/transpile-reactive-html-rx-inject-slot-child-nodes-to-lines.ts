@@ -10,15 +10,34 @@ export interface ITranspileReactiveHTMLRXInjectSlotChildNodesToLinesOptions exte
 //
 {
   nodes: ArrayLike<Node>;
+  required: boolean;
 }
 
 export function transpileReactiveHTMLRXInjectSlotChildNodesToLines(
-  options: ITranspileReactiveHTMLRXInjectSlotChildNodesToLinesOptions,
+  {
+    nodes,
+    required,
+    slotName,
+    ...options
+  }: ITranspileReactiveHTMLRXInjectSlotChildNodesToLinesOptions,
 ): ILines {
-  const defaultLines: ILinesOrNull = transpileReactiveHTMLNodesToJSLines(options);
+  let defaultLines!: ILinesOrNull;
+
+  if (required) {
+    defaultLines = [
+      `throw new Error('The slot ${JSON.stringify(slotName)} is required');`,
+    ];
+    // TODO throw if has child node
+  } else {
+    defaultLines = transpileReactiveHTMLNodesToJSLines({
+      ...options,
+      nodes,
+    });
+  }
 
   return generateJSLinesForRXInjectSlot({
     ...options,
+    slotName,
     defaultLines,
   });
 }

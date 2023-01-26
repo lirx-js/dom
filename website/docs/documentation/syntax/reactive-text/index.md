@@ -16,13 +16,17 @@ observable$((value) => text.value = value);
 ## Example
 
 ```html
-Hello {{ single('world') }} !
+<div>
+  Hello {{ single('world') }} !
+</div>
 ```
 
 Output:
 
 ```html
-Hello world !
+<div>
+  Hello world !
+</div>
 ```
 
 ---

@@ -1,9 +1,7 @@
 # rx-switch
 
 ```html
-<rx-switch
-  expression="observable$"
->
+<rx-switch expression="observable$">
   <rx-switch-case
     case="valueA"
     template="templateReferenceA"
@@ -97,14 +95,16 @@ Output:
 </div>
 ```
 
+---
+
+**[Example file](https://github.com/lirx-js/dom-examples/tree/main/src/syntax/rx-switch/component/rx-switch-example.component.ts)**
+
 ### Alternative syntaxes
 
 ##### Using \*switch-case and \*switch-default
 
 ```html
-<rx-switch
-  expression="observable$"
->
+<rx-switch expression="observable$">
   <tag-name-a
     *switch-case="valueA"
     ...otherAttributesA
@@ -126,7 +126,8 @@ Output:
 </rx-switch>
 ```
 
-Which is equivalent to:
+<details>
+  <summary>Which is equivalent to</summary>
 
 ```html
 <rx-template
@@ -176,3 +177,21 @@ Which is equivalent to:
 </rx-switch>
 ```
 
+</details>
+
+
+##### Using rx-switch-case and rx-switch-default with in-place template
+
+```html
+<rx-switch expression="observable$">
+  <rx-switch-case case="valueA">
+    ...contentA
+  </rx-switch-case>
+  <rx-switch-case case="valueB">
+    ...contentB
+  </rx-switch-case>
+  <rx-switch-default>
+    ...contentC
+  </rx-switch-default>
+</rx-switch>
+```

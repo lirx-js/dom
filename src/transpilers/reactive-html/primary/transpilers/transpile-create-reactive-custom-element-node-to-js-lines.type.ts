@@ -1,6 +1,7 @@
 import { ILines } from '../../../misc/lines/lines.type';
+import { ILinesMap } from '../../../misc/misc/generate-js-lines-for-lines-map';
 
-export type ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap = Map<string, ILines>;
+export type ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap = ILinesMap;
 
 export interface ITranspileCreateReactiveCustomElementNodeToJSLinesOptions {
   name: string,

@@ -1,20 +1,22 @@
 import { wrapLinesWithCurlyBrackets } from '../../../../../misc/lines/functions/wrap-lines-with-curly-brackets';
+import { ILinesOrNull } from '../../../../../misc/lines/lines-or-null.type';
 import { ILines } from '../../../../../misc/lines/lines.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
+import {
+  ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap
+} from '../../../../primary/transpilers/transpile-create-reactive-switch-node-to-js-lines.type';
 
 export interface IGenerateJSLinesForRXSwitchOptions extends IHavingPrimaryTranspilersOptions {
   expression: string;
-  childLines: ILines;
-  switchMapName: string;
-  switchDefaultName: string;
+  templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap;
+  defaultTemplate: ILinesOrNull;
 }
 
 export function generateJSLinesForRXSwitch(
   {
     expression,
-    childLines,
-    switchMapName,
-    switchDefaultName,
+    templatesMap,
+    defaultTemplate,
     transpilers,
   }: IGenerateJSLinesForRXSwitchOptions,
 ): ILines {
@@ -26,14 +28,11 @@ export function generateJSLinesForRXSwitch(
 
   return wrapLinesWithCurlyBrackets([
     `// reactive switch node`,
-    `const ${switchMapName} = new Map();`,  // INFO let and const are important, because they SCOPE and fix the variables
-    `let ${switchDefaultName} = null;`,
-    ...childLines,
     ...transpileAttachNodeToJSLines({
       node: transpileCreateReactiveSwitchNodeToJSLines({
         expression: transpileToObservableToJSLines({ value: [expression] }),
-        templates: [switchMapName],
-        defaultTemplate: [switchDefaultName],
+        templatesMap,
+        defaultTemplate,
       }),
       parentNode: ['parentNode'],
     }),

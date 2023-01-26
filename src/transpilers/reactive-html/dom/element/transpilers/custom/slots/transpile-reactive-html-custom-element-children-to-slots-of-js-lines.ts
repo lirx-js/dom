@@ -3,7 +3,7 @@ import { IHavingPrimaryTranspilersOptions } from '../../../../../primary/primary
 import {
   ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap,
 } from '../../../../../primary/transpilers/transpile-create-reactive-custom-element-node-to-js-lines.type';
-import { generateJSLinesForRXTemplate } from '../../../../rx-component/transpilers/rx-template/generate-js-lines-for-rx-template';
+import { generateJSLinesForRXTemplate } from '../../../../rx-component/transpilers/helpers/for-rx-template/generate-js-lines-for-rx-template';
 import { DEFAULT_SLOT_NAME_CONSTANT } from './default-slot-name.constant';
 import {
   transpileReactiveHTMLCustomElementChildElementToSlotsOfJSLines,

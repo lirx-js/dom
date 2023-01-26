@@ -1,20 +1,23 @@
-import { getElementTagName } from '../../../../../../../misc/dom/get-element-tag-name';
 import { throwIfHasChildNodes } from '../../../../../../../misc/dom/throw-if-has-child-nodes';
 import { createMissingAttributeError } from '../../../../../../misc/errors/create-missing-attribute-error';
+import { createMissingAttributeValueError } from '../../../../../../misc/errors/create-missing-attribute-value-error';
 import { createSwitchCaseAlreadyDefinedError } from '../../../../../../misc/errors/create-switch-case-already-defined-error';
-import { wrapLinesWithCurlyBrackets } from '../../../../../../misc/lines/functions/wrap-lines-with-curly-brackets';
 import { ILinesOrNull } from '../../../../../../misc/lines/lines-or-null.type';
-import { generateOptionalTemplateVariableName } from '../../../../../../misc/templates/generate-template-variable-name';
+import { ILines } from '../../../../../../misc/lines/lines.type';
+import { generateTemplateVariableName } from '../../../../../../misc/templates/generate-template-variable-name';
 import { IHavingPrimaryTranspilersOptions } from '../../../../../primary/primary-transpilers.type';
 import {
-  extractRXAttributesFromReactiveHTMLAttribute,
-
-} from '../../helpers/extract-rx-attributes-from-reactive-html-attribute';
+  ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap,
+} from '../../../../../primary/transpilers/transpile-create-reactive-switch-node-to-js-lines.type';
+import { extractRXAttributesFromReactiveHTMLAttribute } from '../../helpers/extract-attributes/extract-rx-attributes-from-reactive-html-attribute';
+import { IMappedAttributes } from '../../helpers/extract-attributes/mapped-attributes.type';
 import {
-  generateJSLinesForLocalTemplateFromRXContainerElement,
-} from '../../helpers/generate-js-lines-for-local-template-from-rx-container-element';
-import { IMappedAttributes } from '../../helpers/mapped-attributes.type';
-import { generateJSLinesForRXSwitchCase } from './generate-js-lines-for-rx-switch-case';
+  ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunction,
+  ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunctionOptions,
+  ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunction,
+  ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunctionOptions,
+  transpileReactiveHTMLRXChildTemplateToJSLines,
+} from '../../helpers/for-rx-template/transpile-reactive-html-rx-child-template-to-js-lines';
 
 const TAG_NAME: string = 'rx-switch-case';
 const COMMAND_NAME: string = '*switch-case';
@@ -22,7 +25,6 @@ const COMMAND_NAME: string = '*switch-case';
 const SWITCH_CASE_ATTRIBUTE_NAME: string = 'case';
 const TEMPLATE_ATTRIBUTE_NAME: string = 'template';
 
-const LOCAL_TEMPLATE_NAME: string = 'template';
 
 const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
   SWITCH_CASE_ATTRIBUTE_NAME,
@@ -31,63 +33,105 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 
 export interface ITranspileReactiveHTMLRXSwitchCaseToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
   node: Element;
-  switchMapName: string;
-  existingSwitchCaseValues: Set<string>;
+  templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap;
 }
 
 export function transpileReactiveHTMLRXSwitchCaseToJSLines(
-  {
-    node,
-    switchMapName,
-    existingSwitchCaseValues,
-    ...options
-  }: ITranspileReactiveHTMLRXSwitchCaseToJSLinesOptions,
+  options: ITranspileReactiveHTMLRXSwitchCaseToJSLinesOptions,
 ): ILinesOrNull {
-  const name: string = getElementTagName(node);
-  if (name === TAG_NAME) {
-    const attributes: IMappedAttributes = extractRXAttributesFromReactiveHTMLAttribute(node.attributes, ATTRIBUTE_NAMES);
-    const caseValue: string | undefined = attributes.get(SWITCH_CASE_ATTRIBUTE_NAME);
-    const template: string | undefined = attributes.get(TEMPLATE_ATTRIBUTE_NAME);
+  return transpileReactiveHTMLRXChildTemplateToJSLines({
+    ...options,
+    tagName: TAG_NAME,
+    commandName: COMMAND_NAME,
+    onTag: getOnTagFunctionForRXSwitchCase(options),
+    onCommand: getOnCommandFunctionForRXSwitchCase(options),
+  });
+}
 
-    // TODO if "template" is undefined, replace "template" with the rx-switch-case content
+/** FUNCTIONS **/
 
-    if (caseValue === void 0) {
+/* TEMPLATE */
+
+interface IGetOnTagFunctionForRXSwitchCaseOptions {
+  templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap;
+}
+
+function getOnTagFunctionForRXSwitchCase(
+  {
+    templatesMap,
+  }: IGetOnTagFunctionForRXSwitchCaseOptions,
+): ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunction {
+  return (
+    {
+      node,
+      generateTemplate,
+    }: ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunctionOptions,
+  ): ILinesOrNull => {
+    let caseValue!: string;
+    let template!: ILines;
+
+    const attributes: IMappedAttributes = extractRXAttributesFromReactiveHTMLAttribute(
+      node.attributes,
+      ATTRIBUTE_NAMES,
+    );
+
+    /* CASE VALUE */
+    const caseValueAttribute: string | undefined = attributes.get(SWITCH_CASE_ATTRIBUTE_NAME);
+
+    if (caseValueAttribute === void 0) {
       throw createMissingAttributeError(SWITCH_CASE_ATTRIBUTE_NAME, node);
+    } else {
+      caseValue = caseValueAttribute;
     }
 
-    if (existingSwitchCaseValues.has(caseValue)) {
+    /* TEMPLATE */
+    const templateAttribute: string | undefined = attributes.get(TEMPLATE_ATTRIBUTE_NAME);
+
+    if (templateAttribute === void 0) {
+      template = generateTemplate({
+        argumentsLines: null,
+      });
+    } else {
+      template = [generateTemplateVariableName(templateAttribute)];
+      throwIfHasChildNodes(node);
+    }
+
+    templatesMap.set(caseValue, template);
+
+    return template;
+  };
+}
+
+/* COMMAND */
+
+interface IGetOnCommandFunctionForRXSwitchCaseOptions {
+  templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap;
+}
+
+function getOnCommandFunctionForRXSwitchCase(
+  {
+    templatesMap,
+  }: IGetOnCommandFunctionForRXSwitchCaseOptions,
+): ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunction {
+  return (
+    {
+      node,
+      attributeValue: caseValue,
+      generateTemplate,
+    }: ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunctionOptions,
+  ): ILinesOrNull => {
+    if (caseValue === '') {
+      throw createMissingAttributeValueError(COMMAND_NAME, node);
+    } else if (templatesMap.has(caseValue)) {
       throw createSwitchCaseAlreadyDefinedError(caseValue, node.parentElement!);
     } else {
-      existingSwitchCaseValues.add(caseValue);
-    }
-
-    throwIfHasChildNodes(node);
-
-    return generateJSLinesForRXSwitchCase({
-      switchMapName,
-      caseValue,
-      template: generateOptionalTemplateVariableName(template),
-    });
-  } else if (node.hasAttribute(COMMAND_NAME)) {
-    const caseValue: string = node.getAttribute(COMMAND_NAME) as string;
-    node.removeAttribute(COMMAND_NAME);
-
-    return wrapLinesWithCurlyBrackets([
-      ...generateJSLinesForLocalTemplateFromRXContainerElement({
-        ...options,
-        node,
-        templateName: LOCAL_TEMPLATE_NAME,
+      const template: ILines = generateTemplate({
         argumentsLines: null,
-      }),
-      ...generateJSLinesForRXSwitchCase({
-        switchMapName,
-        caseValue,
-        template: LOCAL_TEMPLATE_NAME,
-      }),
-    ]);
-  } else {
-    return null;
-  }
+      });
+      templatesMap.set(caseValue, template);
+      return template;
+    }
+  };
 }
 
 

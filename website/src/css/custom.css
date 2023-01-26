@@ -55,7 +55,21 @@ article:not([itemprop="blogPost"]) img {
     /*padding: 10px 0;*/
 }
 
-
 /*[data-theme='dark'] .markdown img {*/
 /*    background-color: rgba(255, 255, 255, 0.6);*/
 /*}*/
+
+
+.docusaurus-mermaid-container {
+    text-align: center;
+    /*transform-origin: top center;*/
+    /*transform: scale(0.8);*/
+    font-size: 0;
+    margin-bottom: var(--ifm-leading, 20px);
+}
+
+.docusaurus-mermaid-container > svg {
+    /* https://gist.github.com/Nemo64/dce219b81695b177000c*/
+    zoom: 70%;
+}
+

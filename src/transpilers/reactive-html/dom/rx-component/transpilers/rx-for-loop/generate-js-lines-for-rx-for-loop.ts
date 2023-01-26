@@ -3,7 +3,7 @@ import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-tr
 
 export interface IGenerateJSLinesForRXForLoopOptions extends IHavingPrimaryTranspilersOptions {
   items: string;
-  template: string;
+  template: ILines;
   trackBy?: string | undefined;
 }
 
@@ -26,7 +26,7 @@ export function generateJSLinesForRXForLoop(
     ...transpileAttachNodeToJSLines({
       node: transpileCreateReactiveForLoopNodeToJSLines({
         items: transpileToObservableToJSLines({ value: [items] }),
-        template: [template],
+        template,
         trackBy: (trackBy === void 0)
           ? null
           : [trackBy],

@@ -10,20 +10,20 @@ import {
   ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap,
 } from '../../../../../primary/transpilers/transpile-create-reactive-custom-element-node-to-js-lines.type';
 import { transpileReactiveHTMLNodesToJSLines } from '../../../../nodes/transpile-reactive-html-nodes-to-js-lines';
-import { ILetProperty } from '../../../../rx-component/transpilers/helpers/extract-let-property-from-reactive-html-attribute';
+import { ILetProperty } from '../../../../rx-component/transpilers/helpers/extract-attributes/extract-let-property-from-reactive-html-attribute';
 import {
   extractRXAttributesAndLetPropertiesFromReactiveHTMLAttribute,
-} from '../../../../rx-component/transpilers/helpers/extract-rx-attributes-and-let-properties-from-reactive-html-attribute';
+} from '../../../../rx-component/transpilers/helpers/extract-attributes/extract-rx-attributes-and-let-properties-from-reactive-html-attribute';
 import {
   transpileReactiveHTMLRXInjectSlotChildNodesToLines,
 } from '../../../../rx-component/transpilers/rx-inject-slot/transpile-reactive-html-rx-inject-slot-child-nodes-to-lines';
 import {
   generateLetPropertyLinesForInjectTemplate,
-} from '../../../../rx-component/transpilers/rx-inject-template/generate-let-property-lines-for-inject-template';
-import { generateJSLinesForRXTemplate } from '../../../../rx-component/transpilers/rx-template/generate-js-lines-for-rx-template';
+} from '../../../../rx-component/transpilers/helpers/for-rx-template/let-properties/generate-let-property-lines-for-inject-template';
+import { generateJSLinesForRXTemplate } from '../../../../rx-component/transpilers/helpers/for-rx-template/generate-js-lines-for-rx-template';
 import {
   generateLetPropertyLinesForTemplate,
-} from '../../../../rx-component/transpilers/rx-template/generate-let-property-lines-for-template';
+} from '../../../../rx-component/transpilers/helpers/for-rx-template/let-properties/generate-let-property-lines-for-template';
 import { transpileReactiveHTMLElementToJSLines } from '../../../transpile-reactive-html-element-to-js-lines';
 import { DEFAULT_SLOT_NAME_CONSTANT } from './default-slot-name.constant';
 
@@ -183,6 +183,7 @@ function generateProxySlot(
     bodyLines: transpileReactiveHTMLRXInjectSlotChildNodesToLines({
       ...options,
       slotName: proxyName,
+      required: false, // TODO
       nodes: node.childNodes,
       letPropertiesLines: generateLetPropertyLinesForInjectTemplate(letPropertiesForChild, node),
     }),

@@ -4,8 +4,8 @@ import {
   empty,
   IMulticastReplayLastSource,
   IObservable,
+  shareObservableWithMulticastReplayLastSource,
   switchMapObservable,
-  shareObservable,
 } from '@lirx/core';
 import { nodeHasRootParentObservable } from './functions/node-has-root-parent-observable';
 
@@ -33,7 +33,8 @@ export abstract class VirtualNode {
   protected _firstChild: IVirtualNodeOrNull;
   protected _lastChild: IVirtualNodeOrNull;
 
-  protected readonly _isConnected$: IObservable<boolean>;
+  // protected readonly _isConnected$: IObservable<boolean>;
+  protected _isConnected$: IObservable<boolean> | undefined;
 
   protected constructor(
     {
@@ -44,13 +45,14 @@ export abstract class VirtualNode {
     this._isRoot = isRoot;
     this._isLeaf = isLeaf;
 
+    // INFO lazy loading this prop doesnt improve perfs
     this._$parentNode$ = createMulticastReplayLastSource<IVirtualNodeOrNull>(null);
     this._previousNode = null;
     this._nextNode = null;
     this._firstChild = null;
     this._lastChild = null;
 
-    this._isConnected$ = shareObservable(distinctObservable(nodeHasRootParentObservable(this)));
+    // this._isConnected$ = shareObservableWithMulticastReplayLastSource(distinctObservable(nodeHasRootParentObservable(this)));
   }
 
   /**
@@ -130,6 +132,9 @@ export abstract class VirtualNode {
    * This is useful to detect changes in the "connected state" of this node.
    */
   get isConnected$(): IObservable<boolean> {
+    if (this._isConnected$ === void 0) { // micro-optimization
+      this._isConnected$ = shareObservableWithMulticastReplayLastSource(distinctObservable(nodeHasRootParentObservable(this)));
+    }
     return this._isConnected$;
   }
 
@@ -140,7 +145,7 @@ export abstract class VirtualNode {
     observable: IObservable<GValue>,
   ): IObservable<GValue> {
     // or conditionalObservable
-    return switchMapObservable(this._isConnected$, (connected: boolean): IObservable<GValue> => {
+    return switchMapObservable(this.isConnected$, (connected: boolean): IObservable<GValue> => {
       return connected
         ? observable
         : empty<GValue>();
@@ -290,6 +295,7 @@ export abstract class VirtualNode {
       this._previousNode = null;
       this._nextNode = null;
       this._$parentNode$.emit(null);
+
       return true;
     }
   }

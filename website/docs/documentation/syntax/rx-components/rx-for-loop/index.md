@@ -90,7 +90,9 @@ Output:
 </tag-name>
 ```
 
-Which is equivalent to:
+
+<details>
+  <summary>Which is equivalent to</summary>
 
 ```html
 
@@ -113,4 +115,5 @@ Which is equivalent to:
 ></rx-for-loop>
 ```
 
+</details>
 

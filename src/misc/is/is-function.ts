@@ -1,4 +1,4 @@
-import { IGenericFunction } from '@lirx/core';
+import { IGenericFunction } from '@lirx/utils';
 
 export function isFunction(
   value: unknown,

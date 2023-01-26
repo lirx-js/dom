@@ -36,11 +36,9 @@ It has the following attributes:
 - `true`: the name of the template to inject if `condition` emitted *true*
 - `false`: the name of the template to inject if `condition` emitted *false*
 
-:::note
-
 You may omit one of the template.
-
-:::
+In this case, if the value matches the omitted template, the previous child nodes are removed and not replaced.
+So it will result in nothing displayed, until the value changes for the other template.
 
 It's converted to something similar to this:
 
@@ -86,7 +84,8 @@ Output:
 </tag-mame>
 ```
 
-Which is equivalent to:
+<details>
+  <summary>Which is equivalent to</summary>
 
 ```html
 
@@ -106,7 +105,9 @@ Which is equivalent to:
 ></rx-if>
 ```
 
-##### Using rx-true and rx-false
+</details>
+
+##### Using rx-true and rx-false with in-place template
 
 ```html
 <rx-if

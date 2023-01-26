@@ -83,8 +83,8 @@ We'll start by editing the file `todo-list-item.component.html`:
 ```
 
 Every template receives a local `$` variable.
-This variable contains the data used by the template and is reflected on the DOM.
-We'll see later that its content is defined in ito the `.ts` file (here `todo-list-item.component.ts`).
+This variable contains the data used by the template, and they will be reflected on the DOM.
+We'll see later that the content of `$` is defined into the `.ts` file (here `todo-list-item.component.ts`).
 
 The first block creates a &lt;div&gt; those content is a Text node updated each time `$.message$` changes.
 Such a node is created by putting an Observable in double curly brackets, `{{}}` ([documentation](/docs/documentation/syntax/reactive-text/)).
@@ -179,7 +179,7 @@ import style from './todo-list-item.component.scss?inline';
 ```
 
 
-Using [vitejs](https://vitejs.dev/guide/assets.html#importing-asset-as-string) or the [aot compiler](https://todo.com/),
+Using [vitejs](https://vitejs.dev/guide/assets.html#importing-asset-as-string) or the [aot compiler](/docs/documentation/aot-compiler/),
 we may import various file contents using the esm syntax.
 
 #### Define the component's configuration
@@ -193,10 +193,10 @@ interface IData {
 }
 ```
 
-Let's remember that our template requires a `$.message$` variable to be displayed in the `.message` &lt;div&gt;.
+Let's remember that our template requires a `$.message$` variable, displayed in a &lt;div&gt;.
 In consequence, we'll have to provide an `Observable<string>` to fill this content.
 
-On the other hand, we want to intercept the user's clicks on the remove button.
+Furthermore, we want to intercept the user's clicks on the remove button.
 So we'll use the Observer `$.$onClickRemoveButton` for this usage.
 
 The next step consists of defining the configuration of the component itself:
@@ -206,10 +206,10 @@ interface ITodoListItemComponentConfig {
   element: HTMLElement;
   inputs: [
     ['message', string],
-  ],
+  ];
   outputs: [
     ['remove', void],
-  ],
+  ];
   data: IData;
 }
 ```
@@ -226,7 +226,7 @@ We could have written `element: HTMLButtonElement` if we wanted to extend a butt
 ```ts
 inputs: [
   ['message', string],
-],
+];
 ```
 
 The component accepts one input of type `string`, called "*message*".
@@ -236,14 +236,14 @@ In our example, the parent component will set this property, and it will be disp
 ```ts
 outputs: [
   ['remove', void],
-],
+];
 ```
 
 As an output, we have "*remove*". It may be seen as an Event dispatched and listened by EventListeners like `onclick`, `onkeydown`, etc.
 In our example, the parent component will receive this event when the user clicks on the remove button.
 
 ```ts
-data: IData
+data: IData;
 ```
 
 Finally, in the component's interface, we have to set the data type required by its template.
@@ -256,7 +256,8 @@ Finally, in the component's interface, we have to set the data type required by 
 
 #### Create the component
 
-To create a component, we'll use the function [createComponent](/docs/reference/create-component/), with a configuration's object:
+To create a component, we'll use the function [createComponent](/docs/reference/create-component/), with a configuration's object,
+matching our previously defined interface:
 
 ```ts
 export const TodoListItemComponent = createComponent<ITodoListItemComponentConfig>({
@@ -332,7 +333,7 @@ Finally, we have the `init` function.
 This is where we'll define the interactions, the data, the pipelines, etc.
 In short: control everything that appends in the component.
 
-This init function is called when the component is instanced, and
+This *init* function is called when the component is instanced, and
 receives a single argument: `node: VirtualCustomElementNode`.
 This is a representation of the node in the DOM.
 It has some useful methods and properties to: bind Observables with this node, listen to events, subscribes to inputs, dispatch outputs, etc.
@@ -366,9 +367,11 @@ import TodoListItem from './_todo-list-item.mdx';
 
 ## The todo-list component
 
-Alright, we've created a really simple component that simply displays its input and sends an "event" as output.
-Now, we'll create the component which creates and displays many `todo-list-item` when the user enters a new message.
-We'll call it `todo-list`:
+Alright, we've created our first component displaying a "*message*" provided as input and sending a "*remove*" event as output.
+Now, we'll create the component initializing and managing many `todo-list-item`, and call it `todo-list`.
+
+When the user enters a new message, it will append a new `todo-list-item` to a list, and when the user clicks on the "remove" button,
+this item will be removed from this list.
 
 ![](./assets/todo-list-component.png)
 
@@ -438,17 +441,17 @@ The next step - the input itself:
 `[value]="$.inputValue$"`: subscribes to the Observable `$.inputValue$`, and assigns the received values to the &lt;input&gt;'s property `value` -> `input.value = ...`
 ([documentation](/docs/documentation/syntax/attributes/bind/reactive-property/)).
 
-In the `.ts` file, we have to define [a Source using let$$](https://core.lirx.org/docs/documentation/getting-started/what-is-a-source/#let), containing this value:
+In the `.ts` file, we have to define [a Source using let$$](https://core.lirx.org/docs/reference/let/), containing this value:
 
 ```ts
 const [$inputValue, inputValue$, getInputValue] = let$$<string>('');
 ```
 
-Now, if we sent a value though `$inputValue` (ex: `$inputValue('some content')`), then, the input will immediately take this value.
+Now, if we sent a value though `$inputValue` (ex: `$inputValue('some content')`), then, the input will immediately reflect this value.
 
 `(input)="$.$onInput"`: you probably guess what it does 😉. It subscribes to the "*input*" event, and sends them to the Observer `$.$onInput`.
 
-To create this Observer, we have to convert the incoming "*input*" events into the own value of the input (using `$$map`).
+To create this Observer, we have to convert the incoming "*input*" events into the actual value of the input (using `$$map`).
 And then, assign these values to the Observer `$inputValue`.
 
 ```ts
@@ -495,9 +498,9 @@ As you may notice, we're only using **readonly** arrays and readonly properties.
 Let me explain why:
 
 > Observables are streams of data.
-So mutating the data itself (like an object's property or the content of an array), won't send a new value to the Observable,
-meaning no DOM updates.
-Instead, we have to use immutable values, and send new references when a change occurs (or as default, send the mutated value itself).
+So mutating the data itself (like the property of an object or the content of an array), won't emit a new value into the corresponding Observable.
+In our case, it means "*no DOM updates*".
+Instead, we have to use immutable values, and send new references when a change occurs.
 
 In consequence, to add a new item in the list, we'll write:
 
@@ -513,6 +516,17 @@ const addItem = (
   ]);
 };
 ```
+
+:::note
+
+If you feel concerned about immutability performances, you'll have to know that modern javascript engines (ex: V8)
+optimize such patterns, with performances often close a "classic" mutation.
+In consequence, most of the time, it should not be an issue.
+
+Yet, if you still prefer to mutate to original data instead of creating a new reference, you may perfectly do it:
+**as long as you re-emit** the reference into the Observable.
+
+:::
 
 `$[message]="item.message"`: this line sets `item.message` as the value of the '*message*' input of the component `app-todo-list-item` ([documentation](/docs/documentation/syntax/attributes/bind/reactive-input/)).
 Instead of a static value, we could have used an Observable.
@@ -566,16 +580,14 @@ A little more patience, we're almost done 😌.
 We have all the required components, so the last step is to "*start*" our application.
 To do this, we'll use the function [bootstrap](/docs/reference/bootstrap/):
 
-```ts file="main.ts"
+```ts title="main.ts"
 import { bootstrap } from '@lirx/dom';
 import { TodoList } from './todo-list/todo-list.component';
 
-window.onload = () => {
-  bootstrap(TodoList);
-};
+bootstrap(TodoList);
 ```
 
-Its simply takes as input the "root" component of our application and injects it on the DOM, starting our application.
+It simply takes as input the "root" component of our application and injects it into the DOM, starting our application.
 
 And voilà ! The application is ready to be used.
 

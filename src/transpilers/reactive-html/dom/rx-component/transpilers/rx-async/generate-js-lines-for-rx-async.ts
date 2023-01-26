@@ -3,9 +3,9 @@ import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-tr
 
 export interface IGenerateJSLinesForRXAsyncOptions extends IHavingPrimaryTranspilersOptions {
   expression: string;
-  templatePending: string;
-  templateFulfilled: string;
-  templateRejected: string;
+  templatePending: ILines;
+  templateFulfilled: ILines;
+  templateRejected: ILines;
 }
 
 export function generateJSLinesForRXAsync(
@@ -28,9 +28,9 @@ export function generateJSLinesForRXAsync(
     ...transpileAttachNodeToJSLines({
       node: transpileCreateReactiveAsyncNodeToJSLines({
         expression: transpileToObservableToJSLines({ value: [expression] }),
-        templatePending: [templatePending],
-        templateFulfilled: [templateFulfilled],
-        templateRejected: [templateRejected],
+        templatePending,
+        templateFulfilled,
+        templateRejected,
       }),
       parentNode: ['parentNode'],
     }),

@@ -16,6 +16,12 @@ It's converted to something similar to this:
 node.setReactiveInput('name', observable$);
 ```
 
+#### Definition of a component's input
+
+A *component's input* is a special property, used to provide some input data from a parent component to a child component.
+We may think, for example, of a `app-progress` component, requiring a `progress` input (of type: `number`), to display a proportional progress bar.
+
+
 #### Creating an input
 
 Into the component file (`.ts`), the input may be defined like this:
@@ -42,6 +48,12 @@ export const MyComponent = createComponent<IMyComponentConfig>({
   },
 });
 ```
+
+:::note
+
+A component may have many inputs, with different types and optional default values.
+
+:::
 
 ---
 

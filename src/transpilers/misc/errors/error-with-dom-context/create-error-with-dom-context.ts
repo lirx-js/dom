@@ -1,4 +1,4 @@
-import { createCustomError } from '@lirx/core';
+import { createCustomError } from '@lirx/utils';
 import { linesToString } from '../../lines/functions/lines-to-string';
 import { ILines } from '../../lines/lines.type';
 import { ERROR_WITH_DOM_CONTEXT_NAME, IErrorWithDOMContextName } from './error-with-dom-context-name.constant';

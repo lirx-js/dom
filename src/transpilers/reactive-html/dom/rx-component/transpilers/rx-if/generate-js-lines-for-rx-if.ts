@@ -3,8 +3,8 @@ import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-tr
 
 export interface IGenerateJSLinesForRXIfOptions extends IHavingPrimaryTranspilersOptions {
   condition: string;
-  templateTrue: string;
-  templateFalse: string;
+  templateTrue: ILines;
+  templateFalse: ILines;
 }
 
 export function generateJSLinesForRXIf(
@@ -26,8 +26,8 @@ export function generateJSLinesForRXIf(
     ...transpileAttachNodeToJSLines({
       node: transpileCreateReactiveIfNodeToJSLines({
         condition: transpileToObservableToJSLines({ value: [condition] }),
-        templateTrue: [templateTrue],
-        templateFalse: [templateFalse],
+        templateTrue,
+        templateFalse,
       }),
       parentNode: ['parentNode'],
     }),

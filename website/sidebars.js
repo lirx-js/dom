@@ -37,21 +37,31 @@ const sidebars = {
           label: 'Introduction',
           id: 'documentation/component/component/index',
         },
-        // {
-        //   type: 'doc',
-        //   label: 'Inputs / Outputs',
-        //   id: 'documentation/component/inputs-outputs/index',
-        // },
         {
           type: 'link',
           label: 'Styling',
           href: '/docs/documentation/component/component/#style',
         },
         {
+          type: 'doc',
+          label: 'Lifecycle',
+          id: 'documentation/component/lifecycle/index',
+        },
+        {
+          type: 'link',
+          label: 'Inputs',
+          href: '/docs/documentation/syntax/attributes/bind/reactive-input/',
+        },
+        {
+          type: 'link',
+          label: 'Outputs',
+          href: '/docs/documentation/syntax/attributes/event/reactive-output/',
+        },
+        {
           type: 'link',
           label: 'Slots',
           href: '/docs/documentation/syntax/custom-element/#slotting---ak-provide-templates-to-our-components',
-        }
+        },
       ],
     },
     {
@@ -120,6 +130,60 @@ const sidebars = {
       ],
     },
     {
+      type: 'link',
+      label: 'Examples',
+      href: 'https://github.com/lirx-js/dom-examples',
+    },
+    {
+      type: 'doc',
+      label: 'AOT compiler',
+      id: 'documentation/aot-compiler/index',
+    },
+    // {
+    //   type: 'category',
+    //   label: 'Router',
+    //   link: {
+    //     type: 'doc',
+    //     id: 'documentation/router/index',
+    //   },
+    //   items: [
+    //     // TODO
+    //     'documentation/syntax/attributes/bind/reactive-class/index',
+    //   ],
+    // },
+    // {
+    //   type: 'category',
+    //   label: 'CLI',
+    //   link: {
+    //     type: 'doc',
+    //     id: 'documentation/cli/index',
+    //   },
+    //   items: [
+    //     // TODO
+    //     'documentation/syntax/attributes/bind/reactive-class/index',
+    //   ],
+    // },
+    // {
+    //   type: 'category',
+    //   label: 'Material UI',
+    //   link: {
+    //     type: 'doc',
+    //     id: 'documentation/material/index',
+    //   },
+    //   items: [
+    //     {
+    //       type: 'doc',
+    //       label: 'UI',
+    //       id: 'documentation/material/ui',
+    //     },
+    //     {
+    //       type: 'doc',
+    //       label: 'Icons',
+    //       id: 'documentation/material/icons',
+    //     }
+    //   ],
+    // },
+    {
       type: 'category',
       label: 'Comparison',
       items: [
@@ -127,6 +191,11 @@ const sidebars = {
           type: 'doc',
           label: 'React',
           id: 'documentation/comparison/react/index',
+        },
+        {
+          type: 'doc',
+          label: 'Angular',
+          id: 'documentation/comparison/angular/index',
         },
       ],
     },

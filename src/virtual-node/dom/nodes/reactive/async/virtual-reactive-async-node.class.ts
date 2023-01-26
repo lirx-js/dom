@@ -60,6 +60,15 @@ export type IVirtualReactiveAsyncNodePendingTemplate = IVirtualReactiveDOMNodeTe
 export type IVirtualReactiveAsyncNodeFulfilledTemplate<GValue> = IVirtualReactiveDOMNodeTemplate<{ value: GValue }>;
 export type IVirtualReactiveAsyncNodeRejectedTemplate<GValue> = IVirtualReactiveDOMNodeTemplate<{ value: unknown }>;
 
+/**
+ * Represents an abstract Container Node in an abstract DOM,
+ * whose content depends on the values sent by the Observable "value$".
+ * Until a value is received, the template "templatePending" is used.
+ * When a 'next' Notification followed by a 'complete' one is received, then "templateFulfilled" is used,
+ * else an 'error' Notification is received, the "templateRejected" is used.
+ * This is used as a conditionally displayed Node, depending on the state of a Notification Observable.
+ * Usually, it helps to display async data with a loading step.
+ */
 export class VirtualReactiveAsyncNode<GValue> extends VirtualContainerNode {
   constructor(
     value$: IObservable<IDefaultNotificationsUnion<GValue>>,

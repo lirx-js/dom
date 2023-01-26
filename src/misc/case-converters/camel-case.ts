@@ -1,7 +1,7 @@
+
 /**
  * Every word starts with an uppercase except for the first one.
  */
-
 export function isCamelCase(
   input: string,
 ): boolean {

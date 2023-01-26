@@ -1,6 +1,7 @@
 import { inlineLastLines } from '../../../../misc/lines/functions/after-last-line';
 import { indentLines } from '../../../../misc/lines/functions/indent-lines';
 import { ILines } from '../../../../misc/lines/lines.type';
+import { generateJSLinesForLinesMap } from '../../../../misc/misc/generate-js-lines-for-lines-map';
 import {
   ITranspileCreateReactiveSwitchNodeToJSLinesFunction,
   ITranspileCreateReactiveSwitchNodeToJSLinesOptions,
@@ -9,7 +10,7 @@ import {
 export const transpileCreateReactiveSwitchNodeToJSLines: ITranspileCreateReactiveSwitchNodeToJSLinesFunction = (
   {
     expression,
-    templates,
+    templatesMap,
     defaultTemplate,
   }: ITranspileCreateReactiveSwitchNodeToJSLinesOptions,
 ): ILines => {
@@ -21,11 +22,13 @@ export const transpileCreateReactiveSwitchNodeToJSLines: ITranspileCreateReactiv
         [','],
       ),
       ...inlineLastLines(
-        templates,
+        generateJSLinesForLinesMap({
+          linesMap: templatesMap,
+        }),
         [','],
       ),
       ...(
-        (defaultTemplate === null)
+        ((defaultTemplate === null) || (defaultTemplate.length === 0))
           ? []
           : inlineLastLines(
             defaultTemplate,

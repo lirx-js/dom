@@ -38,7 +38,7 @@ export function transpileReactiveHTMLReactiveTextToJSLines(
 
     lines.push(...generateJSLinesForReactiveTextNode({
       ...options,
-      value: match[1].trim(),
+      value: [match[1].trim()],
     }));
 
     index = match.index + match[0].length;

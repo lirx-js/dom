@@ -10,8 +10,9 @@
 </rx-template>
 ```
 
-A template is a portion of html that can be re-used later. 
-It is usually provided to other `rx-` components to generate repetitive or conditional parts of the application.
+A template is a **portion of html that can be re-used later**.
+This is a really important block and concept of this library,
+as it is usually provided to other `rx-` components to generate repetitive or conditional parts of the application.
 
 To create such a template, use `rx-template`.
 
@@ -23,7 +24,7 @@ It has the following attributes:
 It's converted to something similar to this:
 
 ```ts
-const templateReference = (
+const template_templateReference = (
   parentNode: VirtualDOMNode,
   {
     var1,
@@ -34,6 +35,13 @@ const templateReference = (
   return content.attach(parentNode);
 };
 ```
+
+:::note
+
+Usually, you won't have to create directly a template, as the other `rx-` components already have a way to declare such templates directly as child elements or commands.
+However, in some cases it may be useful if you prefer to provide your templates with names.
+
+:::
 
 :::info
 

@@ -37,5 +37,5 @@ You set the state, and then, the DOM is updated. Well, `@lirx/dom` uses a simila
 
 If you are an angular developer, you've probably already played with the Observables through the library: [RxJS](https://rxjs.dev/).
 Typically, you'll use them, when you have to perform an HTTP request, send an event (`@Output` and `EventEmitter`), or use the `async` pipe.
-Well, `@lirx/core` too is a Reactive Programing framework with similar functions, but far faster.
+Well, `@lirx/core` too is a Reactive Programming framework with similar functions, but far faster.
 

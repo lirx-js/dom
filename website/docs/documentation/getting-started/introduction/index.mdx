@@ -2,6 +2,7 @@
 
 🎨 **@lirx/dom** is an **application design framework** for the Web.
 It has been created to build **very large and robust** web applications, with unbeatable performances.
+Its main goal is to create the **perfect [SPA](https://en.wikipedia.org/wiki/Single-page_application)**.
 
 🧩 You can create and assemble **millions of components** easily.
 It closely follows the [MVC](https://developer.mozilla.org/en-US/docs/Glossary/MVC) pattern, with a strict separation between HTML, CSS, and JS files.
@@ -21,7 +22,7 @@ Code in a more predictable way with clear data workflows, avoiding bugs, errors 
 `@lirx/dom` gives you many tools to **write and build dynamic html templates** and **components** with an elegant syntax.
 Due to its unique architecture based purely on Observables, it strongly outperforms Angular, as well as JSX based frameworks (like React).
 
-Moreover, it comes with an [AOT plugin for rollup](https://github.com/lirx-js/dom-aot-plugin),
+Moreover, it comes with an [AOT plugin for rollup](/docs/documentation/aot-compiler/),
 a must-have, optimizing the components to generate small bundles, and fast applications.
 
 > It's light, fast, and simple ! Give it a try !
@@ -32,6 +33,10 @@ import Example from './_example.mdx';
 
 <Example/>
 
+As you may notice, **this framework has similarities with Angular**.
+This is done on purpose, as we want to attract developers, without the necessity to learn a completely new language.
+So, if you're already an Angular developer, you may be interested: this framework brings incredible performances, with a template and style close to Angular.
+
 ### Purpose of this framework
 
 `@lirx/dom` tries to conciliate the best ideas, coming from different web frameworks, to create the fastest and lightest one.
@@ -39,30 +44,31 @@ import Example from './_example.mdx';
 To achieve its goals, it compiles the HTML templates into native javascript with direct DOM manipulation.
 This way, it doesn't have to use an internal *differ* algorithm on the properties of the components (Angular),
 nor iterates over a Virtual DOM and compare the resulting objects (JSX frameworks).
+The output is **pure Javascript**, and this approach permits operations executing **as close as if it was written natively**.
 
 With `@lirx/dom`, and due to its Observable based nature, **only the absolutely essential and minimal javascript is executed**;
 with just the relevant nodes refreshed and nothing else. Thus, the DOM is updated with the precision of a surgeon,
-and the same performances as if it was written natively.
+resulting in insane performances.
 
 > 🤨 Another framework for web-apps ? Isn't it redundant ?
 
 You're partially right.
 
-`@lirx/dom` is done for perfectionists: using Observables **constraint you to work with Reactive Programming**,
+`@lirx/dom` is done for perfectionists: using Observables **introduce you to a new paradigm called Reactive Programming**,
 which is a totally different manner of thinking your code.
 It's usually complex and discouraging for beginners.
 But coding in RP garanties robust and fast applications.
-Observables are very impressive and bring **incredible possibilities**, they just require time to be adopted.
+Observables are very impressive and bring **incredible possibilities**, they just require time to be adopted and mastered.
 
-Another keypoint of `@lirx/dom` is its performances as seen earlier.
+In another hand, `@lirx/dom` strongly focuses on the performances of your applications.
 The most popular frameworks are very intuitive, but this simplicity has a cost in execution time and bundle size.
 This cost is usually ignored because our machines are fast enough for most cases.
-And let's be honest: developers are lazy and/or constrained with deadlines.
-Non optimized code is common and frequent.
+However, for very large applications, it becomes non-negligible, and may be a bottleneck. This library was created to handle such use-cases.
 
-So:
+As a conclusion:
 
-> If you don't really care about performances, you're not the target of this framework.
+> If you're not focused on performances, or doesn't aim for a large and robust application with a powerful architecture,
+you're probably not the target of this framework.
 
-However, if you care, it may be worth experimenting with it.
+However, if you care and are an adventurer and perfectionist like me, it may be worth experimenting with it.
 

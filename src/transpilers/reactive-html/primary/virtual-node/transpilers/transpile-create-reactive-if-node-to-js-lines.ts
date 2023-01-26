@@ -21,10 +21,12 @@ export const transpileCreateReactiveIfNodeToJSLines: ITranspileCreateReactiveIfN
         [','],
       ),
       ...inlineLastLines(
+        // (templateTrue === null) ? ['null'] : templateTrue,
         templateTrue,
         [','],
       ),
       ...inlineLastLines(
+        // (templateFalse === null) ? ['null'] : templateFalse,
         templateFalse,
         [','],
       ),

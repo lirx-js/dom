@@ -1,9 +1,7 @@
 # rx-switch
 
 ```html
-<rx-switch
-  expression="observable$"
->
+<rx-switch expression="observable$">
   <rx-switch-case
     case="valueA"
     template="templateReferenceA"
@@ -34,14 +32,16 @@ Short syntax:
 </rx-switch>
 ```
 
-Creates a virtual Node which:
+This is used to display **conditionally** an element or a node, **switching** on a specific value.
+
+Under the hoods, it creates a virtual Node which:
 
 - subscribes to `observable$`
 - and injects `templateReferenceA`, `templateReferenceB` or `templateReferenceC` according to the received value
 
 :::note
 
-The previously injected template is removed.
+The previously injected template is always removed from the DOM before the new one is appended.
 
 :::
 
@@ -95,14 +95,16 @@ Output:
 </div>
 ```
 
+---
+
+**[Example file](https://github.com/lirx-js/dom-examples/tree/main/src/syntax/rx-switch/component/rx-switch-example.component.ts)**
+
 ### Alternative syntaxes
 
-##### Using *switch-case and *switch-default
+##### Using \*switch-case and \*switch-default
 
 ```html
-<rx-switch
-  expression="observable$"
->
+<rx-switch expression="observable$">
   <tag-name-a
     *switch-case="valueA"
     ...otherAttributesA
@@ -124,7 +126,8 @@ Output:
 </rx-switch>
 ```
 
-Which is equivalent to:
+<details>
+  <summary>Which is equivalent to</summary>
 
 ```html
 <rx-template
@@ -174,3 +177,21 @@ Which is equivalent to:
 </rx-switch>
 ```
 
+</details>
+
+
+##### Using rx-switch-case and rx-switch-default with in-place template
+
+```html
+<rx-switch expression="observable$">
+  <rx-switch-case case="valueA">
+    ...contentA
+  </rx-switch-case>
+  <rx-switch-case case="valueB">
+    ...contentB
+  </rx-switch-case>
+  <rx-switch-default>
+    ...contentC
+  </rx-switch-default>
+</rx-switch>
+```

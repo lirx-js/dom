@@ -15,8 +15,15 @@ import { differStylePropertiesMap } from './style/differ-style-map';
 import { IStylePropertiesMap } from './style/style-properties-map.type';
 import { IStylePropertyAndValueTuple } from './style/style-property-and-value-tuple';
 
+
+/**
+ * Represents an abstract Element in an abstract DOM, having "dynamic" properties (based on Observables).
+ */
 export class VirtualReactiveElementNode<GElementNode extends Element> extends VirtualElementNode<GElementNode> {
 
+  /**
+   * Creates an HTML VirtualReactiveElementNode
+   */
   static createHTML<GKey extends keyof HTMLElementTagNameMap>(
     name: GKey,
     options?: ElementCreationOptions,
@@ -36,6 +43,9 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
     );
   }
 
+  /**
+   * Creates a SVG VirtualReactiveElementNode
+   */
   static createSVG<GKey extends keyof SVGElementTagNameMap>(
     name: GKey,
     options?: ElementCreationOptions,
@@ -55,6 +65,9 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
     );
   }
 
+  /**
+   * Creates a MathML VirtualReactiveElementNode
+   */
   static createMathML<GElementNode extends Element>(
     name: string,
     options?: ElementCreationOptions,
@@ -68,6 +81,9 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
 
   /* EVENT LISTENER */
 
+  /**
+   * Creates an EventListener of type "type" on the element of this node, represented as an Observable.
+   */
   on$<GEvent extends Event>(
     type: string,
     options?: boolean | AddEventListenerOptions,
@@ -81,6 +97,9 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
 
   /* PROPERTY */
 
+  /**
+   * Subscribes to "value$", and sets the property "propertyKey" of the element of this node, with the incoming values.
+   */
   setReactiveProperty<GPropertyKey extends string>(
     propertyKey: GPropertyKey,
     value$: IObservable<ISetCaseInsensitivePropertyValue<GElementNode, GPropertyKey>>,
@@ -101,6 +120,9 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
 
   /* ATTRIBUTE */
 
+  /**
+   * Subscribes to "value$", and sets the attribute "name" of the element of this node, with the incoming values.
+   */
   setReactiveAttribute(
     name: string,
     value$: IObservable<IAttributeValue>,
@@ -112,6 +134,9 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
 
   /* CLASS */
 
+  /**
+   * Subscribes to "enabled$", and sets the css class "name" of the element of this node, with the incoming values.
+   */
   setReactiveClass(
     name: string,
     enabled$: IObservable<boolean>,
@@ -121,6 +146,9 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
     });
   }
 
+  /**
+   * Subscribes to "classNamesList$", and sets the css classes of the element of this node, with the incoming values.
+   */
   setReactiveClassNamesList(
     classNamesList$: IObservable<IClassNamesList>,
   ): IUnsubscribe {
@@ -145,6 +173,9 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
 
   /* STYLE */
 
+  /**
+   * Subscribes to "enabled$", and sets the style property "name" of the element of this node, with the incoming values.
+   */
   setReactiveStyleProperty(
     name: string,
     styleProperty$: IObservable<ISetStylePropertyOrStringOrNull>,
@@ -154,6 +185,9 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
     });
   }
 
+  /**
+   * Subscribes to "stylePropertiesMap$", and sets the style properties of the element of this node, with the incoming values.
+   */
   setReactiveStylePropertiesMap(
     stylePropertiesMap$: IObservable<IStylePropertiesMap>,
   ): IUnsubscribe {

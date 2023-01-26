@@ -33,7 +33,9 @@ function HomepageHeader() {
         <p className="hero__subtitle">{siteConfig.tagline}</p>
 
         <div className={clsx(styles.heroBannerMessage)}>
-          Compose asynchronous data streams like a breeze, create complex data flow, and unleash the full potential of Reactive Programming.
+          LiRX/dom is a high-performance, reactive system, capable of batching DOM updates in a way that leaves other frameworks, and their virtual DOMs, in the dust.
+          Experience consistent, scalable performance, no matter how complex your UI.
+          {/*Create fast and optimized web applications that scale !*/}
         </div>
 
         <div className={styles.heroBannerButtons}>
@@ -43,7 +45,6 @@ function HomepageHeader() {
           >
             Get started !
           </Link>
-
         </div>
       </div>
     </header>

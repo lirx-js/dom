@@ -8,3 +8,4 @@ export * from './string-to-lines';
 export * from './wrap-lines-with-brackets';
 export * from './wrap-lines-with-curly-brackets';
 export * from './wrap-lines-with-round-brackets';
+export * from './wrap-lines-with-square-brackets';

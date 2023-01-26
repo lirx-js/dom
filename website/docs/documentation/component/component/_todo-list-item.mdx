@@ -1,0 +1,104 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="html" label="HTML" default>
+
+```html title="todo-list-item/todo-list-item.component.html"
+<div class="message">
+  {{ $.message$ }}
+</div>
+<button
+  class="remove-button"
+  (click)="$.$onClickRemoveButton"
+>
+  Remove
+</button>
+```
+
+  </TabItem>
+
+  <TabItem value="scss" label="SCSS">
+
+```scss title="todo-list-item/todo-list-item.component.scss"
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #e1e1e1;
+  background-color: #fafafa;
+
+  & > .remove-button {
+    padding: 0 10px;
+    background-color: #ff6060;
+    border-radius: 4px;
+    border: 0;
+    text-transform: uppercase;
+    line-height: 30px;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+```
+
+  </TabItem>
+
+  <TabItem value="ts" label="TS">
+
+```ts title="todo-list-item/todo-list-item.component.ts"
+import { IObservable, IObserver } from '@lirx/core';
+import { compileReactiveHTMLAsComponentTemplate, compileStyleAsComponentStyle, createComponent, VirtualCustomElementNode } from '@lirx/dom';
+
+// @ts-ignore
+import html from './todo-list-item.component.html?raw';
+// @ts-ignore
+import style from './todo-list-item.component.scss?inline';
+
+/**
+ * COMPONENT: 'app-todo-list-item'
+ **/
+
+interface IData {
+  readonly message$: IObservable<string>;
+  readonly $onClickRemoveButton: IObserver<any>;
+}
+
+interface ITodoListItemComponentConfig {
+  element: HTMLElement;
+  inputs: [
+    ['message', string],
+  ];
+  outputs: [
+    ['remove', void],
+  ];
+  data: IData;
+}
+
+export const TodoListItemComponent = createComponent<ITodoListItemComponentConfig>({
+  name: 'app-todo-list-item',
+  template: compileReactiveHTMLAsComponentTemplate({ html }),
+  styles: [compileStyleAsComponentStyle(style)],
+  inputs: [
+    ['message'],
+  ],
+  outputs: [
+    'remove',
+  ],
+  init: (node: VirtualCustomElementNode<ITodoListItemComponentConfig>): IData => {
+    const message$ = node.inputs.get$('message');
+    const $onClickRemoveButton = node.outputs.$set('remove');
+
+    return {
+      message$,
+      $onClickRemoveButton,
+    };
+  },
+});
+```
+
+  </TabItem>
+
+</Tabs>

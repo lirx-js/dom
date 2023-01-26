@@ -1,4 +1,6 @@
+export * from './transpile-apply-node-modifier-to-js-lines.type';
 export * from './transpile-attach-node-to-js-lines.type';
+export * from './transpile-create-reactive-async-node-to-js-lines.type';
 export * from './transpile-create-reactive-custom-element-node-to-js-lines.type';
 export * from './transpile-create-reactive-element-node-to-js-lines.type';
 export * from './transpile-create-reactive-for-loop-node-to-js-lines.type';

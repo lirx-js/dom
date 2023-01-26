@@ -1,13 +1,20 @@
-import { patchQuerySelectorScope } from './patch-query-selector-scope';
-import { querySelectorIteratorWithoutScope } from './query-selector-iterator-without-scope';
+import { elementMatches } from './element-matches';
 
-export function querySelectorIterator<GElement extends Element>(
+/**
+ * Creates an iterator, returning the child elements of "parentNode" matching "selector"
+ * Similar to parentNode.querySelectorAll
+ */
+export function* querySelectorIterator<GElement extends Element>(
   parentNode: Node,
   selector: string,
 ): Generator<GElement> {
-  return patchQuerySelectorScope<GElement>(
-    parentNode,
-    selector,
-    querySelectorIteratorWithoutScope,
-  );
+  if (parentNode.firstChild !== null) {
+    const treeWalker: TreeWalker = document.createTreeWalker(parentNode, NodeFilter.SHOW_ELEMENT);
+    let node: Element | null;
+    while (node = treeWalker.nextNode() as Element | null) {
+      if (elementMatches(node, selector, { scope: parentNode })) {
+        yield node as GElement;
+      }
+    }
+  }
 }

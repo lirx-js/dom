@@ -2,7 +2,7 @@ import { ILines } from '../../../../../misc/lines/lines.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
 
 export interface IGenerateJSLinesForReactiveTextNodeOptions extends IHavingPrimaryTranspilersOptions {
-  value: string;
+  value: ILines;
 }
 
 export function generateJSLinesForReactiveTextNode(
@@ -22,7 +22,7 @@ export function generateJSLinesForReactiveTextNode(
     `// reactive text node`,
     ...transpileAttachNodeToJSLines({
       node: transpileCreateReactiveTextNodeToJSLines({
-        value: transpileToObservableToJSLines({ value: [value] }),
+        value: transpileToObservableToJSLines({ value }),
       }),
       parentNode: ['parentNode'],
     }),

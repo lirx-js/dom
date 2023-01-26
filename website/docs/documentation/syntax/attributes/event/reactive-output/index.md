@@ -1,9 +1,9 @@
 # Output
 
 ```html
-<my-element
+<my-component
   $(name)="$observer"
-></my-element>
+></my-component>
 ```
 
 To listen to values emitted by a **custom element's output**, sent to an `Observer<any>`, write `$(name)`, where `name` is the name of this output.
@@ -16,14 +16,53 @@ It's converted to something similar to this:
 node.setReactiveOutput('name', $observer);
 ```
 
+#### Definition of a component's output
+
+A *component's output* is a special property, used to provide some output data or events from a child component to a parent component.
+We may think, for example, of an `app-datepicker` component, sending a `selectedDate` Event (of type: `Date`), to it's parent's component, when the user selects a date.
+
+
+#### Creating an output
+
+Into the component file (`.ts`), the output may be defined like this:
+
+```ts
+interface IMyComponentConfig {
+  outputs: [
+    ['name', string],
+  ];
+}
+
+export const MyComponent = createComponent<IMyComponentConfig>({
+  name: 'my-component',
+  outputs: [
+    'name',
+  ],
+  init: (node: VirtualCustomElementNode<IMyComponentConfig>): void => {
+    const $name = node.inputs.$set('name');
+    
+    // then we may play with the observer '$name' which reflects the emited data to the output 'name'
+    node.on$('click')(() => {
+      $name(`user-${Date.now()}`);
+    });
+  },
+});
+```
+
+:::note
+
+A component may have many outputs, with different types.
+
+:::
+
 ---
 
 #### Alternative syntax
 
 ```html
-<div
+<my-component
   on-output-name="$observer"
-></div>
+></my-component>
 ```
 
 Instead of using parentheses you may prefix the output's name with `on-output`.

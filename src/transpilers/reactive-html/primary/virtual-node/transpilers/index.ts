@@ -1,5 +1,6 @@
 export * from './transpile-apply-node-modifier-to-js-lines';
 export * from './transpile-attach-node-to-js-lines';
+export * from './transpile-create-reactive-async-node-to-js-lines';
 export * from './transpile-create-reactive-custom-element-node-to-js-lines';
 export * from './transpile-create-reactive-element-node-to-js-lines';
 export * from './transpile-create-reactive-for-loop-node-to-js-lines';
@@ -12,7 +13,7 @@ export * from './transpile-set-reactive-class-names-list-to-js-lines';
 export * from './transpile-set-reactive-class-to-js-lines';
 export * from './transpile-set-reactive-event-listener-to-js-lines';
 export * from './transpile-set-reactive-input-to-js-lines';
-export * from './transpile-set-reactive-ouput-to-js-lines';
+export * from './transpile-set-reactive-output-to-js-lines';
 export * from './transpile-set-reactive-property-to-js-lines';
 export * from './transpile-set-reactive-style-properties-map-to-js-lines';
 export * from './transpile-set-reactive-style-property-to-js-lines';

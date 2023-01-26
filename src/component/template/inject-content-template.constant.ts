@@ -10,6 +10,6 @@ export const INJECT_CONTENT_TEMPLATE: IComponentTemplate<any> = (
   slots: IVirtualCustomElementNodeSlotsMap,
 ): void => {
   if (slots.has('*')) {
-    slots.get('*')!(parentNode);
+    slots.get('*')!(parentNode, {});
   }
 };

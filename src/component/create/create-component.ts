@@ -10,6 +10,10 @@ import { IComponentConfig } from '../types/config/component-config.type';
 import { ICreateComponentOptions } from '../types/options/create-component-options.type';
 import { resolveCreateComponent } from './functions/resolve-create-component';
 
+/**
+ * Creates a component with a specific configuration.
+ * This configuration will determine the values present in the options.
+ */
 export function createComponent<GConfig extends IComponentConfig>(
   {
     name,
@@ -41,6 +45,7 @@ export function createComponent<GConfig extends IComponentConfig>(
     create,
   };
 }
+
 
 /*---------------*/
 

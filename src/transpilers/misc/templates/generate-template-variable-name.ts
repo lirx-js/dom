@@ -6,6 +6,9 @@ export function generateTemplateVariableName(
   return `template_${templateName}`;
 }
 
+/**
+ * @deprecated
+ */
 export function generateOptionalTemplateVariableName(
   templateName: string | undefined,
 ): string {

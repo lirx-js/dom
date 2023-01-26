@@ -19,6 +19,13 @@ export interface IVirtualReactiveForLoopNodeOptionsTrackByFunction<GItem> {
 
 /** CLASS **/
 
+/**
+ * Represents an abstract Container Node in an abstract DOM,
+ * whose content depends on the values sent by the Observable "items$".
+ * When a value is received, the Node iterates on it, and generates N templates from "template".
+ * A "trackBy" function may be used, to recycle similar Nodes.
+ * This is used to generate many Nodes from a list of items.
+ */
 export class VirtualReactiveForLoopNode<GItem> extends VirtualContainerNode {
   constructor(
     items$: IObservable<Iterable<GItem>>,

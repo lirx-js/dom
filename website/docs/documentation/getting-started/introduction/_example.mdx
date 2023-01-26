@@ -65,7 +65,7 @@ export const AppHelloWorldComponent = createComponent<IAppHelloWorldComponentCon
   template: compileReactiveHTMLAsComponentTemplate({ html }),
   styles: [compileStyleAsComponentStyle(style)],
   init: (node: VirtualCustomElementNode<IAppHelloWorldComponentConfig>): IData => {
-    const { emit: $input, subscribe: input$ } = let$$('');
+    const [$input, input$] = let$$('');
     const remaining$ = map$$(input$, (value: string) => value.length);
     const valid$ = map$$(remaining$, (value: number) => (value <= 10));
 

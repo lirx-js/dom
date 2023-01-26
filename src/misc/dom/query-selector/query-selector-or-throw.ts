@@ -1,3 +1,6 @@
+/**
+ * Similar to querySelector, but throws if an element is not found
+ */
 export function querySelectorOrThrow<GElement extends HTMLElement>(
   node: Element,
   selector: string,

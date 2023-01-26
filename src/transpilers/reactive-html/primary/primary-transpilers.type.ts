@@ -1,5 +1,6 @@
 import { ITranspileApplyNodeModifierToJSLinesTrait } from './transpilers/transpile-apply-node-modifier-to-js-lines.type';
 import { ITranspileAttachNodeToJSLinesTrait } from './transpilers/transpile-attach-node-to-js-lines.type';
+import { ITranspileCreateReactiveAsyncNodeToJSLinesTrait } from './transpilers/transpile-create-reactive-async-node-to-js-lines.type';
 import {
   ITranspileCreateReactiveCustomElementNodeToJSLinesTrait,
 } from './transpilers/transpile-create-reactive-custom-element-node-to-js-lines.type';
@@ -27,6 +28,7 @@ export interface IPrimaryTranspilers extends
   //
   ITranspileApplyNodeModifierToJSLinesTrait,
   ITranspileAttachNodeToJSLinesTrait,
+  ITranspileCreateReactiveAsyncNodeToJSLinesTrait,
   ITranspileCreateReactiveCustomElementNodeToJSLinesTrait,
   ITranspileCreateReactiveElementNodeToJSLinesTrait,
   ITranspileCreateReactiveForLoopNodeToJSLinesTrait,

@@ -18,14 +18,17 @@ Short syntax:
 </tag-name>
 ```
 
-Creates a virtual Node which:
+This is used to create **repetitively** an element or a node, iterating over a list of values.
+
+
+Under the hoods, it creates a virtual Node which:
 
 - subscribes to `observable$`
 - and injects the template `templateReference` for each received values
 
 :::note
 
-The virtual Node takes care to optimize the DOM and the rendering process (re-use nodes when possible).
+This `rx-` component takes care to optimize the DOM and the rendering process (by re-using the existing nodes when possible, performing bulk DOM operations, etc...).
 
 :::
 
@@ -49,7 +52,7 @@ new VirtualReactiveForLoopNode(
 
 ```html
 
-<div *for="let item of of('a', 'b', 'c'); index$ as i">
+<div *for="let item of single(['a', 'b', 'c']); index$ as i">
   #{{ i }} : {{ item }}
 </div>
 ```
@@ -69,21 +72,27 @@ Output:
 </div>
 ```
 
+---
+
+**[Example file](https://github.com/lirx-js/dom-examples/tree/main/src/syntax/rx-for-loop/component/rx-for-loop-example.component.ts)**
+
 ### Alternative syntaxes
 
-##### Using *for
+##### Using \*for
 
 ```html
 
 <tag-name
-  *for="let item of items; index$ as i; trackBy: trackByFn"
+  *for="let item of items$; index$ as i; trackBy: trackByFn"
   ...otherAttributes
 >
   ...content
 </tag-name>
 ```
 
-Which is equivalent to:
+
+<details>
+  <summary>Which is equivalent to</summary>
 
 ```html
 
@@ -100,10 +109,11 @@ Which is equivalent to:
 </rx-template>
 
 <rx-for-loop
-  items="items"
+  items="items$"
   template="uuid"
   track-by="trackByFn"
 ></rx-for-loop>
 ```
 
+</details>
 

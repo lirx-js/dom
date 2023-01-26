@@ -5,6 +5,12 @@ import { VirtualContainerNode } from '../../static/container/virtual-container-n
 
 export type IVirtualReactiveIfNodeTemplate = IGenericVirtualReactiveDOMNodeTemplateOrNull;
 
+/**
+ * Represents an abstract Container Node in an abstract DOM,
+ * whose content depends on the values sent by the Observable "condition$".
+ * When true is received, then "templateTrue" is used, else it's 'templateFalse'.
+ * This is used as a conditionally displayed Node.
+ */
 export class VirtualReactiveIfNode extends VirtualContainerNode {
   constructor(
     condition$: IObservable<boolean>,

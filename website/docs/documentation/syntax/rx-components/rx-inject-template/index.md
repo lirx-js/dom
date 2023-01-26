@@ -20,9 +20,19 @@ It's converted to something similar to this:
 ```ts
 templateReference(
   parentNode,
-  { var1: data1, var2: data2 },
+  {
+    var1: data1,
+    var2: data2,
+  },
 );
 ```
+
+:::note
+
+Usually, you won't have to inject directly a template, as the other `rx-` components already have a way to declare and inject such templates.
+However, in some cases it may be useful if you prefer to inject your templates with names.
+
+:::
 
 ## Example
 
@@ -34,15 +44,23 @@ templateReference(
   Hello {{ name }}!
 </rx-template>
 
-<rx-inject-template
-  template="helloTemplate"
-  let-name="single('Alice')"
-></rx-inject-template>
+<div class="main-container">
+  <rx-inject-template
+    template="helloTemplate"
+    let-name="single('Alice')"
+  ></rx-inject-template>
+</div>
 ```
 
 Output:
 
 ```html
-Hello Alice!
+<div class="main-container">
+  Hello Alice!
+</div>
 ```
+
+---
+
+**[Example file](https://github.com/lirx-js/dom-examples/tree/main/src/syntax/rx-inject-template/component/rx-inject-template-example.component.ts)**
 

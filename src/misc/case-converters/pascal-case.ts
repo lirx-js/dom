@@ -1,7 +1,6 @@
 /**
  * Every word starts with an uppercase.
  */
-
 export function isPascalCase(
   input: string,
 ): boolean {

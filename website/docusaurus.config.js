@@ -15,8 +15,8 @@ const githubURL = `https://github.com/${organizationName}/${projectName}/`;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'LiRX/core',
-  tagline: 'The Reactive Programing Web Framework',
+  title: 'LiRX/dom',
+  tagline: 'The Reactive Programming Web Framework',
   url: 'https://dom.lirx.org',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -67,13 +67,18 @@ const config = {
     ],
   ],
 
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
+
   themeConfig:
   /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       metadata: [
         {
           name: 'keywords',
-          content: 'Reactive Programing, framework, web, ui',
+          content: 'Reactive Programming, framework, web, ui',
         },
       ],
       colorMode: {
@@ -81,14 +86,6 @@ const config = {
         disableSwitch: false,
         respectPrefersColorScheme: true,
       },
-      // announcementBar: {
-      //   id: 'support_us',
-      //   content:
-      //     '⭐️ If you like LiRX/core, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/lirx-js/core">GitHub</a>! ⭐️',
-      //   backgroundColor: '#fafbfc',
-      //   textColor: '#091E42',
-      //   isCloseable: true,
-      // },
       navbar: {
         title: 'LiRX/dom',
         logo: {
@@ -131,8 +128,8 @@ const config = {
                 to: '/docs/documentation/getting-started/introduction/',
               },
               {
-                label: 'Example',
-                to: '/docs/documentation/example/',
+                label: 'Examples',
+                to: 'https://github.com/lirx-js/dom-examples',
               },
             ],
           },
@@ -183,7 +180,7 @@ const config = {
               },
               {
                 label: 'Changelog',
-                to: '/docs/changelogs/1.0.0/',
+                to: '/docs/changelogs/0.8.0/',
               },
               {
                 label: 'GitHub',
@@ -214,6 +211,31 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+      },
+      // https://docusaurus.io/docs/markdown-features/diagrams
+      // /** @type {import('@docusaurus/theme-mermaid').UserThemeConfig.mermaid} */
+      mermaid: {
+        // theme: { light: 'neutral', dark: 'forest' },
+        theme: { light: 'default', dark: 'dark' },
+        options: {
+          // https://mermaid.js.org/config/theming.html
+          // "themeVariables": {
+          //   "primaryColor": "#dfecff",
+          //   "primaryTextColor": "#00002d",
+          //   "primaryBorderColor": "#1e7af6",
+          //   "lineColor": "#505050",
+          //   "secondaryColor": "#006100",
+          //   "tertiaryColor": "#fff"
+          // },
+          // "themeVariables": {
+          //   "primaryColor": "#2883fd",
+          //   "primaryTextColor": "#fff",
+          //   "primaryBorderColor": "#0f4288",
+          //   "lineColor": "#505050",
+          //   "secondaryColor": "#006100",
+          //   "tertiaryColor": "#fff"
+          // },
+        },
       },
     }),
 };

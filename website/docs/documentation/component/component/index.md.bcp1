@@ -1,0 +1,94 @@
+# Introduction to Component
+
+To explore the possibilities of `@lirx/dom`, we'll create a simple **todo list**:
+
+![](./assets/todo-list-component.png)
+
+
+This tutorial will cover the most essential parts of this framework through a fun and simple example.
+After following it, you'll be able to create your own components and start to develop great web applications.
+
+Everything is available [in this repository](https://github.com/lirx-js/dom-examples/tree/main/src/todo-list). I encourage you to clone it, to immediately play with it.
+
+## Our first component
+
+Just like Angular, `@lirx/dom` follows the [MVC](https://developer.mozilla.org/en-US/docs/Glossary/MVC) pattern.
+This means that a component is usually constituted of 3 files:
+
+A **typescript file** whose name usually ends with `.component.ts`.
+This file defines the component, imports the style and template, register interactions from the user or other events, and set the values required by the template.
+
+An **html file** whose name usually ends with `.component.html`.
+This file contains the template of the component.
+The template extends HTML with special tag-names and attributes, and is used to manipulate the DOM.
+
+A **scss file** whose name usually ends with `.component.scss`.
+This file contains the style of the component, and may contain css variables to allow the parents to easily modify the style of this component.
+`.css` files are supported too, but `.scss` is strongly recommended, as it is much more concise.
+
+We'll focus now on the "rows" of our todo list. We'll call this component `todo-list-item`.
+
+![](./assets/todo-list-item-component.png)
+
+So let's start by creating a folder for our first component:
+
+```bash
+mkdir todo-list-item
+cd todo-list-item
+```
+
+Then we'll create the component, its template, and its style:
+
+```bash
+touch todo-list-item.component.ts todo-list-item.component.html todo-list-item.component.scss
+```
+
+We end up with this files' structure:
+
+![](./assets/todo-list-item-component-file-structure.png)
+
+Ok, open `todo-list-item.component.ts` and start to edit it.
+
+We'll begin by defining some interfaces for the component.
+They are essentials as they define the element used for it, its properties, and the shape of the data provided to the html template.
+
+```ts
+interface IData {
+  // we'll put there the variables required by the template
+}
+
+// this interface defines the component
+interface ITodoListItemComponentConfig {
+  element: HTMLElement; // it's an HTMLElement
+  data: IData; // the template requires these data
+}
+```
+
+Followed by the creation of the component itself using the function [createComponent](/docs/reference/create-component/):
+
+```ts
+export const TodoListItemComponent = createComponent<ITodoListItemComponentConfig>({
+  name: 'app-todo-list-item',
+  template: compileReactiveHTMLAsComponentTemplate({
+    html: 'Hello world !',
+  }),
+  init: (): IData => {
+    return {};
+  },
+});
+```
+
+This functions takes as input the configuration of the component: its name, a template, some styles, and some interactions (defined later in the `init` function).
+
+As you may notice, we use it in conjunction with the function [compileReactiveHTMLAsComponentTemplate](/docs/reference/compile-reactive-html-as-component-template/).
+Let's explain why:
+
+Templates and styles are **compiled** to executable javascript by the `@lirx/dom` framework.
+This permits AOT compilation, drastically increasing the performances. And, it hides many internal optimizations, to deliver the best for our app.
+
+Finally, we'll have to "start" our application. This is done by injecting the "main" component from our application though the function [bootstrap](/docs/reference/bootstrap/):
+
+```ts
+bootstrap(TodoListItemComponent);
+```
+

@@ -18,7 +18,7 @@ Consequently, when possible you should think first to alternatives.
 ></div>
 ```
 
-The purpose of a Modifier is to **modify** directly a **VirtualDOMNode**.
+The purpose of a Modifier is to **modify** directly a **[VirtualDOMNode](/docs/reference/virtual-dom-node/)**.
 This is a powerful tool, **so you have to use it with extreme caution**.
 
 It invokes a `IVirtualDOMNodeModifier` with the specified *name*:

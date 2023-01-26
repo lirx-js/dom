@@ -1,6 +1,7 @@
 import { IPrimaryTranspilers } from '../primary-transpilers.type';
 import { transpileApplyNodeModifierToJSLines } from './transpilers/transpile-apply-node-modifier-to-js-lines';
 import { transpileAttachNodeToJSLines } from './transpilers/transpile-attach-node-to-js-lines';
+import { transpileCreateReactiveAsyncNodeToJSLines } from './transpilers/transpile-create-reactive-async-node-to-js-lines';
 import { transpileCreateReactiveCustomElementNodeToJSLines } from './transpilers/transpile-create-reactive-custom-element-node-to-js-lines';
 import { transpileCreateReactiveElementNodeToJSLines } from './transpilers/transpile-create-reactive-element-node-to-js-lines';
 import { transpileCreateReactiveForLoopNodeToJSLines } from './transpilers/transpile-create-reactive-for-loop-node-to-js-lines';
@@ -13,7 +14,7 @@ import { transpileSetReactiveClassNamesListToJSLines } from './transpilers/trans
 import { transpileSetReactiveClassToJSLines } from './transpilers/transpile-set-reactive-class-to-js-lines';
 import { transpileSetReactiveEventListenerToJSLines } from './transpilers/transpile-set-reactive-event-listener-to-js-lines';
 import { transpileSetReactiveInputToJSLines } from './transpilers/transpile-set-reactive-input-to-js-lines';
-import { transpileSetReactiveOutputToJSLines } from './transpilers/transpile-set-reactive-ouput-to-js-lines';
+import { transpileSetReactiveOutputToJSLines } from './transpilers/transpile-set-reactive-output-to-js-lines';
 import { transpileSetReactivePropertyToJSLines } from './transpilers/transpile-set-reactive-property-to-js-lines';
 import { transpileSetReactiveStylePropertiesMapToJSLines } from './transpilers/transpile-set-reactive-style-properties-map-to-js-lines';
 import { transpileSetReactiveStylePropertyToJSLines } from './transpilers/transpile-set-reactive-style-property-to-js-lines';
@@ -23,6 +24,7 @@ import { transpileToObservableToJSLines } from './transpilers/transpile-to-obser
 export const PRIMARY_TRANSPILERS_FOR_VIRTUAL_NODE_CONSTANT: IPrimaryTranspilers = {
   transpileApplyNodeModifierToJSLines,
   transpileAttachNodeToJSLines,
+  transpileCreateReactiveAsyncNodeToJSLines,
   transpileCreateReactiveCustomElementNodeToJSLines,
   transpileCreateReactiveElementNodeToJSLines,
   transpileCreateReactiveForLoopNodeToJSLines,

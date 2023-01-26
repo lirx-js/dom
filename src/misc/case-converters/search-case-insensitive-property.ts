@@ -7,12 +7,13 @@ export function searchCaseInsensitiveProperty(
 ): PropertyKey | null {
   if (propertyKey in object) {
     return propertyKey;
-  } else if (typeof propertyKey === 'symbol') {
+  } else if (
+    (typeof propertyKey === 'symbol')
+    || (typeof propertyKey === 'number')
+  ) {
     return null;
   } else {
-    const lowerCaseName: string = (typeof propertyKey === 'number')
-      ? String(propertyKey)
-      : propertyKey.toLowerCase();
+    const lowerCaseName: string = propertyKey.toLowerCase();
     for (const prop in object) {
       if (prop.toLowerCase() === lowerCaseName) {
         return prop;

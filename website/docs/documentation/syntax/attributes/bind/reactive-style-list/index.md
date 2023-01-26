@@ -8,7 +8,7 @@
 
 To define the **style of an element** updated by an `Observable<IStylePropertiesMap>`, write `[style...]`.
 
-Only the previously received styles are removed, and the new ones added, so it's possible to cumulate with `[style.prop-name]`.
+Only the previously received styles are removed, and the new ones added, so it's possible to cumulate this bind with `[style.prop-name]` for example.
 
 It's converted to something similar to this:
 
@@ -28,7 +28,7 @@ as it tends to be more readable.
 ```html
 <div
   [style.font-size]="single('14px')"
-  [style...]="single(new Map([['line-height', { value: '20px' }]))"
+  [style...]="single(new Map([['line-height', { value: '20px' }]]))"
 ></div>
 ```
 

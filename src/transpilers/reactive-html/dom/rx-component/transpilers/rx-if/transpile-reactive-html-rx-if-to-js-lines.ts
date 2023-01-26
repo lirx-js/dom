@@ -1,19 +1,27 @@
-import { getElementTagName } from '../../../../../../misc/dom/get-element-tag-name';
 import { isElementNode } from '../../../../../../misc/dom/is/is-element-node';
-import { isTextNode } from '../../../../../../misc/dom/is/is-text-node';
-import { wrapLinesWithCurlyBrackets } from '../../../../../misc/lines/functions/wrap-lines-with-curly-brackets';
+import { isTextNodeWithNonWhiteSpaceCharacters } from '../../../../../../misc/dom/is/is-text-node-with-non-white-space-characters';
+import {
+  createAtLeastOneOfTheseAttributesIsRequiredError,
+} from '../../../../../misc/errors/create-at-least-one-of-these-attributes-is-required-error';
+import { createDuplicateTemplateError } from '../../../../../misc/errors/create-duplicate-template-error';
+import { createInvalidElementFoundError } from '../../../../../misc/errors/create-invalid-element-found-error';
+import { createMissingAttributeError } from '../../../../../misc/errors/create-missing-attribute-error';
+import { createMissingAttributeValueError } from '../../../../../misc/errors/create-missing-attribute-value-error';
+import { createShouldNotContainTextNodeError } from '../../../../../misc/errors/create-should-not-contain-text-node-error';
 import { ILinesOrNull } from '../../../../../misc/lines/lines-or-null.type';
 import { ILines } from '../../../../../misc/lines/lines.type';
-import { generateOptionalTemplateVariableName } from '../../../../../misc/templates/generate-template-variable-name';
+import { generateTemplateVariableName } from '../../../../../misc/templates/generate-template-variable-name';
 import { NULL_TEMPLATE } from '../../../../../misc/templates/null-template.constant';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
+import { extractRXAttributesFromReactiveHTMLAttribute } from '../helpers/extract-attributes/extract-rx-attributes-from-reactive-html-attribute';
+import { IMappedAttributes } from '../helpers/extract-attributes/mapped-attributes.type';
 import {
-  extractRXAttributesFromReactiveHTMLAttribute,
-  IMappedAttributes,
-} from '../helpers/extract-rx-attributes-from-reactive-html-attribute';
-import {
-  generateJSLinesForLocalTemplateFromRXContainerElement,
-} from '../helpers/generate-js-lines-for-local-template-from-rx-container-element';
+  ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunction,
+  ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunctionOptions,
+  ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunction,
+  ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunctionOptions,
+  transpileReactiveHTMLRXChildTemplateToJSLines,
+} from '../helpers/for-rx-template/transpile-reactive-html-rx-child-template-to-js-lines';
 import { generateJSLinesForRXIf } from './generate-js-lines-for-rx-if';
 import { transpileReactiveHTMLRXIfFalseToJSLines } from './rx-if-false/transpile-reactive-html-rx-if-false-to-js-lines';
 import { transpileReactiveHTMLRXIfTrueToJSLines } from './rx-if-true/transpile-reactive-html-rx-if-true-to-js-lines';
@@ -59,11 +67,6 @@ const CONDITION_ATTRIBUTE_NAME: string = 'condition';
 const TEMPLATE_TRUE_ATTRIBUTE_NAME: string = 'true';
 const TEMPLATE_FALSE_ATTRIBUTE_NAME: string = 'false';
 
-const LOCAL_TEMPLATE_NAME: string = 'template';
-
-const LOCAL_TEMPLATE_TRUE_NAME: string = 'template_true';
-const LOCAL_TEMPLATE_FALSE_NAME: string = 'template_false';
-
 const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
   CONDITION_ATTRIBUTE_NAME,
   TEMPLATE_TRUE_ATTRIBUTE_NAME,
@@ -75,28 +78,61 @@ export interface ITranspileReactiveHTMLRXIfToJSLinesOptions extends IHavingPrima
 }
 
 export function transpileReactiveHTMLRXIfToJSLines(
-  {
-    node,
-    ...options
-  }: ITranspileReactiveHTMLRXIfToJSLinesOptions,
+  options: ITranspileReactiveHTMLRXIfToJSLinesOptions,
 ): ILinesOrNull {
-  const name: string = getElementTagName(node);
-  if (name === TAG_NAME) {
+  return transpileReactiveHTMLRXChildTemplateToJSLines({
+    ...options,
+    tagName: TAG_NAME,
+    commandName: COMMAND_NAME,
+    onTag: getOnTagFunctionForRXIf(options),
+    onCommand: getOnCommandFunctionForRXIf(options),
+  });
+}
+
+/** FUNCTIONS **/
+
+/* TEMPLATE */
+
+function getOnTagFunctionForRXIf(
+  options: ITranspileReactiveHTMLRXIfToJSLinesOptions,
+): ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunction {
+  return (
+    {
+      node,
+    }: ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunctionOptions,
+  ): ILinesOrNull => {
+    let condition!: string;
+    let templateTrue!: ILines;
+    let templateFalse!: ILines;
+
     const attributes: IMappedAttributes = extractRXAttributesFromReactiveHTMLAttribute(
       node.attributes,
       ATTRIBUTE_NAMES,
     );
-    const condition: string | undefined = attributes.get(CONDITION_ATTRIBUTE_NAME);
 
-    if (condition === void 0) {
-      throw new Error(`Missing attribute '${CONDITION_ATTRIBUTE_NAME}'`);
+    /* CONDITION */
+    const conditionAttribute: string | undefined = attributes.get(CONDITION_ATTRIBUTE_NAME);
+
+    if (conditionAttribute === void 0) {
+      throw createMissingAttributeError(CONDITION_ATTRIBUTE_NAME, node);
+    } else {
+      condition = conditionAttribute;
     }
 
-    let templateTrue: string = generateOptionalTemplateVariableName(attributes.get(TEMPLATE_TRUE_ATTRIBUTE_NAME));
-    let templateFalse: string = generateOptionalTemplateVariableName(attributes.get(TEMPLATE_FALSE_ATTRIBUTE_NAME));
+    /* TEMPLATES */
+    const templateTrueAttribute: string | undefined = attributes.get(TEMPLATE_TRUE_ATTRIBUTE_NAME);
+    const templateFalseAttribute: string | undefined = attributes.get(TEMPLATE_FALSE_ATTRIBUTE_NAME);
 
+    if (templateTrueAttribute !== void 0) {
+      templateTrue = [generateTemplateVariableName(templateTrueAttribute)];
+    }
+
+    if (templateFalseAttribute !== void 0) {
+      templateFalse = [generateTemplateVariableName(templateFalseAttribute)];
+    }
+
+    // ANALYSE CHILD NODES
     const childNodes: ArrayLike<ChildNode> = node.childNodes;
-    const childLines: ILines = [];
 
     for (let i = 0, l = childNodes.length; i < l; i++) {
       const childNode: ChildNode = childNodes[i];
@@ -104,76 +140,79 @@ export function transpileReactiveHTMLRXIfToJSLines(
         const result: ILinesOrNull = transpileReactiveHTMLRXIfTrueToJSLines({
           ...options,
           node: childNode,
-          templateName: LOCAL_TEMPLATE_TRUE_NAME,
         });
         if (result === null) {
           const result: ILinesOrNull = transpileReactiveHTMLRXIfFalseToJSLines({
             ...options,
             node: childNode,
-            templateName: LOCAL_TEMPLATE_FALSE_NAME,
           });
           if (result === null) {
-            throw new Error(`Found invalid element '${getElementTagName(childNode)}'`);
-          } else if (templateFalse === NULL_TEMPLATE) {
-            templateFalse = LOCAL_TEMPLATE_FALSE_NAME;
-            childLines.push(...result);
+            throw createInvalidElementFoundError(childNode);
+          } else if (templateFalse === void 0) {
+            templateFalse = result;
           } else {
-            throw new Error(`The template '${TEMPLATE_FALSE_ATTRIBUTE_NAME}' is already defined`);
+            throw createDuplicateTemplateError(TEMPLATE_FALSE_ATTRIBUTE_NAME, node);
           }
-        } else if (templateTrue === NULL_TEMPLATE) {
-          templateTrue = LOCAL_TEMPLATE_TRUE_NAME;
-          childLines.push(...result);
+        } else if (templateTrue === void 0) {
+          templateTrue = result;
         } else {
-          throw new Error(`The template '${TEMPLATE_TRUE_ATTRIBUTE_NAME}' is already defined`);
+          throw createDuplicateTemplateError(TEMPLATE_TRUE_ATTRIBUTE_NAME, node);
         }
-      } else if (isTextNode(childNode) && (childNode.data.trim() !== '')) {
-        throw new Error(`The content of ${TAG_NAME} should not contain any Text Node`);
+      } else if (isTextNodeWithNonWhiteSpaceCharacters(childNode)) {
+        throw createShouldNotContainTextNodeError(node);
       }
     }
 
     if (
-      (templateTrue === NULL_TEMPLATE)
-      && (templateFalse === NULL_TEMPLATE)
+      (templateTrue === void 0)
+      && (templateFalse === void 0)
     ) {
-      throw new Error(`At least '${TEMPLATE_TRUE_ATTRIBUTE_NAME}' or '${TEMPLATE_FALSE_ATTRIBUTE_NAME}' attribute must be present`);
+      throw createAtLeastOneOfTheseAttributesIsRequiredError([
+        TEMPLATE_TRUE_ATTRIBUTE_NAME,
+        TEMPLATE_FALSE_ATTRIBUTE_NAME,
+      ], node);
     }
 
-    const lines: ILines = generateJSLinesForRXIf({
+    if (templateTrue === void 0) {
+      templateTrue = [NULL_TEMPLATE];
+    }
+
+    if (templateFalse === void 0) {
+      templateFalse = [NULL_TEMPLATE];
+    }
+
+    return generateJSLinesForRXIf({
       ...options,
       condition,
       templateTrue,
       templateFalse,
     });
-
-    return (
-      (childLines.length > 0)
-        ? wrapLinesWithCurlyBrackets([
-          ...childLines,
-          ...lines,
-        ], false)
-        : lines
-    );
-  } else if (node.hasAttribute(COMMAND_NAME)) {
-    const condition: string = node.getAttribute(COMMAND_NAME) as string;
-    node.removeAttribute(COMMAND_NAME);
-
-    return wrapLinesWithCurlyBrackets([
-      ...generateJSLinesForLocalTemplateFromRXContainerElement({
-        ...options,
-        node,
-        templateName: LOCAL_TEMPLATE_NAME,
-        argumentsLines: null,
-      }),
-      ...generateJSLinesForRXIf({
-        ...options,
-        condition,
-        templateTrue: LOCAL_TEMPLATE_NAME,
-        templateFalse: NULL_TEMPLATE,
-      }),
-    ], false);
-  } else {
-    return null;
-  }
+  };
 }
 
+/* COMMAND */
 
+function getOnCommandFunctionForRXIf(
+  options: ITranspileReactiveHTMLRXIfToJSLinesOptions,
+): ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunction {
+  return (
+    {
+      node,
+      attributeValue: condition,
+      generateTemplate,
+    }: ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunctionOptions,
+  ): ILinesOrNull => {
+    if (condition === '') {
+      throw createMissingAttributeValueError(COMMAND_NAME, node);
+    } else {
+      return generateJSLinesForRXIf({
+        ...options,
+        condition,
+        templateTrue: generateTemplate({
+          argumentsLines: null,
+        }),
+        templateFalse: [NULL_TEMPLATE],
+      });
+    }
+  };
+}

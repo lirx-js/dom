@@ -6,6 +6,9 @@ import { IGenericVirtualRootNode, VirtualRootNode } from '../virtual-node/dom/no
 import { IComponent } from './types/component.type';
 import { IComponentConfig } from './types/config/component-config.type';
 
+/**
+ * Creates "component", and appends it to "container" (usually the <body>)
+ */
 export function bootstrap<GConfig extends IComponentConfig>(
   component: IComponent<GConfig>,
   slots?: IVirtualCustomElementNodeSlotsMap,

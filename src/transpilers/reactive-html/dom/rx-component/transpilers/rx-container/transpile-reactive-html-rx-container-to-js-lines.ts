@@ -1,8 +1,8 @@
+import { createShouldNotHaveAttributesError } from '../../../../../misc/errors/create-should-not-have-attributes-error';
 import { ILinesOrNull } from '../../../../../misc/lines/lines-or-null.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
 import { transpileReactiveHTMLNodesToJSLines } from '../../../nodes/transpile-reactive-html-nodes-to-js-lines';
 import { isRXContainer } from './is-rx-container';
-import { RX_CONTAINER_TAG_NAME } from './rx-container-tag-name.constant';
 
 /*
 Syntax:
@@ -31,7 +31,7 @@ export function transpileReactiveHTMLRXContainerToJSLines(
         nodes: node.childNodes,
       });
     } else {
-      throw new Error(`${RX_CONTAINER_TAG_NAME} must not have any attributes`);
+      throw createShouldNotHaveAttributesError(node);
     }
   } else {
     return null;

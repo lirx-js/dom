@@ -16,11 +16,19 @@ observable$((value) => text.value = value);
 ## Example
 
 ```html
-Hello {{ single('world') }} !
+<div>
+  Hello {{ single('world') }} !
+</div>
 ```
 
 Output:
 
 ```html
-Hello world !
+<div>
+  Hello world !
+</div>
 ```
+
+---
+
+**[Example file](https://github.com/lirx-js/dom-examples/tree/main/src/syntax/reactive-text/component/reactive-text-example.component.ts)**

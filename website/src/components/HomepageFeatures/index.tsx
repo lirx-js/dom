@@ -10,35 +10,46 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Fast and Small',
-    Svg: require('@site/static/img/illustrations/undraw/red/undraw_outer_space_re_u9vd.svg').default,
+    title: 'Like No Other',
+    Svg: require('@site/static/img/illustrations/undraw/blue/undraw_the_world_is_mine_re_j5cr.svg').default,
     description: (
       <>
-        LiRX/core was designed from the ground up to be fast, small, and performant.
-        It <a href={'/docs/documentation/performances/'}>outperforms RxJS</a> in every aspects.
+        LiRX/dom is a framework to create performant web applications, purely based on reactive programming:
+        update only what's required on nothing more.
       </>
     ),
   },
   {
-    title: 'Build Complex Data Flows',
-    Svg: require('@site/static/img/illustrations/undraw/red/undraw_mind_map_re_nlb6.svg').default,
+    title: 'A Complete Framework',
+    Svg: require('@site/static/img/illustrations/undraw/blue/undraw_aircraft_re_m05i.svg').default,
     description: (
       <>
-        Assemble many Observables to create custom data streams,
-        and adopt <i>Reactive Programming</i> for each of your async data sources.
+        Embeds everything you need: a router, an aot compiler, and a bundler.
+        It supports typescript and scss right out of the box.
+        And carries for you the essentials parts.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/illustrations/undraw/red/undraw_programmer_re_owql.svg').default,
+    title: 'Build small or large applications',
+    Svg: require('@site/static/img/illustrations/undraw/blue/undraw_building_blocks_re_5ahy.svg').default,
     description: (
       <>
-        LiRX/core can create understandable and complex data pipelines with just a few lines of code.
-        Master data streams like a boss.
+        Assemble your components from a small and simple application to the largest and complete one.
+        Your imagination is the only limit.
       </>
     ),
   },
+  // {
+  //   title: 'Focus on What Matters',
+  //   Svg: require('@site/static/img/illustrations/undraw/red/undraw_programmer_re_owql.svg').default,
+  //   description: (
+  //     <>
+  //       LiRX/core can create understandable and complex data pipelines with just a few lines of code.
+  //       Master data streams like a boss.
+  //     </>
+  //   ),
+  // },
 ];
 
 function Feature({title, Svg, description}: FeatureItem) {

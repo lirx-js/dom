@@ -1,17 +1,20 @@
-import { getElementTagName } from '../../../../../../misc/dom/get-element-tag-name';
 import { throwIfHasChildNodes } from '../../../../../../misc/dom/throw-if-has-child-nodes';
+import { createInvalidForLoopSyntaxError } from '../../../../../misc/errors/create-invalid-for-loop-syntax-error';
+import { createMissingAttributeError } from '../../../../../misc/errors/create-missing-attribute-error';
 import { wrapLinesWithCurlyBrackets } from '../../../../../misc/lines/functions/wrap-lines-with-curly-brackets';
 import { ILinesOrNull } from '../../../../../misc/lines/lines-or-null.type';
 import { ILines } from '../../../../../misc/lines/lines.type';
 import { generateTemplateVariableName } from '../../../../../misc/templates/generate-template-variable-name';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
+import { extractRXAttributesFromReactiveHTMLAttribute } from '../helpers/extract-attributes/extract-rx-attributes-from-reactive-html-attribute';
+import { IMappedAttributes } from '../helpers/extract-attributes/mapped-attributes.type';
 import {
-  extractRXAttributesFromReactiveHTMLAttribute,
-  IMappedAttributes,
-} from '../helpers/extract-rx-attributes-from-reactive-html-attribute';
-import {
-  generateJSLinesForLocalTemplateFromRXContainerElement,
-} from '../helpers/generate-js-lines-for-local-template-from-rx-container-element';
+  ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunction,
+  ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunctionOptions,
+  ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunction,
+  ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunctionOptions,
+  transpileReactiveHTMLRXChildTemplateToJSLines,
+} from '../helpers/for-rx-template/transpile-reactive-html-rx-child-template-to-js-lines';
 import { extractRXForLoopCommand, IRXForLoopCommand } from './extract-rx-for-loop-command';
 import { generateJSLinesForRXForLoop } from './generate-js-lines-for-rx-for-loop';
 
@@ -57,8 +60,6 @@ const ITEMS_ATTRIBUTE_NAME: string = 'items';
 const TEMPLATE_ATTRIBUTE_NAME: string = 'template';
 const TRACK_BY_ATTRIBUTE_NAME: string = 'track-by';
 
-const LOCAL_TEMPLATE_NAME: string = 'template';
-
 const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
   ITEMS_ATTRIBUTE_NAME,
   TEMPLATE_ATTRIBUTE_NAME,
@@ -69,38 +70,104 @@ export interface ITranspileReactiveHTMLRXForLoopToJSLinesOptions extends IHaving
   node: Element;
 }
 
-// export function compileRXForLoop(
 export function transpileReactiveHTMLRXForLoopToJSLines(
-  {
-    node,
-    ...options
-  }: ITranspileReactiveHTMLRXForLoopToJSLinesOptions,
+  options: ITranspileReactiveHTMLRXForLoopToJSLinesOptions,
 ): ILinesOrNull {
-  const name: string = getElementTagName(node);
-  if (name === TAG_NAME) {
-    const attributes: IMappedAttributes = extractRXAttributesFromReactiveHTMLAttribute(node.attributes, ATTRIBUTE_NAMES);
-    const items: string | undefined = attributes.get(ITEMS_ATTRIBUTE_NAME);
-    const template: string | undefined = attributes.get(TEMPLATE_ATTRIBUTE_NAME);
-    const trackBy: string | undefined = attributes.get(TRACK_BY_ATTRIBUTE_NAME);
+  return transpileReactiveHTMLRXChildTemplateToJSLines({
+    ...options,
+    tagName: TAG_NAME,
+    commandName: COMMAND_NAME,
+    onTag: getOnTagFunctionForRXForLoop(options),
+    onCommand: getOnCommandFunctionForRXForLoop(options),
+  });
+}
 
-    if (items === void 0) {
-      throw new Error(`Missing attribute '${ITEMS_ATTRIBUTE_NAME}'`);
+/** FUNCTIONS **/
+
+/* TEMPLATE */
+
+function getOnTagFunctionForRXForLoop(
+  options: ITranspileReactiveHTMLRXForLoopToJSLinesOptions,
+): ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunction {
+  return (
+    {
+      node,
+      generateTemplate,
+    }: ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunctionOptions,
+  ): ILinesOrNull => {
+    let items!: string;
+    let template!: ILines;
+    let trackBy!: string | undefined;
+
+    const attributes: IMappedAttributes = extractRXAttributesFromReactiveHTMLAttribute(
+      node.attributes,
+      ATTRIBUTE_NAMES,
+    );
+
+    /* ITEMS */
+    const itemsAttribute: string | undefined = attributes.get(ITEMS_ATTRIBUTE_NAME);
+
+    if (itemsAttribute === void 0) {
+      throw createMissingAttributeError(ITEMS_ATTRIBUTE_NAME, node);
+    } else {
+      items = itemsAttribute;
     }
 
-    if (template === void 0) {
-      throw new Error(`Missing attribute '${TEMPLATE_ATTRIBUTE_NAME}'`);
+    /* TEMPLATE */
+    const templateAttribute: string | undefined = attributes.get(TEMPLATE_ATTRIBUTE_NAME);
+
+    if (templateAttribute === void 0) {
+      const properties: string[] = [
+        `item`,
+        `index$`,
+      ];
+      template = generateTemplate({
+        argumentsLines: wrapLinesWithCurlyBrackets(properties.map(_ => `${_},`), false),
+      });
+    } else {
+      template = [generateTemplateVariableName(templateAttribute)];
+      throwIfHasChildNodes(node);
     }
 
-    throwIfHasChildNodes(node);
+    /* TRACK BY */
+    const trackByAttribute: string | undefined = attributes.get(TRACK_BY_ATTRIBUTE_NAME);
+
+    if (trackByAttribute === void 0) {
+      trackBy = void 0;
+    } else {
+      trackBy = itemsAttribute;
+    }
 
     return generateJSLinesForRXForLoop({
       ...options,
       items,
-      template: generateTemplateVariableName(template),
+      template,
       trackBy,
     });
-  } else if (node.hasAttribute(COMMAND_NAME)) {
-    const command: IRXForLoopCommand = extractRXForLoopCommand(node.getAttribute(COMMAND_NAME) as string);
+  };
+}
+
+/* COMMAND */
+
+function getOnCommandFunctionForRXForLoop(
+  options: ITranspileReactiveHTMLRXForLoopToJSLinesOptions,
+): ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunction {
+  return (
+    {
+      node,
+      attributeValue,
+      generateTemplate,
+    }: ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunctionOptions,
+  ): ILinesOrNull => {
+    let command: IRXForLoopCommand;
+    try {
+      command = extractRXForLoopCommand(attributeValue);
+    } catch (error: unknown) {
+      throw (error instanceof Error)
+        ? createInvalidForLoopSyntaxError(error.message, node)
+        : error;
+    }
+
     node.removeAttribute(COMMAND_NAME);
 
     const templateVariablesLines: ILines = [
@@ -117,25 +184,17 @@ export function transpileReactiveHTMLRXForLoopToJSLines(
       );
     }
 
-    return wrapLinesWithCurlyBrackets([
-      ...generateJSLinesForLocalTemplateFromRXContainerElement({
-          ...options,
-          node,
-          templateName: LOCAL_TEMPLATE_NAME,
+    return generateJSLinesForRXForLoop(
+      {
+        ...options,
+        items: command.items,
+        template: generateTemplate({
           argumentsLines: wrapLinesWithCurlyBrackets(templateVariablesLines, false),
-        },
-      ),
-      ...generateJSLinesForRXForLoop(
-        {
-          ...options,
-          items: command.items,
-          template: LOCAL_TEMPLATE_NAME,
-          trackBy: command.trackBy,
-        },
-      ),
-    ], false);
-  } else {
-    return null;
-  }
+        }),
+        trackBy: command.trackBy,
+      },
+    );
+  };
 }
+
 

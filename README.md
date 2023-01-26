@@ -13,6 +13,12 @@
 </p>
 
 <p align="center">
+  <a href="https://dom.lirx.org/">
+    DOCUMENTATION
+  </a>
+</p>
+
+<p align="center">
   <a href="https://www.npmjs.com/package/@lirx/dom">
     <img src="https://img.shields.io/npm/v/@lirx/dom.svg" alt="npm package" />
   </a>
@@ -73,8 +79,8 @@ which strongly optimizes your components and generates very small bundles.
 
 It's light, fast, and simple ! Give it a try !
 
-- [Tutorial](website/docs/__pending/tutorial/tutorial.md)
-- [Syntax](website/docs/__pending/syntax/00-toc.md)
+- [Tutorial](https://dom.lirx.org/docs/documentation/getting-started/introduction/)
+- [Syntax](https://dom.lirx.org/docs/documentation/syntax/)
 
 
 ## 📑 Example
@@ -153,39 +159,25 @@ yarn add @lirx/dom
 npm install @lirx/dom--save
 ```
 
-**[SEED IN PROGRESS](https://github.com/lifaon74/rx-js-light-debug-vite)**
-
-This library supports:
-
-- **common-js** (require): transpiled as es6, with .cjs extension, useful for old nodejs versions
-- **module** (esm import): transpiled as esnext, with .mjs extension (requires node resolution for external packages)
-
-In a **browser** environment, you'll need to resolve external imports thought a bundler like
-[snowpack](https://www.snowpack.dev/),
-[rollup](https://rollupjs.org/guide/en/),
-[webpack](https://webpack.js.org/),
-etc...
-or directly using [skypack](https://www.skypack.dev/):
-[https://cdn.skypack.dev/@lirx/dom](https://cdn.skypack.dev/@lirx/dom)
-
+[Click here to read the installation manual](https://dom.lirx.org/docs/documentation/getting-started/installation/)
 
 ---
 
 #### Differences with other popular frameworks:
 
-| Feature        | Angular | Virtual DOM (React, Vue) | @lirx/dom |
-|----------------| --- | ---          | --- |
-| **Semantics**  | html with special flavour | `jsx` or `hyperscript` | html with special flavour |
-| **Memory**     | **medium**: data are directly reflected on the nodes, but the framework itself is heavy | **high** a lot of virtual DOM elements are created every time the DOM updates, and the number of virtual nodes is also linearly proportional to the size of the DOM tree. | **very low**: once the data pipeline is set, on every update the data is directly reflected on the node. |
-| **CPU**        | **medium**: when zoneJs triggers, all expressions in the html are evaluated and reflected on the nodes | **high** because a lot of time is spent regenerating the Virtual DOM, calculating the diff and figuring out what changed. | **low**: the nodes subscribe only to the part of the data that is needed for rendering / updating them. It's almost unbeatable, because when the data changes, it directly updates the nodes. |
-| **Size**       | ~50KB | ~10KB (preact) | ~8KB (with jit compiler), ~4KB (aot) |
+| Feature       | Angular                                                                                                | Virtual DOM (React, Vue)                                                                                                                                                  | @lirx/dom                                                                                                                                                                                     |
+|---------------|--------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Semantics** | html with special flavour                                                                              | `jsx` or `hyperscript`                                                                                                                                                    | html with special flavour                                                                                                                                                                     |
+| **Memory**    | **medium**: data are directly reflected on the nodes, but the framework itself is heavy                | **high** a lot of virtual DOM elements are created every time the DOM updates, and the number of virtual nodes is also linearly proportional to the size of the DOM tree. | **very low**: once the data pipeline is set, on every update the data is directly reflected on the node.                                                                                      |
+| **CPU**       | **medium**: when zoneJs triggers, all expressions in the html are evaluated and reflected on the nodes | **high** because a lot of time is spent regenerating the Virtual DOM, calculating the diff and figuring out what changed.                                                 | **low**: the nodes subscribe only to the part of the data that is needed for rendering / updating them. It's almost unbeatable, because when the data changes, it directly updates the nodes. |
+| **Size**      | ~50KB                                                                                                  | ~10KB (preact)                                                                                                                                                            | ~8KB (with jit compiler), ~4KB (aot)                                                                                                                                                          |
 
 *size is calculated for similar 'hello world' projects, compiled, minified and gzipped.
 
 The current frameworks are pretty efficient, however, they are far from the perfect optimization.
 `@lirx/dom` tries to do better by conciliating an elegant syntax with maximal performances.
 
-For new incomers, learning [observables](https://github.com/lirx-js/core) may be discouraging,
+For new incomers, learning [observables](https://core.lirx.org/docs/documentation/getting-started/introduction/) may be discouraging,
 as it is a totally different manner to think your code,
 but once you're comfortable with this principle, you'll fully enjoy the potential, and the performances they provide:
 

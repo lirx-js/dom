@@ -1,5 +1,9 @@
 import { IVirtualDOMNodeOrNull, VirtualDOMNode } from '../../../virtual-dom-node.class';
 
+/**
+ * Represents an abstract Container Node in an abstract DOM.
+ * This is used as a virtual container for many DOM Nodes.
+ */
 export class VirtualContainerNode extends VirtualDOMNode {
 
   constructor() {

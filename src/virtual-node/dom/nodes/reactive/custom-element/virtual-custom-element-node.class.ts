@@ -5,8 +5,6 @@ import { ITypedSourcesMap } from '../../../../../misc/typed-sources-map/implemen
 import {
   ITypedSourcesMapEntriesTupleToEntriesTuple,
 } from '../../../../../misc/typed-sources-map/types/typed-sources-map-entries-tuple-to-entries-tuple.infer';
-import { ITypedSourcesMapEntriesTuple } from '../../../../../misc/typed-sources-map/types/typed-sources-map-entries-tuple.type';
-import { IGenericTypedSourcesMapEntry } from '../../../../../misc/typed-sources-map/types/typed-sources-map-entry.type';
 import { VirtualReactiveElementNode } from '../element/virtual-reactive-element-node.class';
 import { IVirtualCustomElementNodeSlotsMap } from './slots/virtual-custom-element-node-slots-map.type';
 import { InferVirtualCustomElementNodeConfigElement } from './types/config/infer-virtual-custom-element-node-config-element.type';
@@ -31,6 +29,14 @@ import { InferVirtualCustomElementNodeOptionsInputs } from './types/options/infe
 import { InferVirtualCustomElementNodeOptionsOutputs } from './types/options/infer-virtual-custom-element-node-options-outputs.type';
 import { IVirtualCustomElementNodeOptions } from './types/options/virtual-custom-element-node-options.type';
 
+/**
+ * Represents an instance of a Component.
+ * It has:
+ * - a name
+ * - some slots
+ * - and some 'inputs' and 'outputs'
+ *
+ */
 export class VirtualCustomElementNode<GConfig extends IVirtualCustomElementNodeConfig> extends VirtualReactiveElementNode<InferVirtualCustomElementNodeConfigElement<GConfig>> {
 
   protected readonly _name: string;
@@ -108,6 +114,9 @@ export class VirtualCustomElementNode<GConfig extends IVirtualCustomElementNodeC
 
   /* INPUT */
 
+  /**
+   * Subscribes to "value$", and dispatches the incoming values in the input "key".
+   */
   setReactiveInput<GKey extends InferVirtualCustomElementNodeSetReactiveInputKeys<GConfig>>(
     key: GKey,
     value$: IObservable<InferVirtualCustomElementNodeSetReactiveInputValueFromKey<GConfig, GKey>>,
@@ -115,15 +124,19 @@ export class VirtualCustomElementNode<GConfig extends IVirtualCustomElementNodeC
     return this.onConnected$(value$)(this._inputs.$set<GKey>(key));
   }
 
+  /**
+   * Subscribes to "value$", and dispatches the incoming values in the input "key".
+   * However, "key" is case-insensitive.
+   */
   setCaseInsensitiveReactiveInput<GKey extends string>(
     key: GKey,
-    value: IObservable<ISetCaseInsensitiveInputValue<GConfig, GKey>>,
+    value$: IObservable<ISetCaseInsensitiveInputValue<GConfig, GKey>>,
   ): IUnsubscribe {
     const lowerCaseKey: string = key.toLowerCase();
     if (this._lowerCaseInputKeys.has(lowerCaseKey)) {
       return this.setReactiveInput(
         this._lowerCaseInputKeys.get(lowerCaseKey) as InferVirtualCustomElementNodeSetReactiveInputKeys<GConfig>,
-        value as any,
+        value$ as any,
       );
     } else {
       throw new Error(`Input '${key}' not found`);
@@ -132,6 +145,9 @@ export class VirtualCustomElementNode<GConfig extends IVirtualCustomElementNodeC
 
   /* OUTPUT */
 
+  /**
+   * Subscribes to the output "key", and dispatches the incoming values in the Observer "$value".
+   */
   setReactiveOutput<GKey extends InferVirtualCustomElementNodeSetReactiveOutputKeys<GConfig>>(
     key: GKey,
     $value: IObserver<InferVirtualCustomElementNodeSetReactiveOutputValueFromKey<GConfig, GKey>>,
@@ -147,15 +163,24 @@ export class VirtualCustomElementNode<GConfig extends IVirtualCustomElementNodeC
     return observable$($value);
   }
 
+  /**
+   * Subscribes to the output "key", and dispatches the incoming values in the Observer "$value".
+   * However, "key" is case-insensitive.
+   */
   setCaseInsensitiveReactiveOutput<GKey extends string>(
     key: GKey,
-    value: IObservable<ISetCaseInsensitiveOutputValue<GConfig, GKey>>,
+    $value: IObserver<ISetCaseInsensitiveOutputValue<GConfig, GKey>>,
   ): IUnsubscribe {
     const lowerCaseKey: string = key.toLowerCase();
     if (this._lowerCaseOutputKeys.has(lowerCaseKey)) {
       return this.setReactiveOutput(
         this._lowerCaseOutputKeys.get(lowerCaseKey) as InferVirtualCustomElementNodeSetReactiveOutputKeys<GConfig>,
-        value as any,
+        $value as any,
+      );
+    } else if (this._lowerCaseInputKeys.has(lowerCaseKey)) {
+      return this.setReactiveOutput(
+        this._lowerCaseInputKeys.get(lowerCaseKey) as InferVirtualCustomElementNodeSetReactiveOutputKeys<GConfig>,
+        $value as any,
       );
     } else {
       throw new Error(`Output '${key}' not found`);

@@ -1,3 +1,5 @@
-export function isEmptyString(input: string): boolean {
+export function isEmptyString(
+  input: string,
+): boolean {
   return (input === '');
 }

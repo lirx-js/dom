@@ -1,0 +1,1 @@
+export * from './virtual-shadow-root-node.class';

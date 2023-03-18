@@ -1,6 +1,7 @@
 import { getLowerCaseObjectKeysMap } from '../../../../../misc/object/get-lower-case-object-keys-map';
 import { linkDOMNodeWithVirtualDOMNode } from '../../../functions/link/link-dom-node-with-virtual-dom-node';
 import { VirtualDOMNode } from '../../../virtual-dom-node.class';
+import { IVirtualShadowRootNodeInit, VirtualShadowRootNode } from '../shadow-root/virtual-shadow-root-node.class';
 import { IAttributeValue } from './attribute/attribute-value.type';
 import { ISetStylePropertyOrStringOrNull, IStyleProperty } from './style/style-property.type';
 
@@ -15,6 +16,7 @@ export type ISetCaseInsensitivePropertyValue<GElementNode extends Element, GProp
  */
 export class VirtualElementNode<GElementNode extends Element> extends VirtualDOMNode {
   protected readonly _elementNode: GElementNode;
+  protected _shadowRoot: VirtualShadowRootNode<this> | null;
   protected readonly _selfDOMNodes: [GElementNode]; // computed
 
   protected readonly _lowerCaseElementKeys: ReadonlyMap<string, string>; // computed
@@ -29,6 +31,7 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
       isLeaf: false,
     });
     this._elementNode = document.createElementNS(namespaceURI, name, options) as GElementNode;
+    this._shadowRoot = null;
     this._selfDOMNodes = [
       this._elementNode,
     ];
@@ -45,6 +48,10 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
     return this._elementNode;
   }
 
+  get shadowRoot(): VirtualShadowRootNode<this> | null {
+    return this._shadowRoot;
+  }
+
   override getSelfDOMNodes(): readonly Node[] {
     return this._selfDOMNodes;
   }
@@ -55,6 +62,12 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
 
   override getReferenceDOMNode(): Node {
     return this._elementNode;
+  }
+
+  attachShadow(
+    options?: IVirtualShadowRootNodeInit,
+  ): VirtualShadowRootNode<this> {
+    return this._shadowRoot = VirtualShadowRootNode.attachShadow<this>(this, options);
   }
 
   /* PROPERTY */
@@ -220,4 +233,5 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
   }
 }
 
+export type IGenericVirtualElementNode = VirtualElementNode<any>;
 

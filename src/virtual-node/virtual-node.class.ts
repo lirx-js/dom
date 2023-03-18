@@ -69,6 +69,11 @@ export abstract class VirtualNode {
     return this._isLeaf;
   }
 
+  get isConnectedRoot(): boolean {
+    return this.isRoot
+      && this.isConnected;
+  }
+
   /**
    * Returns an Observable sending the parent of this node.
    * This is useful to detect changes in the parent node.
@@ -118,7 +123,7 @@ export abstract class VirtualNode {
   get isConnected(): boolean {
     let node: IVirtualNodeOrNull = this;
     while (node !== null) {
-      if (node.isRoot) {
+      if (node.isConnectedRoot) {
         return true;
       } else {
         node = node.parentNode;

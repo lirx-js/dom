@@ -1,4 +1,5 @@
-import { IObservable, IObserver, IUnsubscribe } from '@lirx/core';
+import { IObservable, IObserver } from '@lirx/core';
+import { IUnsubscribe } from '@lirx/utils';
 import { HTML_NAMESPACE_URI_CONSTANT } from '../../../../../misc/namespace-uri/html-namespace-uri.constant';
 import { createTypedSourcesMap } from '../../../../../misc/typed-sources-map/implementations/create-typed-sources-map';
 import { ITypedSourcesMap } from '../../../../../misc/typed-sources-map/implementations/typed-sources-map';

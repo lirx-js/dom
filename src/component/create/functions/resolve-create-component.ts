@@ -23,19 +23,19 @@ export function resolveCreateComponent<GConfig extends IComponentConfig>(
     slots,
   }: IResolveCreateComponentOptions<GConfig>,
 ): void {
-  const $: InferComponentConfigData<GConfig> = resolveCreateComponentInit({
+  const $: InferComponentConfigData<GConfig> = resolveCreateComponentInit<GConfig>({
     node,
     init,
   });
 
-  injectCreateComponentTemplate({
+  injectCreateComponentTemplate<GConfig>({
     node,
     template,
     $,
     slots,
   });
 
-  applyCreateComponentStyles({
+  applyCreateComponentStyles<GConfig>({
     node,
     styles,
   });

@@ -1,7 +1,6 @@
 import { VirtualCustomElementNode } from '../../../virtual-node/dom/nodes/reactive/custom-element/virtual-custom-element-node.class';
 import { IComponentConfig } from '../../types/config/component-config.type';
 import { IComponentStyle } from '../../types/options/component-style.type';
-import { ICreateComponentOptions } from '../../types/options/create-component-options.type';
 
 export interface IApplyCreateComponentStylesOptions<GConfig extends IComponentConfig> {
   node: VirtualCustomElementNode<GConfig>;

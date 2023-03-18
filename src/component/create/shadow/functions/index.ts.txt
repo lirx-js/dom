@@ -1,0 +1,4 @@
+export * from './apply-create-shadow-component-styles';
+export * from './inject-create-shadow-component-template';
+export * from './resolve-create-shadow-component';
+export * from './resolve-create-shadow-component-init';

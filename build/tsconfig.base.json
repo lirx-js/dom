@@ -25,6 +25,7 @@
     "strictPropertyInitialization": true,
     "noUnusedLocals": false,
     "suppressImplicitAnyIndexErrors": true,
+    "module": "esnext",
     "moduleResolution": "node",
     "stripInternal": false,
     "target": "esnext",

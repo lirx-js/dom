@@ -6,7 +6,6 @@ import { applyTemplateForVirtualDOMNode } from '../../../virtual-node/functions/
 import { IComponentConfig } from '../../types/config/component-config.type';
 import { InferComponentConfigData } from '../../types/config/infer-component-config-data.type';
 import { IComponentTemplate } from '../../types/options/component-template.type';
-import { ICreateComponentOptions } from '../../types/options/create-component-options.type';
 
 export interface IInjectCreateComponentTemplateOptions<GConfig extends IComponentConfig> {
   node: VirtualCustomElementNode<GConfig>;

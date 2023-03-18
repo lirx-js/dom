@@ -1,4 +1,5 @@
-import { fromEventTarget, IObservable, IUnsubscribe } from '@lirx/core';
+import { fromEventTarget, IObservable } from '@lirx/core';
+import { IUnsubscribe } from '@lirx/utils';
 import { HTML_NAMESPACE_URI_CONSTANT } from '../../../../../misc/namespace-uri/html-namespace-uri.constant';
 import { MATH_ML_NAMESPACE_URI_CONSTANT } from '../../../../../misc/namespace-uri/math-ml-namespace-uri.constant';
 import { SVG_NAMESPACE_URI_CONSTANT } from '../../../../../misc/namespace-uri/svg-namespace-uri.constant';

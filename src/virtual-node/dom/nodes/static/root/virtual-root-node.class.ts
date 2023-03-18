@@ -35,6 +35,10 @@ export class VirtualRootNode<GRootNode extends ParentNode> extends VirtualDOMNod
     linkDOMNodeWithVirtualDOMNode(this._rootNode, this);
   }
 
+  override get isConnected(): boolean {
+    return true; // INFO maybe check if connected to the root document
+  }
+
   /**
    * Returns the associated DOM Node of this node.
    */

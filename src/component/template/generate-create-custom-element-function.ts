@@ -1,6 +1,6 @@
 import {
   IVirtualCustomElementNodeConfig,
-} from '../../virtual-node/dom/nodes/reactive/custom-element/types/config/virtual-custom-element-node-config.type';
+} from '../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/config/virtual-custom-element-node-config.type';
 import { IComponentCreateFunction, IGenericComponent } from '../types/component.type';
 
 export type ICustomElementList = readonly IGenericComponent[];

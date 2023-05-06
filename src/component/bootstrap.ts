@@ -1,8 +1,8 @@
 import {
   IVirtualCustomElementNodeSlotsMap,
-} from '../virtual-node/dom/nodes/reactive/custom-element/slots/virtual-custom-element-node-slots-map.type';
-import { VirtualCustomElementNode } from '../virtual-node/dom/nodes/reactive/custom-element/virtual-custom-element-node.class';
-import { IGenericVirtualRootNode, VirtualRootNode } from '../virtual-node/dom/nodes/static/root/virtual-root-node.class';
+} from '../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/slots/virtual-custom-element-node-slots-map.type';
+import { VirtualCustomElementNode } from '../dom-manipulation/virtual-nodes/virtual-custom-element-node/virtual-custom-element-node.class';
+import { IGenericVirtualRootNode, VirtualRootNode } from '../dom-manipulation/virtual-nodes/virtual-root-node/virtual-root-node.class';
 import { IComponent } from './types/component.type';
 import { IComponentConfig } from './types/config/component-config.type';
 

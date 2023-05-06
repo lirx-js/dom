@@ -1,0 +1,2 @@
+export * from './infer-virtual-custom-element-node-options-inputs-interface.type';
+export * from './infer-virtual-custom-element-node-options-inputs.type';

@@ -1,6 +1,6 @@
 import {
   IVirtualCustomElementNodeOptions,
-} from '../../../virtual-node/dom/nodes/reactive/custom-element/types/options/virtual-custom-element-node-options.type';
+} from '../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/options/virtual-custom-element-node-options.type';
 import { IComponentConfig } from '../config/component-config.type';
 import { InferComponentConfigData } from '../config/infer-component-config-data.type';
 import { IComponentStyle } from './component-style.type';

@@ -1,8 +1,8 @@
 import { createCounter } from '../../misc/create-counter';
-import { linesOrNullToLines } from '../../transpilers/misc/lines/functions/lines-or-null-to-lines';
-import { linesToString } from '../../transpilers/misc/lines/functions/lines-to-string';
-import { ILines } from '../../transpilers/misc/lines/lines.type';
-import { transpileReactiveStyleToCSSLines } from '../../transpilers/reactive-style/css/transpile-reactive-style-to-css-lines';
+import { linesOrNullToLines } from '../../syntax/misc/lines/functions/lines-or-null-to-lines';
+import { linesToString } from '../../syntax/misc/lines/functions/lines-to-string';
+import { ILines } from '../../syntax/misc/lines/lines.type';
+import { transpileReactiveStyleToCSSLines } from '../../syntax/reactive-style/transpile/css/transpile-reactive-style-to-css-lines';
 
 export const COMPONENT_STYLES_ID = createCounter();
 

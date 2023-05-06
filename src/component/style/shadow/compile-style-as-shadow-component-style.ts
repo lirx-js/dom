@@ -1,7 +1,7 @@
 import {
-  IGenericVirtualCustomElementNode,
-} from '../../../virtual-node/dom/nodes/reactive/custom-element/virtual-custom-element-node.class';
-import { IGenericVirtualShadowRootNode } from '../../../virtual-node/dom/nodes/static/shadow-root/virtual-shadow-root-node.class';
+  IGenericVirtualElementNode
+} from '../../../dom-manipulation/virtual-nodes/virtual-element-node/generic-virtual-element-node.type';
+import { IGenericVirtualShadowRootNode } from '../../../dom-manipulation/virtual-nodes/virtual-shadow-root-node/virtual-shadow-root-node.class';
 import { IComponentStyle } from '../../types/options/component-style.type';
 
 export function compileStyleAsShadowComponentStyle(
@@ -11,7 +11,7 @@ export function compileStyleAsShadowComponentStyle(
   sheet.replaceSync(css);
 
   return (
-    node: IGenericVirtualCustomElementNode,
+    node: IGenericVirtualElementNode,
   ): void => {
     const shadowRoot: IGenericVirtualShadowRootNode | null = node.shadowRoot;
     if (shadowRoot === null) {

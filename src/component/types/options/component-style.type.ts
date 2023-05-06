@@ -1,9 +1,9 @@
 import {
-  IGenericVirtualCustomElementNode,
-} from '../../../virtual-node/dom/nodes/reactive/custom-element/virtual-custom-element-node.class';
+  IGenericVirtualElementNode
+} from '../../../dom-manipulation/virtual-nodes/virtual-element-node/generic-virtual-element-node.type';
 
 export interface IComponentStyle {
   (
-    node: IGenericVirtualCustomElementNode,
+    node: IGenericVirtualElementNode,
   ): void;
 }

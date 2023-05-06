@@ -1,11 +1,11 @@
-import { createNamesMismatchError } from '../../misc/errors/create-names-mismatch-error';
+import { createNamesMismatchError } from '../errors/create-names-mismatch-error';
 import {
   IVirtualCustomElementNodeSlotsMap,
-} from '../../virtual-node/dom/nodes/reactive/custom-element/slots/virtual-custom-element-node-slots-map.type';
+} from '../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/slots/virtual-custom-element-node-slots-map.type';
 import {
   IVirtualCustomElementNodeConfig,
-} from '../../virtual-node/dom/nodes/reactive/custom-element/types/config/virtual-custom-element-node-config.type';
-import { VirtualCustomElementNode } from '../../virtual-node/dom/nodes/reactive/custom-element/virtual-custom-element-node.class';
+} from '../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/config/virtual-custom-element-node-config.type';
+import { VirtualCustomElementNode } from '../../dom-manipulation/virtual-nodes/virtual-custom-element-node/virtual-custom-element-node.class';
 import { IComponent } from '../types/component.type';
 
 export function createComponentReference<GConfig extends IVirtualCustomElementNodeConfig>(

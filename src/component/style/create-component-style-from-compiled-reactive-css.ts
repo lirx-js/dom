@@ -1,6 +1,6 @@
 import {
-  IGenericVirtualCustomElementNode,
-} from '../../virtual-node/dom/nodes/reactive/custom-element/virtual-custom-element-node.class';
+  IGenericVirtualElementNode
+} from '../../dom-manipulation/virtual-nodes/virtual-element-node/generic-virtual-element-node.type';
 import { IComponentStyle } from '../types/options/component-style.type';
 import { ICompiledReactiveCSS } from './compile-style-as-compiled-reactive-css';
 
@@ -31,7 +31,7 @@ export function createComponentStyleFromCompiledReactiveCSS(
   };
 
   return (
-    node: IGenericVirtualCustomElementNode,
+    node: IGenericVirtualElementNode,
   ): void => {
     node.setAttribute(id, '');
 

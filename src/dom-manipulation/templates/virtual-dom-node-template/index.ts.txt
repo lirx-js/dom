@@ -1,0 +1,2 @@
+export * from './apply-template-for-virtual-dom-node';
+export * from './virtual-dom-node-template.type';

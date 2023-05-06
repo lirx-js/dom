@@ -1,8 +1,8 @@
 import {
   IGenericVirtualDOMNodeModifier,
   IVirtualDOMNodeModifierFunction,
-} from '../../modifiers/virtual-dom-node/virtual-dom-node-modifier.type';
-import { VirtualDOMNode } from '../../virtual-node/dom/virtual-dom-node.class';
+} from '../../dom-manipulation/modifiers/virtual-dom-node-modifier/virtual-dom-node-modifier.type';
+import { VirtualDOMNode } from '../../dom-manipulation/virtual-nodes/virtual-dom-node/virtual-dom-node.class';
 
 export type INodeModifierList = readonly IGenericVirtualDOMNodeModifier[];
 

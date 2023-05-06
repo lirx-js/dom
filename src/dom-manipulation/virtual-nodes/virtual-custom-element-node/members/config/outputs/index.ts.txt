@@ -1,0 +1,2 @@
+export * from './infer-virtual-custom-element-node-config-outputs.type';
+export * from './virtual-custom-element-node-config-outputs.type';

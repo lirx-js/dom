@@ -1,4 +1,4 @@
-import { VirtualCustomElementNode } from '../../../virtual-node/dom/nodes/reactive/custom-element/virtual-custom-element-node.class';
+import { VirtualCustomElementNode } from '../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/virtual-custom-element-node.class';
 import { IComponentConfig } from '../../types/config/component-config.type';
 import { IComponentStyle } from '../../types/options/component-style.type';
 

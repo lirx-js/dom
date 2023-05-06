@@ -1,6 +1,6 @@
 import {
   IGenericComponentTemplateWithImportsAsFirstArgument,
-} from '../../transpilers/reactive-html/html/component/component-template-with-imports-as-first-argument/component-template-with-imports-as-first-argument.type';
+} from '../../syntax/reactive-html/transpile/html/component/component-template-with-imports-as-first-argument/component-template-with-imports-as-first-argument.type';
 import { IComponentTemplate } from '../types/options/component-template.type';
 import { ICompileReactiveHTMLAsComponentTemplateOptions } from './compile-reactive-html-as-component-template';
 import { generateApplyNodeModifierFunction } from './generate-apply-node-modifier-function';

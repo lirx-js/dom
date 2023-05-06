@@ -1,20 +1,23 @@
-import { IGenericVirtualDOMNodeModifier } from '../../modifiers/virtual-dom-node/virtual-dom-node-modifier.type';
-import { indentLines } from '../../transpilers/misc/lines/functions/indent-lines';
-import { linesToString } from '../../transpilers/misc/lines/functions/lines-to-string';
-import { ILines } from '../../transpilers/misc/lines/lines.type';
+import { IGenericVirtualDOMNodeModifier } from '../../dom-manipulation/modifiers/virtual-dom-node-modifier/virtual-dom-node-modifier.type';
+import { indentLines } from '../../syntax/misc/lines/functions/indent-lines';
+import { linesToString } from '../../syntax/misc/lines/functions/lines-to-string';
+import { ILines } from '../../syntax/misc/lines/lines.type';
+import { generateJsLinesForValuesToImportFromObject } from '../../syntax/misc/misc/generate-js-lines-for-values-to-import-from-object';
 import {
   IComponentTemplateWithImportsAsFirstArgument,
-} from '../../transpilers/reactive-html/html/component/component-template-with-imports-as-first-argument/component-template-with-imports-as-first-argument.type';
+} from '../../syntax/reactive-html/transpile/html/component/component-template-with-imports-as-first-argument/component-template-with-imports-as-first-argument.type';
 import {
   transpileReactiveHTMLToJSLinesAsComponentTemplateWithImportsAsFirstArgument,
-} from '../../transpilers/reactive-html/html/component/component-template-with-imports-as-first-argument/transpile-reactive-html-to-js-lines-as-component-template-with-imports-as-first-argument';
-import { ITranspileReactiveHTMLToJSLinesOptions } from '../../transpilers/reactive-html/html/transpile-reactive-html-to-js-lines';
+} from '../../syntax/reactive-html/transpile/html/component/component-template-with-imports-as-first-argument/transpile-reactive-html-to-js-lines-as-component-template-with-imports-as-first-argument';
+import { ITranspileReactiveHTMLToJSLinesOptions } from '../../syntax/reactive-html/transpile/html/transpile-reactive-html-to-js-lines';
 
 import {
-  PRIMARY_TRANSPILERS_FOR_VIRTUAL_NODE_CONSTANT,
-} from '../../transpilers/reactive-html/primary/virtual-node/primary-transpilers-for-virtual-node.constant';
+  PRIMARY_TRANSPILERS_FOR_VIRTUAL_NODE_BASED_REACTIVE_HTML,
+} from '../../syntax/reactive-html/transpile/primary/virtual-node-based/primary-transpilers-for-virtual-node-based-reactive-html.constant';
+import {
+  VALUES_TO_IMPORT_FOR_VIRTUAL_NODE_BASED_REACTIVE_HTML,
+} from '../../syntax/reactive-html/transpile/primary/virtual-node-based/values-to-import-for-virtual-node-based-reactive-html.constant';
 import { IComponentTemplate } from '../types/options/component-template.type';
-import { DEFAULT_COMPONENT_TEMPLATE_VALUES_TO_IMPORT } from './constants/default-component-template-values-to-import.constant';
 import { generateApplyNodeModifierFunction } from './generate-apply-node-modifier-function';
 import { generateCreateCustomElementFunction, ICustomElementList } from './generate-create-custom-element-function';
 
@@ -34,7 +37,7 @@ export function compileReactiveHTMLAsComponentTemplate<GData extends object>(
   const applyNodeModifier = generateApplyNodeModifierFunction(modifiers);
 
   const valuesToImport = {
-    ...DEFAULT_COMPONENT_TEMPLATE_VALUES_TO_IMPORT,
+    ...VALUES_TO_IMPORT_FOR_VIRTUAL_NODE_BASED_REACTIVE_HTML,
     createCustomElement,
     applyNodeModifier,
   };
@@ -42,17 +45,15 @@ export function compileReactiveHTMLAsComponentTemplate<GData extends object>(
   const functionImportLines: ILines = [
     `{`,
     ...indentLines(
-      Object.keys(valuesToImport).map((value: string): string => {
-        return `${value},`;
-      }),
+      generateJsLinesForValuesToImportFromObject(valuesToImport),
     ),
     `},`,
   ];
 
   const lines: ILines = transpileReactiveHTMLToJSLinesAsComponentTemplateWithImportsAsFirstArgument({
     ...options,
-    functionImportLines,
-    transpilers: PRIMARY_TRANSPILERS_FOR_VIRTUAL_NODE_CONSTANT,
+    functionImportLines: functionImportLines,
+    transpilers: PRIMARY_TRANSPILERS_FOR_VIRTUAL_NODE_BASED_REACTIVE_HTML,
   });
 
   const compiledReactiveHTML: string = linesToString(lines);

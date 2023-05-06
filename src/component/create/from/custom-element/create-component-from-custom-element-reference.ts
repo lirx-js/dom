@@ -1,8 +1,8 @@
-import { createNamesMismatchError } from '../../../../misc/errors/create-names-mismatch-error';
+import { createNamesMismatchError } from '../../../errors/create-names-mismatch-error';
 import {
   IVirtualCustomElementNodeSlotsMap,
-} from '../../../../virtual-node/dom/nodes/reactive/custom-element/slots/virtual-custom-element-node-slots-map.type';
-import { VirtualCustomElementNode } from '../../../../virtual-node/dom/nodes/reactive/custom-element/virtual-custom-element-node.class';
+} from '../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/slots/virtual-custom-element-node-slots-map.type';
+import { VirtualCustomElementNode } from '../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/virtual-custom-element-node.class';
 import { ICreateComponentFromCustomElementNameOptions } from './create-component-from-custom-element-name';
 import {
   ICustomElementComponent,
@@ -10,7 +10,7 @@ import {
   ICustomElementConstructor,
   ICustomElementVirtualCustomElementNode,
 } from './custom-element.types';
-import { createCustomElementNotDefinedError } from '../../../../misc/errors/create-custom-element-not-defined-error';
+import { createCustomElementNotDefinedError } from '../../../errors/create-custom-element-not-defined-error';
 
 export interface ICreateComponentFromCustomElementReferenceOptions extends ICreateComponentFromCustomElementNameOptions {
   mustHaveSameConstructor?: boolean;

@@ -1,0 +1,2 @@
+export * from './virtual-dom-node-query-selector-iterator';
+export * from './virtual-dom-node-query-selector';

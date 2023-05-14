@@ -1,23 +1,25 @@
 import { HTML_NAMESPACE_URI_CONSTANT } from '../../misc/namespace-uri/html-namespace-uri.constant';
 import { VirtualReactiveElementNode } from '../virtual-reactive-element-node/virtual-reactive-element-node.class';
 import { InferVirtualCustomElementNodeConfigElement } from './members/config/infer-virtual-custom-element-node-config-element.type';
+import { IVirtualCustomElementNodeConfigInputs } from './members/config/inputs/virtual-custom-element-node-config-inputs.type';
+import { IVirtualCustomElementNodeConfigOutputs } from './members/config/outputs/virtual-custom-element-node-config-outputs.type';
 import { IVirtualCustomElementNodeConfig } from './members/config/virtual-custom-element-node-config.type';
 import {
   createVirtualCustomElementNodeInputsFromInputsMap,
-} from './members/inputs/create-virtual-custom-element-node-inputs-from-inputs-map';
+} from './members/inputs/inputs-map/create-virtual-custom-element-node-inputs-from-inputs-map';
 import {
   createVirtualCustomElementNodeInputsMap,
   IVirtualCustomElementNodeInputsMap,
-} from './members/inputs/create-virtual-custom-element-node-inputs-map';
+} from './members/inputs/inputs-map/create-virtual-custom-element-node-inputs-map';
 import { IVirtualCustomElementNodeInputs } from './members/inputs/virtual-custom-element-node-inputs.type';
 import { IVirtualCustomElementNodeOptions } from './members/options/virtual-custom-element-node-options.type';
 import {
   createVirtualCustomElementNodeOutputsFromOutputsMap,
-} from './members/outputs/create-virtual-custom-element-node-outputs-from-outputs-map';
+} from './members/outputs/outputs-map/create-virtual-custom-element-node-outputs-from-outputs-map';
 import {
   createVirtualCustomElementNodeOutputsMap,
   IVirtualCustomElementNodeOutputsMap,
-} from './members/outputs/create-virtual-custom-element-node-outputs-map';
+} from './members/outputs/outputs-map/create-virtual-custom-element-node-outputs-map';
 import { IVirtualCustomElementNodeOutputs } from './members/outputs/virtual-custom-element-node-outputs.type';
 import { IVirtualCustomElementNodeSlotsMap } from './members/slots/virtual-custom-element-node-slots-map.type';
 
@@ -59,8 +61,8 @@ export class VirtualCustomElementNode<GConfig extends IVirtualCustomElementNodeC
     this._name = name;
     this._extends = _extends;
     this._slots = slots;
-    this._inputsMap = createVirtualCustomElementNodeInputsMap<GConfig>(this, inputs);
-    this._outputsMap = createVirtualCustomElementNodeOutputsMap<GConfig>(this, outputs);
+    this._inputsMap = createVirtualCustomElementNodeInputsMap(inputs as IVirtualCustomElementNodeConfigInputs);
+    this._outputsMap = createVirtualCustomElementNodeOutputsMap(outputs as IVirtualCustomElementNodeConfigOutputs);
 
     if (_extends !== void 0) {
       this.setAttribute('is', name);

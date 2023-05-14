@@ -9,10 +9,10 @@ const ROOT_PATH = $path.join(__dirname, '../../../');
 // const NODE_MODULE_PATH = $path.join(ROOT_PATH, 'node_modules');
 // const VITE_CACHE_PATH = $path.join(NODE_MODULE_PATH, '.vite');
 
-const REFACTOR_DIRECTORY_PATH = $path.join(ROOT_PATH, 'src/dom-manipulation/virtual-nodes/virtual-custom-element-node/members/outputs/case-insensitive');
+const REFACTOR_DIRECTORY_PATH = $path.join(ROOT_PATH, 'src/core');
 
-const SIMPLE_REFACTOR_FROM = 'input';
-const SIMPLE_REFACTOR_TO = 'output';
+const SIMPLE_REFACTOR_FROM = 'abc';
+const SIMPLE_REFACTOR_TO = 'def';
 
 
 function dashCaseToCamelCase(

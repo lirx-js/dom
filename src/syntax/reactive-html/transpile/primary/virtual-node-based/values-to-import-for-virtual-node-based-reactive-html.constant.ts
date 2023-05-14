@@ -18,6 +18,9 @@ import {
   VirtualReactiveAsyncNode,
 } from '../../../../../dom-manipulation/virtual-nodes/virtual-reactive-async-node/virtual-reactive-async-node.class';
 import {
+  virtualReactiveElementNodeSetReactiveEventListenerFromObservable,
+} from '../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/members/event-listener/virtual-reactive-element-node-set--reactive-event-listener-from-observable';
+import {
   VirtualReactiveElementNode,
 } from '../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/virtual-reactive-element-node.class';
 import {
@@ -46,6 +49,7 @@ export const VALUES_TO_IMPORT_FOR_VIRTUAL_NODE_BASED_REACTIVE_HTML = {
   virtualElementNodeAppendClassName,
   // getCaseInsensitiveVirtualElementNodePropertyKey,
   virtualReactiveElementNodeSetCaseInsensitiveReactiveProperty,
+  virtualReactiveElementNodeSetReactiveEventListenerFromObservable,
   virtualCustomElementNodeSetCaseInsensitiveReactiveInputLike,
   virtualCustomElementNodeSetCaseInsensitiveReactiveOutput,
   virtualCustomElementNodeSetCaseInsensitiveReactiveOutputFromObservable,

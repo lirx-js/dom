@@ -1,6 +1,6 @@
 {
   "name": "ts-lib-seed",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Seed to build a library",
   "main": "index.js",
   "scripts": {
@@ -54,6 +54,7 @@
     "clean:dist": "echo 'clean:dist' && find ../ -path '../dist/*' -delete",
     "comment:build:package": "yarn run uncomment:index-files && yarn run build:package && yarn run comment:index-files",
     "build:dev": "yarn run comment:build:package && yarn run bump:publish:package:dev",
+    "build:prod": "yarn run comment:build:package && yarn run publish:package",
     "ncu": "npx npm-check-updates"
   },
   "repository": {
@@ -68,13 +69,13 @@
     "acorn": "^8.8.2",
     "acorn-walk": "^8.2.0",
     "astring": "^1.8.4",
-    "cssnano": "^5.1.15",
-    "html-minifier-terser": "^7.1.0",
-    "postcss": "^8.4.21",
-    "sass": "^1.59.3",
-    "tsc-watch": "^6.0.0",
+    "cssnano": "^6.0.1",
+    "html-minifier-terser": "^7.2.0",
+    "postcss": "^8.4.23",
+    "sass": "^1.62.1",
+    "tsc-watch": "^6.0.4",
     "tslib": "^2.5.0",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.4"
   },
   "packageManager": "yarn@3.5.0"
 }

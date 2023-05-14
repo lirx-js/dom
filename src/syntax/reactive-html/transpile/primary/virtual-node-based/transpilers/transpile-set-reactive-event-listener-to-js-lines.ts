@@ -13,18 +13,24 @@ export const transpileSetReactiveEventListenerToJSLines: ITranspileSetReactiveEv
     observableMode,
   }: ITranspileSetReactiveEventListenerToJSLinesOptions,
 ): ILines => {
-  return inlineLastLines(
-    node,
-    [
-      observableMode
-        ? `.setReactiveEventListenerFromObservable(` // TODO
-        : `.setReactiveEventListener(`,
-    ],
-    name,
-    [', '],
-    value,
-    [');'],
-  );
+  return observableMode
+    ? inlineLastLines(
+      [`virtualReactiveElementNodeSetReactiveEventListenerFromObservable(`],
+      node,
+      [', '],
+      name,
+      [', '],
+      value,
+      [');'],
+    )
+    : inlineLastLines(
+      node,
+      [`.setReactiveEventListener(`],
+      name,
+      [', '],
+      value,
+      [');'],
+    );
 };
 
 

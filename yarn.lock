@@ -3,13 +3,13 @@
 
 
 "@lirx/core@latest":
-  version "1.4.0-dev.1682681176592"
-  resolved "http://localhost:4873/@lirx/core/-/core-1.4.0-dev.1682681176592.tgz#dd8fb488f23e2f04aa53970647a63912b2f9075d"
-  integrity sha512-OmwsVErudqFViCo4onVuMOml0RzghQQVer6KeJhidNa1vuOQ+sOWKch7wBO1eotQ6hH96KqO2BPr47Wuys63OA==
+  version "1.4.0-dev.1683557786665"
+  resolved "http://localhost:4873/@lirx/core/-/core-1.4.0-dev.1683557786665.tgz#10fa651f8a7f91fc21f4576af8b8961a1b683884"
+  integrity sha512-ejxmwBRBJM7h26whfaKkN2QEXp0/rJ1ORbq0VWZ9lcY5VqfGWLAD5Fu52z5z1SB6jPU4H8vAEiqfKg7xez8ANA==
   dependencies:
     "@lirx/utils" latest
 
 "@lirx/utils@latest":
-  version "1.1.1-dev.1683096477611"
-  resolved "http://localhost:4873/@lirx/utils/-/utils-1.1.1-dev.1683096477611.tgz#fa34a65e806c3d553abbee25f2b8355f47446476"
-  integrity sha512-x7vJawxg04W9CaRVC1rwWgTM+W9266dKoYsxcXFdJ9VwQFcjp59yDOTDd1pLNpZ9mZnBptoll4I/cX5EiydVlg==
+  version "1.1.1"
+  resolved "http://localhost:4873/@lirx/utils/-/utils-1.1.1.tgz#78e1bcc6b8d961b680517797c6d8ebced6d10956"
+  integrity sha512-FIh/xx8aYJmTEhxwUtwESTbpecRn2qpbWHV5gAx4wDhe7gV/eAz7Ko6AU+tFNThX3DjN7aKA9apYZpvivjoCHA==

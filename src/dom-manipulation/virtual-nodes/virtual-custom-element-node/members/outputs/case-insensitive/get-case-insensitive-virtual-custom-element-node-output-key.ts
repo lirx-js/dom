@@ -1,8 +1,8 @@
 import { IGenericVirtualCustomElementNode } from '../../../generic-virtual-custom-element-node.type';
 import { VirtualCustomElementNode } from '../../../virtual-custom-element-node.class';
 import { IVirtualCustomElementNodeConfig } from '../../config/virtual-custom-element-node-config.type';
-import { getVirtualCustomElementNodeOutputsMap } from './get-virtual-custom-element-node-outputs-map';
-import { InferCaseInsensitiveOutputKey } from './infer-case-insensitive-output-key.type';
+import { getVirtualCustomElementNodeOutputsMap } from '../outputs-map/get-virtual-custom-element-node-outputs-map';
+import { InferCaseInsensitiveOutputKey } from './infer-virtual-custom-element-node-case-insensitive-output-key.type';
 
 export function getCaseInsensitiveVirtualCustomElementNodeOutputKey<GConfig extends IVirtualCustomElementNodeConfig, GKey extends string>(
   node: VirtualCustomElementNode<GConfig>,

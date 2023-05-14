@@ -4,14 +4,14 @@ import {
   IVirtualCustomElementNodeConfig
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/config/virtual-custom-element-node-config.type';
 import {
-  InferCustomVirtualElementNodeSetCaseInsensitiveInputValue
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/inputs/case-insensitive/infer-custom-virtual-element-node-set-case-insensitive-input-value.type';
+  InferVirtualCustomElementNodeCaseInsensitiveInputValue
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/inputs/case-insensitive/infer-virtual-custom-element-node-case-insensitive-input-value.type';
 import {
   virtualCustomElementNodeSetCaseInsensitiveReactiveInputLike
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/inputs/case-insensitive/virtual-custom-element-node-set-case-insensitive-reactive-input-like';
 import {
-  InferCustomVirtualElementNodeSetCaseInsensitiveOutputValue
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/outputs/case-insensitive/infer-custom-virtual-element-node-set-case-insensitive-output-value.type';
+  InferVirtualCustomElementNodeCaseInsensitiveOutputValue
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/outputs/case-insensitive/infer-virtual-custom-element-node-case-insensitive-output-value.type';
 import {
   virtualCustomElementNodeSetCaseInsensitiveReactiveOutput
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/outputs/case-insensitive/virtual-custom-element-node-set-case-insensitive-reactive-output';
@@ -56,7 +56,7 @@ export const transpileAOTSetReactiveOutputToJSLines: ITranspileSetReactiveOutput
 export function aot_17<GConfig extends IVirtualCustomElementNodeConfig, GKey extends string>(
   node: VirtualCustomElementNode<GConfig>,
   key: GKey,
-  value$: IObservable<IObserver<InferCustomVirtualElementNodeSetCaseInsensitiveOutputValue<GConfig, GKey>>>,
+  value$: IObservable<IObserver<InferVirtualCustomElementNodeCaseInsensitiveOutputValue<GConfig, GKey>>>,
 ): IUnsubscribe {
   return virtualCustomElementNodeSetCaseInsensitiveReactiveOutputFromObservable<GConfig, GKey>(
     node,
@@ -68,7 +68,7 @@ export function aot_17<GConfig extends IVirtualCustomElementNodeConfig, GKey ext
 export function aot_18<GConfig extends IVirtualCustomElementNodeConfig, GKey extends string>(
   node: VirtualCustomElementNode<GConfig>,
   key: GKey,
-  value$: IObservable<IObserver<InferCustomVirtualElementNodeSetCaseInsensitiveOutputValue<GConfig, GKey>>>,
+  value$: IObservable<IObserver<InferVirtualCustomElementNodeCaseInsensitiveOutputValue<GConfig, GKey>>>,
 ): IUnsubscribe {
   return virtualCustomElementNodeSetCaseInsensitiveReactiveOutput<GConfig, GKey>(
     node,

@@ -106,20 +106,6 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
     return this.on$<GEvent>(type, options)(observer);
   }
 
-  // /**
-  //  * Creates an EventListener of type "type" on the element of this node, whose listener is an Observable of Observer.
-  //  */
-  // setReactiveEventListenerFromObservable<GEvent extends Event>(
-  //   type: string,
-  //   observer$: IObservable<IObserver<GEvent>>,
-  //   options?: boolean | AddEventListenerOptions,
-  // ): IUnsubscribe {
-  //   return this.bindObservableWithObservableOfObserver(
-  //     this.on$<GEvent>(type, options),
-  //     observer$,
-  //   );
-  // }
-
   /* PROPERTY */
 
   /**

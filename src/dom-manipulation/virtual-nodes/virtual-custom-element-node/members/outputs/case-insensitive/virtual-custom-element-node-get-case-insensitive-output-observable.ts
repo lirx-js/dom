@@ -1,21 +1,21 @@
 import { IObservable } from '@lirx/core';
 import { VirtualCustomElementNode } from '../../../virtual-custom-element-node.class';
 import { IVirtualCustomElementNodeConfig } from '../../config/virtual-custom-element-node-config.type';
-import { IVirtualCustomElementNodeOutputsMap } from '../create-virtual-custom-element-node-outputs-map';
+import { virtualCustomElementNodeGetOutputObservable } from '../virtual-custom-element-node-get-output-observable';
 import { getCaseInsensitiveVirtualCustomElementNodeOutputKey } from './get-case-insensitive-virtual-custom-element-node-output-key';
-import { getVirtualCustomElementNodeOutputsMap } from './get-virtual-custom-element-node-outputs-map';
 import {
-  InferCustomVirtualElementNodeSetCaseInsensitiveOutputValue,
-} from './infer-custom-virtual-element-node-set-case-insensitive-output-value.type';
+  InferVirtualCustomElementNodeCaseInsensitiveOutputValue,
+} from './infer-virtual-custom-element-node-case-insensitive-output-value.type';
 
 export function virtualCustomElementNodeGetCaseInsensitiveOutputObservable<GConfig extends IVirtualCustomElementNodeConfig, GKey extends string>(
   node: VirtualCustomElementNode<GConfig>,
   key: GKey,
-): IObservable<InferCustomVirtualElementNodeSetCaseInsensitiveOutputValue<GConfig, GKey>> {
-  const _key: string = getCaseInsensitiveVirtualCustomElementNodeOutputKey<GConfig, GKey>(
+): IObservable<InferVirtualCustomElementNodeCaseInsensitiveOutputValue<GConfig, GKey>> {
+  return virtualCustomElementNodeGetOutputObservable<GConfig, GKey>(
     node,
-    key,
+    getCaseInsensitiveVirtualCustomElementNodeOutputKey<GConfig, GKey>(
+      node,
+      key,
+    ),
   );
-  const map: IVirtualCustomElementNodeOutputsMap = getVirtualCustomElementNodeOutputsMap(node);
-  return map.get(_key)![1];
 }

@@ -1,20 +1,20 @@
 import { IGenericVirtualCustomElementNode } from '../../../generic-virtual-custom-element-node.type';
 import { VirtualCustomElementNode } from '../../../virtual-custom-element-node.class';
 import { IVirtualCustomElementNodeConfig } from '../../config/virtual-custom-element-node-config.type';
-import { getVirtualCustomElementNodeInputsMap } from './get-virtual-custom-element-node-inputs-map';
-import { InferCaseInsensitiveInputKey } from './infer-case-insensitive-input-key.type';
+import { getVirtualCustomElementNodeInputsMap } from '../inputs-map/get-virtual-custom-element-node-inputs-map';
+import { InferVirtualCustomElementNodeCaseInsensitiveInputKey } from './infer-virtual-custom-element-node-case-insensitive-input-key.type';
 
 export function getCaseInsensitiveVirtualCustomElementNodeInputKey<GConfig extends IVirtualCustomElementNodeConfig, GKey extends string>(
   node: VirtualCustomElementNode<GConfig>,
   key: GKey,
-): InferCaseInsensitiveInputKey<GConfig, GKey> {
+): InferVirtualCustomElementNodeCaseInsensitiveInputKey<GConfig, GKey> {
   const map: ILowerCaseKeysMap = getCachedLowerCaseVirtualCustomElementNodeInputKeysMap(node);
 
   const _key: string | undefined = map.get(key.toLowerCase());
   if (_key === void 0) {
     throw new Error(`Input '${key}' not found`);
   } else {
-    return _key as InferCaseInsensitiveInputKey<GConfig, GKey>;
+    return _key as InferVirtualCustomElementNodeCaseInsensitiveInputKey<GConfig, GKey>;
   }
 }
 

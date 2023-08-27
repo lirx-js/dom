@@ -1,7 +1,10 @@
-import { distinctObserver, IObservable } from '@lirx/core';
+import { IObservable, distinctObservable } from '@lirx/core';
 import { applyTemplateForVirtualDOMNode } from '../../templates/virtual-dom-node-template/apply-template-for-virtual-dom-node';
-import { IGenericVirtualReactiveDOMNodeTemplateOrNull } from '../../templates/virtual-reactive-dom-node-template/virtual-reactive-dom-node-template.type';
+import {
+  IGenericVirtualReactiveDOMNodeTemplateOrNull,
+} from '../../templates/virtual-reactive-dom-node-template/virtual-reactive-dom-node-template.type';
 import { VirtualContainerNode } from '../virtual-container-node/virtual-container-node.class';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 
 export type IVirtualReactiveSwitchNodeTemplate = IGenericVirtualReactiveDOMNodeTemplateOrNull;
 
@@ -19,17 +22,21 @@ export class VirtualReactiveSwitchNode<GValue> extends VirtualContainerNode {
   ) {
     super();
 
-    this.onConnected$<GValue>(value$)(distinctObserver<GValue>((value: GValue): void => {
-      this.detachChildren();
-      const template: IVirtualReactiveSwitchNodeTemplate = templatesMap.get(value) ?? defaultTemplate;
-      if (template !== null) {
-        applyTemplateForVirtualDOMNode(
-          this,
-          template,
-          [{}],
-        );
-      }
-    }));
+    const _value$ = distinctObservable<GValue>(value$);
+
+    this.onConnected((): IUnsubscribe => {
+      return _value$((value: GValue): void => {
+        this.detachChildren();
+        const template: IVirtualReactiveSwitchNodeTemplate = templatesMap.get(value) ?? defaultTemplate;
+        if (template !== null) {
+          applyTemplateForVirtualDOMNode(
+            this,
+            template,
+            [{}],
+          );
+        }
+      });
+    });
   }
 }
 

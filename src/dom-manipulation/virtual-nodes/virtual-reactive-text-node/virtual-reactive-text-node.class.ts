@@ -1,5 +1,6 @@
 import { IObservable } from '@lirx/core';
 import { VirtualTextNode } from '../virtual-text-node/virtual-text-node';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 
 /**
  * Represents an abstract Text Node in an abstract DOM.
@@ -12,8 +13,10 @@ export class VirtualReactiveTextNode extends VirtualTextNode {
     value$: IObservable<string>,
   ) {
     super();
-    this.onConnected$(value$)((value: string): void => {
-      this.value = value;
+    this.onConnected((): IUnsubscribe => {
+      return value$((value: string): void => {
+        this.value = value;
+      });
     });
   }
 }

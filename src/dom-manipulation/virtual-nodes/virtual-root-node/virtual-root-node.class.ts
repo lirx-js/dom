@@ -1,5 +1,5 @@
-import { linkDOMNodeWithVirtualDOMNode } from '../virtual-node/members/link/link-dom-node-with-virtual-dom-node';
 import { VirtualDOMNode } from '../virtual-dom-node/virtual-dom-node.class';
+import { linkDOMNodeWithVirtualDOMNode } from '../virtual-node/members/link/link-dom-node-with-virtual-dom-node';
 import { IVirtualNodeOrNull } from '../virtual-node/virtual-node-or-null.type';
 
 let BODY_ROOT: VirtualRootNode<HTMLBodyElement>;
@@ -19,29 +19,30 @@ export class VirtualRootNode<GRootNode extends ParentNode> extends VirtualDOMNod
     return BODY_ROOT;
   }
 
-  protected readonly _rootNode: GRootNode; // the associated DOM Node
-  protected readonly _selfDOMNodes: [GRootNode]; // computed
+  readonly #rootNode: GRootNode; // the associated DOM Node
+  readonly #selfDOMNodes: [GRootNode]; // computed
 
   constructor(
     rootNode: GRootNode,
+    parentNode?: IVirtualNodeOrNull,
   ) {
-    super();
-    this._rootNode = rootNode;
-    this._selfDOMNodes = [
-      this._rootNode,
+    super(parentNode);
+    this.#rootNode = rootNode;
+    this.#selfDOMNodes = [
+      this.#rootNode,
     ];
-    linkDOMNodeWithVirtualDOMNode(this._rootNode, this);
+    linkDOMNodeWithVirtualDOMNode(this.#rootNode, this);
   }
 
   override get isConnected(): boolean {
-    return this._rootNode.isConnected;
+    return this.#rootNode.isConnected;
   }
 
   /**
    * Returns the associated DOM Node of this node.
    */
   get rootNode(): GRootNode {
-    return this._rootNode;
+    return this.#rootNode;
   }
 
   override acceptsParent(
@@ -51,15 +52,15 @@ export class VirtualRootNode<GRootNode extends ParentNode> extends VirtualDOMNod
   }
 
   override getSelfDOMNodes(): readonly Node[] {
-    return this._selfDOMNodes;
+    return this.#selfDOMNodes;
   }
 
   override getParentDOMNode(): ParentNode {
-    return this._rootNode;
+    return this.#rootNode;
   }
 
   override getReferenceDOMNode(): Node {
-    return this._rootNode;
+    return this.#rootNode;
   }
 }
 

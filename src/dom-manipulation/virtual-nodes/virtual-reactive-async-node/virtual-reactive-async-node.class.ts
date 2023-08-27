@@ -8,7 +8,7 @@ import {
   IObserver,
   TInferNotificationGName,
 } from '@lirx/core';
-import { futureUnsubscribe, IUnsubscribe } from '@lirx/utils';
+import { futureUnsubscribe, IUnsubscribe } from '@lirx/unsubscribe';
 import {
   IGenericVirtualReactiveDOMNodeTemplateOrNull,
   IVirtualReactiveDOMNodeTemplate,
@@ -96,20 +96,22 @@ export class VirtualReactiveAsyncNode<GValue> extends VirtualContainerNode {
       }
     };
 
-    this.onConnected$<IVirtualReactiveAsyncNodeNotifications<GValue>>(state$)((
-      {
-        name,
-        value,
-      }: IVirtualReactiveAsyncNodeNotifications<GValue>,
-    ): void => {
-      this.detachChildren();
-
-      const template: IGenericVirtualReactiveDOMNodeTemplateOrNull = getTemplate(name);
-      if (template !== null) {
-        template(this, {
+    this.onConnected((): IUnsubscribe => {
+      return state$((
+        {
+          name,
           value,
-        });
-      }
+        }: IVirtualReactiveAsyncNodeNotifications<GValue>,
+      ): void => {
+        this.detachChildren();
+
+        const template: IGenericVirtualReactiveDOMNodeTemplateOrNull = getTemplate(name);
+        if (template !== null) {
+          template(this, {
+            value,
+          });
+        }
+      });
     });
   }
 }

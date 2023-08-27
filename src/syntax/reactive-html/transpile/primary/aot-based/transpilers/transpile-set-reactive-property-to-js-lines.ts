@@ -1,11 +1,11 @@
 import { IObservable } from '@lirx/core';
-import { IUnsubscribe } from '@lirx/utils';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 import {
   InferVirtualElementNodeSetCaseInsensitivePropertyValue,
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-element-node/members/property/case-insensitive/infer-virtual-element-node-set-case-insensitive-property-value.type';
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/members/property/case-insensitive/infer-virtual-element-node-set-case-insensitive-property-value.type';
 import {
   virtualReactiveElementNodeSetCaseInsensitiveReactiveProperty,
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-element-node/members/property/case-insensitive/virtual-reactive-element-node-set-case-insensitive-reactive-property';
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/members/property/case-insensitive/virtual-reactive-element-node-set-case-insensitive-reactive-property';
 import {
   VirtualReactiveElementNode,
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/virtual-reactive-element-node.class';
@@ -34,12 +34,12 @@ export const transpileAOTSetReactivePropertyToJSLines: ITranspileSetReactiveProp
   );
 };
 
-export function aot_19<GElementNode extends Element, GPropertyKey extends string>(
+export function aot_19<GElementNode extends Element, GCaseInsensitiveKey extends string>(
   node: VirtualReactiveElementNode<GElementNode>,
-  propertyKey: GPropertyKey,
-  value$: IObservable<InferVirtualElementNodeSetCaseInsensitivePropertyValue<GElementNode, GPropertyKey>>,
+  propertyKey: GCaseInsensitiveKey,
+  value$: IObservable<InferVirtualElementNodeSetCaseInsensitivePropertyValue<GElementNode, GCaseInsensitiveKey>>,
 ): IUnsubscribe {
-  return virtualReactiveElementNodeSetCaseInsensitiveReactiveProperty<GElementNode, GPropertyKey>(
+  return virtualReactiveElementNodeSetCaseInsensitiveReactiveProperty<GElementNode, GCaseInsensitiveKey>(
     node,
     propertyKey,
     value$,

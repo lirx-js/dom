@@ -1,2 +1,0 @@
-export * from './generate-let-property-lines-for-inject-template';
-export * from './generate-let-property-lines-for-template';

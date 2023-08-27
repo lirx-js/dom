@@ -1,4 +1,3 @@
-
 /**
  * Every word starts with an uppercase except for the first one.
  */

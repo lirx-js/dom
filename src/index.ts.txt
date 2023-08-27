@@ -1,4 +1,0 @@
-export * from './component/index';
-export * from './dom-manipulation/index';
-export * from './misc/index';
-export * from './syntax/index';

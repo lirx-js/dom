@@ -1,2 +1,0 @@
-export * from './case-insensitive/index';
-export * from './infer-virtual-element-node-property-keys.type';

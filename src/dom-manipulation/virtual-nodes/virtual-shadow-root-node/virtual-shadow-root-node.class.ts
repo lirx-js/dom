@@ -8,7 +8,7 @@ export interface IVirtualShadowRootNodeInit extends Partial<ShadowRootInit> {
 /**
  * Represents an abstract ShadowRoot Node in an abstract DOM.
  */
-export class VirtualShadowRootNode<GParentBode extends IGenericVirtualElementNode> extends VirtualRootNode<ShadowRoot> {
+export class VirtualShadowRootNode<GParentNode extends IGenericVirtualElementNode> extends VirtualRootNode<ShadowRoot> {
 
   static attachShadow<GParentBode extends IGenericVirtualElementNode>(
     parentNode: GParentBode,
@@ -39,18 +39,20 @@ export class VirtualShadowRootNode<GParentBode extends IGenericVirtualElementNod
   }
 
   protected constructor(
-    parentNode: GParentBode,
+    parentNode: GParentNode,
   ) {
-    super(parentNode.elementNode.shadowRoot);
-    this._$parentNode$.emit(parentNode);
+    super(
+      parentNode.elementNode.shadowRoot,
+      parentNode,
+    );
   }
 
-  get parentNode$(): IObservable<GParentBode> {
-    return super.parentNode$ as IObservable<GParentBode>;
+  get parentNode$(): IObservable<GParentNode> {
+    return super.parentNode$ as IObservable<GParentNode>;
   }
 
-  get parentNode(): GParentBode {
-    return super.parentNode as GParentBode;
+  get parentNode(): GParentNode {
+    return super.parentNode as GParentNode;
   }
 
   override get isConnected(): boolean {

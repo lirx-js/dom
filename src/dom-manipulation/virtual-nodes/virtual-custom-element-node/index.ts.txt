@@ -1,3 +1,0 @@
-export * from './generic-virtual-custom-element-node.type';
-export * from './members/index';
-export * from './virtual-custom-element-node.class';

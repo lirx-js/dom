@@ -6,9 +6,14 @@ export function applyTemplateForVirtualDOMNode<GArguments extends any[]>(
   parentNode: VirtualDOMNode,
   template: IVirtualDOMNodeTemplate<GArguments>,
   args: GArguments,
+  allowBatch: boolean = true,
 ): void {
-  const container: VirtualContainerNode = new VirtualContainerNode();
-  template(container, ...args);
-  container.attach(parentNode);
+  if (parentNode.isConnected && allowBatch) { // batch append child nodes to increase performances
+    const container: VirtualContainerNode = new VirtualContainerNode();
+    template(container, ...args);
+    container.attach(parentNode);
+  } else {
+    template(parentNode, ...args);
+  }
 }
 

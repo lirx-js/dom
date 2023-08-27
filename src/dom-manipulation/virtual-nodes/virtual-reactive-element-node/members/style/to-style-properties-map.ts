@@ -22,10 +22,18 @@ export type IStylePropertiesMapAsIterableEntry =
 
 export type IStylePropertiesMapAsIterable = Iterable<IStylePropertiesMapAsIterableEntry>;
 
+export type IStylePropertiesMapAsRecordEntry =
+  | IStylePropertyLike
+  | null
+  ;
+
+export type IStylePropertiesMapAsRecord = Record<string, IStylePropertiesMapAsRecordEntry>;
+
 export type IStylePropertiesMapLike =
   | IStylePropertiesMap
   | IStylePropertiesMapAsString
   | IStylePropertiesMapAsIterable
+  | IStylePropertiesMapAsRecord
   ;
 
 export function toStylePropertiesMap(
@@ -35,8 +43,10 @@ export function toStylePropertiesMap(
     return input;
   } else if (typeof input === 'string') {
     return stringToStylePropertiesMap(input);
-  } else {
+  } else if (Symbol.iterator in input) {
     return iterableToStylePropertiesMap(input);
+  } else {
+    return recordToStylePropertiesMap(input);
   }
 }
 
@@ -87,6 +97,24 @@ export function iterableToStylePropertiesMap(
       }
 
       stylePropertiesMap.set(name, property);
+    }
+  }
+
+  return stylePropertiesMap;
+}
+
+export function recordToStylePropertiesMap(
+  input: IStylePropertiesMapAsRecord,
+): IStylePropertiesMap {
+  const stylePropertiesMap: IStylePropertiesMap = new Map<string, IStyleProperty>();
+
+  const entries = Object.entries(input);
+
+  for (let i = 0, l = entries.length; i < l; i++) {
+    const [name, entry]: [string, IStylePropertiesMapAsRecordEntry] = entries[i];
+
+    if (entry !== null) {
+      stylePropertiesMap.set(name, toStyleProperty(entry));
     }
   }
 

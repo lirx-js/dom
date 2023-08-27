@@ -52,12 +52,15 @@ export function transpileReactiveHTMLCustomElementChildrenToSlotsOfJSLines(
     }
   }
 
-  slots.set(DEFAULT_SLOT_NAME_CONSTANT, generateJSLinesForRXTemplate({
-    argumentsLines: null,
-    bodyLines: defaultSlotBodyLines,
-  }));
+  if (defaultSlotBodyLines.length > 0) {
+    slots.set(DEFAULT_SLOT_NAME_CONSTANT, generateJSLinesForRXTemplate({
+      argumentsLines: null,
+      bodyLines: defaultSlotBodyLines,
+    }));
+  }
+
+  // deleteEmptySlots(slots);
 
   return slots;
 }
-
 

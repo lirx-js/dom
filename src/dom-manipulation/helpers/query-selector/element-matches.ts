@@ -1,6 +1,6 @@
 import { uuid } from '../../../misc/uuid';
-import { isDocumentFragmentNode } from '../is/is-document-fragment-node';
-import { isElementNode } from '../is/is-element-node';
+import { isDocumentFragmentNode } from '../is/node-type/is-document-fragment-node';
+import { isElementNode } from '../is/node-type/is-element-node';
 
 // https://github.com/whatwg/dom/issues/1081
 

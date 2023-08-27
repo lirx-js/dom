@@ -4,7 +4,7 @@ tags: [FUNCTION, VIRTUAL DOM]
 
 # VirtualDOMNode
 
-- **[SOURCE FILE](https://github.com/lirx-js/dom/blob/main/src/virtual-node/virtual-node.class.ts)**
+- **[SOURCE FILE](https://github.com/lirx-js/dom/blob/main/src/dom-manipulation/virtual-nodea/virtual-node/virtual-node.class.ts)**
 
 ---
 
@@ -13,16 +13,6 @@ tags: [FUNCTION, VIRTUAL DOM]
  * Represents an abstract Node in a Tree
  */
 declare abstract class VirtualNode {
-    protected constructor(options: IVirtualNodeOptions);
-
-    /**
-     * Returns true if this node is a root.
-     */
-    get isRoot(): boolean;
-    /**
-     * Returns true if this node is a leaf.
-     */
-    get isLeaf(): boolean;
     /**
      * Returns an Observable sending the parent of this node.
      * This is useful to detect changes in the parent node.
@@ -72,11 +62,6 @@ declare abstract class VirtualNode {
      */
     attach(parentNode: VirtualNode, referenceNode?: IVirtualNodeOrNull): boolean;
     /**
-     * Returns true if this node may be attached to "childNode".
-     * It is usually used to prevent invalid Tree to exist (we may think about a <button> containing an <input>)
-     */
-    abstract canAttachChildNode(childNode: VirtualNode): boolean;
-    /**
      * Detaches this node from its parent node.
      * Returns true if this operation was necessary (the node had a parent node)
      */
@@ -98,6 +83,21 @@ declare abstract class VirtualNode {
      * Detaches all the child nodes of this node.
      */
     detachChildren(): void;
+
+    /**
+     * Returns true if this node accepts "node" has children.
+     * It is usually used to prevent invalid Tree to exist (we may think about a <button> containing an <input>)
+     */
+    abstract acceptsChild(
+      node: VirtualNode,
+    ): boolean;
+
+    /**
+     * Returns true if this node accepts "node" has its parent.
+     */
+    abstract acceptsParent(
+      node: IVirtualNodeOrNull,
+    ): boolean;
 }
 ```
 

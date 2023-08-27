@@ -1,7 +1,7 @@
-import { IObservableLike, toObservableThrowIfUndefined } from '@lirx/core';
-import { IUnsubscribe } from '@lirx/utils';
+import { IObservableLike, unknownToObservableNotUndefined } from '@lirx/core';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 import {
-  IAttributeValue,
+  IAttributeWriteValue,
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-element-node/members/attribute/attribute-value.type';
 import {
   IGenericVirtualReactiveElementNode,
@@ -34,10 +34,10 @@ export const transpileAOTSetReactiveAttributeToJSLines: ITranspileSetReactiveAtt
 export function aot_11(
   node: IGenericVirtualReactiveElementNode,
   name: string,
-  value$: IObservableLike<IAttributeValue>,
+  value$: IObservableLike<IAttributeWriteValue>,
 ): IUnsubscribe {
   return node.setReactiveAttribute(
     name,
-    toObservableThrowIfUndefined(value$),
+    unknownToObservableNotUndefined(value$),
   );
 }

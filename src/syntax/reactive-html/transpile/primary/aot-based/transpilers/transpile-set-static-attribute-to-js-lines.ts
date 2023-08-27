@@ -2,7 +2,7 @@ import {
   IGenericVirtualElementNode,
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-element-node/generic-virtual-element-node.type';
 import {
-  IAttributeValue,
+  IAttributeWriteValue,
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-element-node/members/attribute/attribute-value.type';
 import {
   virtualElementNodeAppendClassName,
@@ -58,7 +58,7 @@ export function aot_22(
 export function aot_23(
   node: IGenericVirtualReactiveElementNode,
   name: string,
-  value: IAttributeValue,
+  value: IAttributeWriteValue,
 ): void {
   return node.setAttribute(
     name,

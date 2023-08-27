@@ -1,4 +1,4 @@
-import { IObservableLike, toObservableThrowIfUndefined } from '@lirx/core';
+import { IObservableLike, unknownToObservableNotUndefined } from '@lirx/core';
 import {
   IVirtualReactiveIfNodeTemplate,
   VirtualReactiveIfNode,
@@ -46,7 +46,7 @@ export function aot_7(
   templateFalse?: IVirtualReactiveIfNodeTemplate,
 ): VirtualReactiveIfNode {
   return new VirtualReactiveIfNode(
-    toObservableThrowIfUndefined(condition$),
+    unknownToObservableNotUndefined(condition$),
     templateTrue,
     templateFalse,
   );

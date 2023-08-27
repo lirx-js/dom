@@ -1,8 +1,8 @@
+import { ILines } from '../lines/lines.type';
 import { attributeNodeToHTML } from './attribute-node-to-html';
 import { commentNodeToHTML } from './comment-node-to-html';
 import { elementNodeToHTML } from './element-node-to-html';
 import { textNodeToHTML } from './text-node-to-html';
-import { ILines } from '../lines/lines.type';
 
 export function nodeToHTML(
   node: Node,

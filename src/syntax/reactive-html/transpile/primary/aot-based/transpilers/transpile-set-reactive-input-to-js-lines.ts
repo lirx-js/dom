@@ -1,23 +1,17 @@
-import { IObservableLike } from '@lirx/core';
-import { IUnsubscribe } from '@lirx/utils';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 import {
-  IVirtualCustomElementNodeConfig,
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/config/virtual-custom-element-node-config.type';
-import {
-  InferVirtualCustomElementNodeCaseInsensitiveInputValue,
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/inputs/case-insensitive/infer-virtual-custom-element-node-case-insensitive-input-value.type';
-import {
-  virtualCustomElementNodeSetCaseInsensitiveReactiveInputLike,
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/inputs/case-insensitive/virtual-custom-element-node-set-case-insensitive-reactive-input-like';
-import {
-  VirtualCustomElementNode,
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/virtual-custom-element-node.class';
+  VirtualComponentNode,
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-component-node/virtual-component-node.class';
 import { inlineLastLines } from '../../../../../misc/lines/functions/after-last-line';
 import { ILines } from '../../../../../misc/lines/lines.type';
 import {
   ITranspileSetReactiveInputToJSLinesFunction,
   ITranspileSetReactiveInputToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-input-to-js-lines.type';
+import {
+  bindCaseInsensitiveInputWithObservableLike,
+  InferBindCaseInsensitiveInputWithObservableLikeValue,
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-component-node/data/inputs/case-insensitive/bind/bind-case-insensitive-input-with-observable-like';
 
 export const transpileAOTSetReactiveInputToJSLines: ITranspileSetReactiveInputToJSLinesFunction = (
   {
@@ -37,14 +31,14 @@ export const transpileAOTSetReactiveInputToJSLines: ITranspileSetReactiveInputTo
   );
 };
 
-export function aot_16<GConfig extends IVirtualCustomElementNodeConfig, GKey extends string>(
-  node: VirtualCustomElementNode<GConfig>,
-  key: GKey,
-  value$: IObservableLike<InferVirtualCustomElementNodeCaseInsensitiveInputValue<GConfig, GKey>>,
+export function aot_16<GData extends object, GCaseInsensitiveKey extends string>(
+  node: VirtualComponentNode<any, GData>,
+  caseInsensitiveKey: GCaseInsensitiveKey,
+  value$: InferBindCaseInsensitiveInputWithObservableLikeValue<GData, GCaseInsensitiveKey>,
 ): IUnsubscribe {
-  return virtualCustomElementNodeSetCaseInsensitiveReactiveInputLike<GConfig, GKey>(
+  return bindCaseInsensitiveInputWithObservableLike<GData, GCaseInsensitiveKey>(
     node,
-    key,
+    caseInsensitiveKey,
     value$,
   );
 }

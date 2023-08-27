@@ -13,7 +13,7 @@ export const transpileSetReactiveInputToJSLines: ITranspileSetReactiveInputToJSL
   }: ITranspileSetReactiveInputToJSLinesOptions,
 ): ILines => {
   return inlineLastLines(
-    [`virtualCustomElementNodeSetCaseInsensitiveReactiveInputLike(`],
+    [`bindCaseInsensitiveInputWithObservableLike(`],
     node,
     [', '],
     name,
@@ -21,14 +21,6 @@ export const transpileSetReactiveInputToJSLines: ITranspileSetReactiveInputToJSL
     value,
     [');'],
   );
-  // return inlineLastLines(
-  //   node,
-  //   [`.setCaseInsensitiveReactiveInput(`],
-  //   name,
-  //   [', '],
-  //   value,
-  //   [');'],
-  // );
 };
 
 

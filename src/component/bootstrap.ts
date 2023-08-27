@@ -1,20 +1,19 @@
 import {
-  IVirtualCustomElementNodeSlotsMap,
-} from '../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/slots/virtual-custom-element-node-slots-map.type';
-import { VirtualCustomElementNode } from '../dom-manipulation/virtual-nodes/virtual-custom-element-node/virtual-custom-element-node.class';
+  IVirtualComponentNodeSlotsMap,
+} from '../dom-manipulation/virtual-nodes/virtual-component-node/types/slots/virtual-component-node-slots-map.type';
 import { IGenericVirtualRootNode, VirtualRootNode } from '../dom-manipulation/virtual-nodes/virtual-root-node/virtual-root-node.class';
-import { IComponent } from './types/component.type';
-import { IComponentConfig } from './types/config/component-config.type';
+import { AbstractComponent } from './classes/abstract-component.class';
+import { IComponentVirtualComponentNode } from './classes/types/component-virtual-component-node.type';
 
 /**
  * Creates "component", and appends it to "container" (usually the <body>)
  */
-export function bootstrap<GConfig extends IComponentConfig>(
-  component: IComponent<GConfig>,
-  slots?: IVirtualCustomElementNodeSlotsMap,
+export function bootstrap<GElement extends Element, GData extends object>(
+  component: AbstractComponent<GElement, GData>,
+  slots?: IVirtualComponentNodeSlotsMap,
   container: HTMLElement | IGenericVirtualRootNode = VirtualRootNode.body,
-): VirtualCustomElementNode<GConfig> {
-  const elementNode: VirtualCustomElementNode<GConfig> = component.create(slots);
+): IComponentVirtualComponentNode<GElement, GData> {
+  const elementNode: IComponentVirtualComponentNode<GElement, GData> = component.create(slots);
   elementNode.attach(
     (container instanceof VirtualRootNode)
       ? container

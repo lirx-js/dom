@@ -1,9 +1,10 @@
-import { distinctObserver, IObservable } from '@lirx/core';
+import { IObservable, distinctObservable } from '@lirx/core';
 import { applyTemplateForVirtualDOMNode } from '../../templates/virtual-dom-node-template/apply-template-for-virtual-dom-node';
 import {
   IGenericVirtualReactiveDOMNodeTemplateOrNull,
 } from '../../templates/virtual-reactive-dom-node-template/virtual-reactive-dom-node-template.type';
 import { VirtualContainerNode } from '../virtual-container-node/virtual-container-node.class';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 
 export type IVirtualReactiveIfNodeTemplate = IGenericVirtualReactiveDOMNodeTemplateOrNull;
 
@@ -21,27 +22,31 @@ export class VirtualReactiveIfNode extends VirtualContainerNode {
   ) {
     super();
 
-    this.onConnected$<boolean>(condition$)(distinctObserver<boolean>((value: boolean): void => {
-      this.detachChildren();
+    const _condition$ = distinctObservable<boolean>(condition$);
 
-      if (value) {
-        if (templateTrue !== null) {
-          applyTemplateForVirtualDOMNode(
-            this,
-            templateTrue,
-            [{}],
-          );
+    this.onConnected((): IUnsubscribe => {
+      return _condition$((value: boolean): void => {
+        this.detachChildren();
+
+        if (value) {
+          if (templateTrue !== null) {
+            applyTemplateForVirtualDOMNode(
+              this,
+              templateTrue,
+              [{}],
+            );
+          }
+        } else {
+          if (templateFalse !== null) {
+            applyTemplateForVirtualDOMNode(
+              this,
+              templateFalse,
+              [{}],
+            );
+          }
         }
-      } else {
-        if (templateFalse !== null) {
-          applyTemplateForVirtualDOMNode(
-            this,
-            templateFalse,
-            [{}],
-          );
-        }
-      }
-    }));
+      });
+    });
   }
 }
 

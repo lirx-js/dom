@@ -4,7 +4,7 @@ import {
   ITranspileSetReactiveClassToJSLinesFunction,
   ITranspileSetReactiveClassToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-class-to-js-lines.type';
-import { transpileToObservableToJSLines } from './transpile-to-observable-to-js-lines';
+import { transpileUnknownToObservableToJSLines } from './transpile-unknown-to-observable-to-js-lines';
 
 export const transpileSetReactiveClassToJSLines: ITranspileSetReactiveClassToJSLinesFunction = (
   {
@@ -18,7 +18,7 @@ export const transpileSetReactiveClassToJSLines: ITranspileSetReactiveClassToJSL
     [`.setReactiveClass(`],
     name,
     [', '],
-    transpileToObservableToJSLines({ value }),
+    transpileUnknownToObservableToJSLines({ value }),
     [');'],
   );
 };

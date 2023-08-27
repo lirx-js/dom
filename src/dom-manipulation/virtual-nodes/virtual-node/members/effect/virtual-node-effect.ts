@@ -1,5 +1,5 @@
 import { effect, IEffectOptions, IEffetFunction } from '@lirx/core';
-import { IUnsubscribe } from '@lirx/utils';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 import { VirtualNode } from '../../virtual-node.class';
 
 export function virtualNodeEffect(

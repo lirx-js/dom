@@ -1,2 +1,0 @@
-export * from './create-virtual-reactive-element-node-modifier';
-export * from './virtual-reactive-element-node-modifier.type';

@@ -1,5 +1,5 @@
 import { IPrimaryTranspilers } from '../primary-transpilers.type';
-import { transpileApplyNodeModifierToJSLines } from './transpilers/transpile-apply-node-modifier-to-js-lines';
+import { transpileApplyNodeModifiersToJSLines } from './transpilers/transpile-apply-node-modifiers-to-js-lines';
 import { transpileAttachNodeToJSLines } from './transpilers/transpile-attach-node-to-js-lines';
 import { transpileCreateReactiveAsyncNodeToJSLines } from './transpilers/transpile-create-reactive-async-node-to-js-lines';
 import { transpileCreateReactiveCustomElementNodeToJSLines } from './transpilers/transpile-create-reactive-custom-element-node-to-js-lines';
@@ -21,7 +21,7 @@ import { transpileSetReactiveStylePropertyToJSLines } from './transpilers/transp
 import { transpileSetStaticAttributeToJSLines } from './transpilers/transpile-set-static-attribute-to-js-lines';
 
 export const PRIMARY_TRANSPILERS_FOR_VIRTUAL_NODE_BASED_REACTIVE_HTML: IPrimaryTranspilers = {
-  transpileApplyNodeModifierToJSLines,
+  transpileApplyNodeModifiersToJSLines,
   transpileAttachNodeToJSLines,
   transpileCreateReactiveAsyncNodeToJSLines,
   transpileCreateReactiveCustomElementNodeToJSLines,

@@ -5,5 +5,5 @@ export function generateJsLinesForValuesToImportFromObject(
 ): ILines {
   return Object.keys(valuesToImport).map((value: string): string => {
     return `${value},`;
-  })
+  });
 }

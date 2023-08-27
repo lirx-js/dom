@@ -1,5 +1,5 @@
-import { IObservableLike, toObservableThrowIfUndefined } from '@lirx/core';
-import { IUnsubscribe } from '@lirx/utils';
+import { IObservableLike, unknownToObservableNotUndefined } from '@lirx/core';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 import {
   IGenericVirtualReactiveElementNode,
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/generic-virtual-reactive-element-node.type';
@@ -33,6 +33,6 @@ export function aot_12(
   classNamesList$: IObservableLike<IClassNamesList>,
 ): IUnsubscribe {
   return node.setReactiveClassNamesList(
-    toObservableThrowIfUndefined(classNamesList$),
+    unknownToObservableNotUndefined(classNamesList$),
   );
 }

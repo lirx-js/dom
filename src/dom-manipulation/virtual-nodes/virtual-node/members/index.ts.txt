@@ -1,5 +1,0 @@
-export * from './effect/index';
-export * from './link/index';
-export * from './misc/index';
-export * from './query-selector/index';
-export * from './verify/index';

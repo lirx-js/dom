@@ -1,4 +1,0 @@
-export * from './component.type';
-export * from './config/index';
-export * from './is-component';
-export * from './options/index';

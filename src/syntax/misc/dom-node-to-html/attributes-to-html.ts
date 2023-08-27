@@ -1,6 +1,6 @@
-import { nodesToHTML } from './nodes-to-html';
 import { ILines } from '../lines/lines.type';
 import { attributeNodeToHTML } from './attribute-node-to-html';
+import { nodesToHTML } from './nodes-to-html';
 
 export function attributesToHTML(
   nodes: ArrayLike<Attr>,

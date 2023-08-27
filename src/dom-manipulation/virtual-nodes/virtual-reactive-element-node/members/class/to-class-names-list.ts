@@ -9,7 +9,6 @@ export type IClassNamesListLike =
   | IClassNamesListAsIterable
   ;
 
-
 export function toClassNamesList(
   input: IClassNamesListLike,
 ): IClassNamesList {
@@ -21,9 +20,6 @@ export function toClassNamesList(
     return new Set<string>(input);
   }
 }
-
-
-
 
 export function stringToClassNamesList(
   input: IClassNamesListAsString,

@@ -1,7 +1,7 @@
-import { isElementNode } from '../../../../../../../dom-manipulation/helpers/is/is-element-node';
+import { isElementNode } from '../../../../../../../dom-manipulation/helpers/is/node-type/is-element-node';
 import {
   isTextNodeWithNonWhiteSpaceCharacters,
-} from '../../../../../../../dom-manipulation/helpers/is/is-text-node-with-non-white-space-characters';
+} from '../../../../../../../dom-manipulation/helpers/is/node-type/is-text-node-with-non-white-space-characters';
 import { getElementTagName } from '../../../../../../../dom-manipulation/helpers/misc/get-element-tag-name';
 import { createInvalidElementFoundError } from '../../../../../../misc/errors/create-invalid-element-found-error';
 import { createMissingAttributeError } from '../../../../../../misc/errors/create-missing-attribute-error';

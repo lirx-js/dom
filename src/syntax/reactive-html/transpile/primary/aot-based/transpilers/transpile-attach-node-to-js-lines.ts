@@ -22,7 +22,6 @@ export const transpileAOTAttachNodeToJSLines: ITranspileAttachNodeToJSLinesFunct
   );
 };
 
-
 export function aot_0(
   node: VirtualNode,
   parentNode: VirtualNode,

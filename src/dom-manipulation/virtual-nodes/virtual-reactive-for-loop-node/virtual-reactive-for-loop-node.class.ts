@@ -5,6 +5,7 @@ import {
 import { VirtualContainerNode } from '../virtual-container-node/virtual-container-node.class';
 import { VirtualNode } from '../virtual-node/virtual-node.class';
 import { trackByIdentity } from './members/track-by/track-by-identity';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 
 /** TYPES **/
 
@@ -42,8 +43,10 @@ export class VirtualReactiveForLoopNode<GItem> extends VirtualContainerNode {
     );
     container.attach(this);
 
-    this.onConnected$(items$)((items: Iterable<GItem>): void => {
-      container.update(items);
+    this.onConnected((): IUnsubscribe => {
+      return items$((items: Iterable<GItem>): void => {
+        container.update(items);
+      });
     });
   }
 
@@ -217,7 +220,7 @@ function applyCurrentNodeListBulk<GItem>(
 class VirtualReactiveForLoopContainerNode<GItem> extends VirtualContainerNode {
   public readonly template: IVirtualReactiveForLoopNodeTemplate<GItem>;
   public readonly trackBy: IVirtualReactiveForLoopNodeOptionsTrackByFunction<GItem>;
-  protected _previousTrackByMap: ITrackByMap<GItem>;
+  #previousTrackByMap: ITrackByMap<GItem>;
 
   constructor(
     template: IVirtualReactiveForLoopNodeTemplate<GItem>,
@@ -227,7 +230,7 @@ class VirtualReactiveForLoopContainerNode<GItem> extends VirtualContainerNode {
     this.template = template;
     this.trackBy = trackBy;
 
-    this._previousTrackByMap = createTrackByMap();
+    this.#previousTrackByMap = createTrackByMap();
   }
 
   get parentNode(): IVirtualReactiveForLoopNodeOrNull<GItem> {
@@ -241,7 +244,7 @@ class VirtualReactiveForLoopContainerNode<GItem> extends VirtualContainerNode {
   update(
     items: Iterable<GItem>,
   ): void {
-    const previousTrackByMap: ITrackByMap<GItem> = this._previousTrackByMap;
+    const previousTrackByMap: ITrackByMap<GItem> = this.#previousTrackByMap;
     const currentTrackByMap: ITrackByMap<GItem> = createTrackByMap();
 
     const currentNodeList: readonly VirtualReactiveForLoopChildNode<GItem>[] = constructCurrentNodeList(
@@ -265,7 +268,7 @@ class VirtualReactiveForLoopContainerNode<GItem> extends VirtualContainerNode {
       );
     }
 
-    this._previousTrackByMap = currentTrackByMap;
+    this.#previousTrackByMap = currentTrackByMap;
   }
 
   override acceptsChild(

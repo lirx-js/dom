@@ -1,11 +1,8 @@
 import { IObservable, IObserver } from '@lirx/core';
-import { IUnsubscribe } from '@lirx/utils';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 import {
   IGenericVirtualReactiveElementNode,
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/generic-virtual-reactive-element-node.type';
-import {
-  virtualReactiveElementNodeSetReactiveEventListenerFromObservable
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/members/event-listener/virtual-reactive-element-node-set--reactive-event-listener-from-observable';
 import { inlineLastLines } from '../../../../../misc/lines/functions/after-last-line';
 import { ILines } from '../../../../../misc/lines/lines.type';
 import {
@@ -42,8 +39,7 @@ export function aot_14<GEvent extends Event>(
   observable: IObservable<IObserver<GEvent>>,
   options?: boolean | AddEventListenerOptions,
 ): IUnsubscribe {
-  return virtualReactiveElementNodeSetReactiveEventListenerFromObservable<GEvent>(
-    node,
+  return node.setReactiveEventListener<GEvent>(
     type,
     observable,
     options,
@@ -56,9 +52,11 @@ export function aot_15<GEvent extends Event>(
   observer: IObserver<GEvent>,
   options?: boolean | AddEventListenerOptions,
 ): IUnsubscribe {
-  return node.setReactiveEventListener<GEvent>(
+  return node.setEventListener<GEvent>(
     type,
     observer,
     options,
   );
 }
+
+

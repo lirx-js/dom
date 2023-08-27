@@ -1,9 +1,9 @@
-import { fromEventTarget, IObservable, IObserver } from '@lirx/core';
-import { IUnsubscribe } from '@lirx/utils';
+import { fromEventTarget, IObservable, IObserver, subscribeToObservableUsingAnObservableOfObserver } from '@lirx/core';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 import { HTML_NAMESPACE_URI_CONSTANT } from '../../misc/namespace-uri/html-namespace-uri.constant';
 import { MATH_ML_NAMESPACE_URI_CONSTANT } from '../../misc/namespace-uri/math-ml-namespace-uri.constant';
 import { SVG_NAMESPACE_URI_CONSTANT } from '../../misc/namespace-uri/svg-namespace-uri.constant';
-import { IAttributeValue } from '../virtual-element-node/members/attribute/attribute-value.type';
+import { IAttributeWriteValue } from '../virtual-element-node/members/attribute/attribute-value.type';
 import {
   ISetStyleProperty,
   ISetStylePropertyOrNull,
@@ -89,21 +89,26 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
     options?: boolean | AddEventListenerOptions,
   ): IObservable<GEvent> {
     return fromEventTarget<string, GEvent>(
-      this._elementNode as any,
+      this.elementNode as any,
       type,
       options,
     );
   }
 
   /**
-   * Creates an EventListener of type "type" on the element of this node, whose listener is an Observer.
+   * Creates an EventListener of type "type" on the element of this node, whose listener is an Observer, obtained from an Observable.
    */
   setReactiveEventListener<GEvent extends Event>(
     type: string,
-    observer: IObserver<GEvent>,
+    $listener: IObservable<IObserver<GEvent>>,
     options?: boolean | AddEventListenerOptions,
   ): IUnsubscribe {
-    return this.on$<GEvent>(type, options)(observer);
+    return this.onConnected((): IUnsubscribe => {
+      return subscribeToObservableUsingAnObservableOfObserver<GEvent>(
+        this.on$(type, options),
+        $listener,
+      );
+    });
   }
 
   /* PROPERTY */
@@ -114,9 +119,11 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
   setReactiveProperty<GPropertyKey extends keyof GElementNode>(
     propertyKey: GPropertyKey,
     value$: IObservable<GElementNode[GPropertyKey]>,
-  ): void {
-    this.onConnected$(value$)((value: GElementNode[GPropertyKey]): void => {
-      this.setProperty<GPropertyKey>(propertyKey, value);
+  ): IUnsubscribe {
+    return this.onConnected((): IUnsubscribe => {
+      return value$((value: GElementNode[GPropertyKey]): void => {
+        this.setProperty<GPropertyKey>(propertyKey, value);
+      });
     });
   }
 
@@ -127,10 +134,12 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
    */
   setReactiveAttribute(
     name: string,
-    value$: IObservable<IAttributeValue>,
+    value$: IObservable<IAttributeWriteValue>,
   ): IUnsubscribe {
-    return this.onConnected$(value$)((value: IAttributeValue): void => {
-      this.setAttribute(name, value);
+    return this.onConnected((): IUnsubscribe => {
+      return value$((value: IAttributeWriteValue): void => {
+        this.setAttribute(name, value);
+      });
     });
   }
 
@@ -143,8 +152,10 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
     name: string,
     enabled$: IObservable<boolean>,
   ): IUnsubscribe {
-    return this.onConnected$(enabled$)((enabled: boolean): void => {
-      this.setClass(name, enabled);
+    return this.onConnected((): IUnsubscribe => {
+      return enabled$((enabled: boolean): void => {
+        this.setClass(name, enabled);
+      });
     });
   }
 
@@ -156,20 +167,22 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
   ): IUnsubscribe {
     let previousClassNames: IClassNamesList = new Set<string>();
 
-    return this.onConnected$(classNamesList$)((classNamesList: IClassNamesList): void => {
-      const nextClassNames: string[] = differClassNames(previousClassNames, classNamesList);
+    return this.onConnected((): IUnsubscribe => {
+      return classNamesList$((classNamesList: IClassNamesList): void => {
+        const nextClassNames: string[] = differClassNames(previousClassNames, classNamesList);
 
-      const iterator: IterableIterator<string> = previousClassNames.values();
-      let result: IteratorResult<string>;
-      while (!(result = iterator.next()).done) {
-        this.setClass(result.value, false);
-      }
+        const iterator: IterableIterator<string> = previousClassNames.values();
+        let result: IteratorResult<string>;
+        while (!(result = iterator.next()).done) {
+          this.setClass(result.value, false);
+        }
 
-      for (let i = 0, l = nextClassNames.length; i < l; i++) {
-        this.setClass(nextClassNames[i], true);
-      }
+        for (let i = 0, l = nextClassNames.length; i < l; i++) {
+          this.setClass(nextClassNames[i], true);
+        }
 
-      previousClassNames = new Set<string>(classNamesList);
+        previousClassNames = new Set<string>(classNamesList);
+      });
     });
   }
 
@@ -182,8 +195,10 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
     name: string,
     styleProperty$: IObservable<ISetStylePropertyOrStringOrNull>,
   ): IUnsubscribe {
-    return this.onConnected$(styleProperty$)((styleProperty: ISetStylePropertyOrStringOrNull): void => {
-      this.setStyleProperty(name, styleProperty);
+    return this.onConnected((): IUnsubscribe => {
+      return styleProperty$((styleProperty: ISetStylePropertyOrStringOrNull): void => {
+        this.setStyleProperty(name, styleProperty);
+      });
     });
   }
 
@@ -195,21 +210,23 @@ export class VirtualReactiveElementNode<GElementNode extends Element> extends Vi
   ): IUnsubscribe {
     let previousStyles: IStylePropertiesMap = new Map<string, ISetStyleProperty>();
 
-    return this.onConnected$(stylePropertiesMap$)((stylePropertiesMap: IStylePropertiesMap): void => {
-      const nextStyles: IStylePropertyAndValueTuple[] = differStylePropertiesMap(previousStyles, stylePropertiesMap);
+    return this.onConnected((): IUnsubscribe => {
+      return stylePropertiesMap$((stylePropertiesMap: IStylePropertiesMap): void => {
+        const nextStyles: IStylePropertyAndValueTuple[] = differStylePropertiesMap(previousStyles, stylePropertiesMap);
 
-      const iterator: IterableIterator<string> = previousStyles.keys();
-      let result: IteratorResult<string>;
-      while (!(result = iterator.next()).done) {
-        this.setStyleProperty(result.value, null);
-      }
+        const iterator: IterableIterator<string> = previousStyles.keys();
+        let result: IteratorResult<string>;
+        while (!(result = iterator.next()).done) {
+          this.setStyleProperty(result.value, null);
+        }
 
-      for (let i = 0, l = nextStyles.length; i < l; i++) {
-        const [name, property]: [string, ISetStylePropertyOrNull] = nextStyles[i];
-        this.setStyleProperty(name, property);
-      }
+        for (let i = 0, l = nextStyles.length; i < l; i++) {
+          const [name, property]: [string, ISetStylePropertyOrNull] = nextStyles[i];
+          this.setStyleProperty(name, property);
+        }
 
-      previousStyles = new Map<string, ISetStyleProperty>(stylePropertiesMap);
+        previousStyles = new Map<string, ISetStyleProperty>(stylePropertiesMap);
+      });
     });
   }
 }

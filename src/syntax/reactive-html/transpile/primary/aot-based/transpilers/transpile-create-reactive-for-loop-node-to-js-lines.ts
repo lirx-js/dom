@@ -1,4 +1,4 @@
-import { IObservableLike, toObservableThrowIfUndefined } from '@lirx/core';
+import { IObservableLike, unknownToObservableNotUndefined } from '@lirx/core';
 import {
   IVirtualReactiveForLoopNodeOptionsTrackByFunction,
   IVirtualReactiveForLoopNodeTemplate,
@@ -49,7 +49,7 @@ export function aot_6<GItem>(
   trackBy?: IVirtualReactiveForLoopNodeOptionsTrackByFunction<GItem>,
 ): VirtualReactiveForLoopNode<GItem> {
   return new VirtualReactiveForLoopNode<GItem>(
-    toObservableThrowIfUndefined(items$),
+    unknownToObservableNotUndefined(items$),
     template,
     trackBy,
   );

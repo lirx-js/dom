@@ -4,7 +4,7 @@
  *  - prefixed: mod-name
  */
 export interface IModifierProperty {
-  readonly weight: number;
+  readonly weight: number | undefined;
   readonly name: string;
   readonly value: string;
   readonly prefixMode: boolean;
@@ -31,7 +31,7 @@ export function extractModifierPropertyFromReactiveHTMLAttribute(
   } else {
     const prefixMode: boolean = (match[2] !== void 0);
 
-    let weight: number = 0;
+    let weight: number | undefined = void 0;
     let name: string = prefixMode ? match[2] : match[1];
     const value: string = attribute.value.trim();
 

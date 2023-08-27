@@ -1,5 +1,5 @@
-import { IObservableLike, toObservableThrowIfUndefined } from '@lirx/core';
-import { IUnsubscribe } from '@lirx/utils';
+import { IObservableLike, unknownToObservableNotUndefined } from '@lirx/core';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 import {
   ISetStylePropertyOrStringOrNull,
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-element-node/members/style/style-property.type';
@@ -31,7 +31,6 @@ export const transpileAOTSetReactiveStylePropertyToJSLines: ITranspileSetReactiv
   );
 };
 
-
 export function aot_21(
   node: IGenericVirtualReactiveElementNode,
   name: string,
@@ -39,6 +38,6 @@ export function aot_21(
 ): IUnsubscribe {
   return node.setReactiveStyleProperty(
     name,
-    toObservableThrowIfUndefined(styleProperty$),
+    unknownToObservableNotUndefined(styleProperty$),
   );
 }

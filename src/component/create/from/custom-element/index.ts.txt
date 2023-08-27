@@ -1,4 +1,0 @@
-export * from './create-component-from-custom-element-name';
-export * from './create-component-from-custom-element-reference';
-export * from './create-component-from-custom-element';
-export * from './custom-element.types';

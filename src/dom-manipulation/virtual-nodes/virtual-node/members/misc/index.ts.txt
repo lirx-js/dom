@@ -1,1 +1,0 @@
-export * from './virtual-node-subscribe-to-observable-with-observable-of-observers';

@@ -107,18 +107,18 @@ Output:
 
 </details>
 
-##### Using rx-true and rx-false with in-place template
+##### Using rx-if-true and rx-if-false with in-place template
 
 ```html
 <rx-if
   condition="observable$"
 >
-  <rx-true>
+  <rx-if-true>
     ...trueContent
-  </rx-true>
-  <rx-false>
+  </rx-if-true>
+  <rx-if-false>
     ...falseContent
-  </rx-false>
+  </rx-if-false>
 </rx-if>
 ```
 

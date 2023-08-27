@@ -1,4 +1,3 @@
-import { IGenericVirtualDOMNodeModifier } from '../../dom-manipulation/modifiers/virtual-dom-node-modifier/virtual-dom-node-modifier.type';
 import { indentLines } from '../../syntax/misc/lines/functions/indent-lines';
 import { linesToString } from '../../syntax/misc/lines/functions/lines-to-string';
 import { ILines } from '../../syntax/misc/lines/lines.type';
@@ -17,29 +16,35 @@ import {
 import {
   VALUES_TO_IMPORT_FOR_VIRTUAL_NODE_BASED_REACTIVE_HTML,
 } from '../../syntax/reactive-html/transpile/primary/virtual-node-based/values-to-import-for-virtual-node-based-reactive-html.constant';
-import { IComponentTemplate } from '../types/options/component-template.type';
-import { generateApplyNodeModifierFunction } from './generate-apply-node-modifier-function';
-import { generateCreateCustomElementFunction, ICustomElementList } from './generate-create-custom-element-function';
+import { IComponentTemplate } from './component-template.type';
+import {
+  generateApplyNodeModifiersFunctionFromModifierList,
+  IGenericVirtualDOMNodeModifierList,
+} from './apply-node-modifier-function/generate-apply-node-modifiers-function-from-modifier-list';
+import {
+  generateCreateCustomElementFunctionFromComponentList,
+  IGenericAbstractComponentList,
+} from './create-custom-element-function/generate-create-custom-element-function-from-component-list';
 
 export interface ICompileReactiveHTMLAsComponentTemplateOptions extends Omit<ITranspileReactiveHTMLToJSLinesOptions, 'transpilers'> {
-  customElements?: ICustomElementList;
-  modifiers?: readonly IGenericVirtualDOMNodeModifier[];
+  components?: IGenericAbstractComponentList;
+  modifiers?: IGenericVirtualDOMNodeModifierList;
 }
 
 export function compileReactiveHTMLAsComponentTemplate<GData extends object>(
   {
-    customElements,
+    components,
     modifiers,
     ...options
   }: ICompileReactiveHTMLAsComponentTemplateOptions,
 ): IComponentTemplate<GData> {
-  const createCustomElement = generateCreateCustomElementFunction(customElements);
-  const applyNodeModifier = generateApplyNodeModifierFunction(modifiers);
+  const createCustomElement = generateCreateCustomElementFunctionFromComponentList(components);
+  const applyNodeModifiers = generateApplyNodeModifiersFunctionFromModifierList(modifiers);
 
   const valuesToImport = {
     ...VALUES_TO_IMPORT_FOR_VIRTUAL_NODE_BASED_REACTIVE_HTML,
     createCustomElement,
-    applyNodeModifier,
+    applyNodeModifiers,
   };
 
   const functionImportLines: ILines = [
@@ -52,7 +57,7 @@ export function compileReactiveHTMLAsComponentTemplate<GData extends object>(
 
   const lines: ILines = transpileReactiveHTMLToJSLinesAsComponentTemplateWithImportsAsFirstArgument({
     ...options,
-    functionImportLines: functionImportLines,
+    functionImportLines,
     transpilers: PRIMARY_TRANSPILERS_FOR_VIRTUAL_NODE_BASED_REACTIVE_HTML,
   });
 

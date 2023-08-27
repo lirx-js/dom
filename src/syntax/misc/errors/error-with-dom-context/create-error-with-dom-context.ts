@@ -1,9 +1,9 @@
 import { createCustomError } from '@lirx/utils';
+import { nodeToHTML } from '../../dom-node-to-html/node-to-html';
 import { linesToString } from '../../lines/functions/lines-to-string';
 import { ILines } from '../../lines/lines.type';
 import { ERROR_WITH_DOM_CONTEXT_NAME, IErrorWithDOMContextName } from './error-with-dom-context-name.constant';
 import { IErrorWithDOMContext, IErrorWithDOMContextOptions, IErrorWithDOMContextProperties } from './error-with-dom-context.type';
-import { nodeToHTML } from '../../dom-node-to-html/node-to-html';
 
 export function createErrorWithDOMContext(
   {

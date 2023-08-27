@@ -1,2 +1,0 @@
-export * from './virtual-custom-element-node-slot-template.type';
-export * from './virtual-custom-element-node-slots-map.type';

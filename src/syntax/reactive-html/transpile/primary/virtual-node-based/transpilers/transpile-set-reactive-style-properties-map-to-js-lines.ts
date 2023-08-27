@@ -4,7 +4,7 @@ import {
   ITranspileSetReactiveStylePropertiesMapToJSLinesFunction,
   ITranspileSetReactiveStylePropertiesMapToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-style-properties-map-to-js-lines.type';
-import { transpileToObservableToJSLines } from './transpile-to-observable-to-js-lines';
+import { transpileUnknownToObservableToJSLines } from './transpile-unknown-to-observable-to-js-lines';
 
 export const transpileSetReactiveStylePropertiesMapToJSLines: ITranspileSetReactiveStylePropertiesMapToJSLinesFunction = (
   {
@@ -15,7 +15,7 @@ export const transpileSetReactiveStylePropertiesMapToJSLines: ITranspileSetReact
   return inlineLastLines(
     node,
     [`.setReactiveStylePropertiesMap(`],
-    transpileToObservableToJSLines({ value }),
+    transpileUnknownToObservableToJSLines({ value }),
     [');'],
   );
 };

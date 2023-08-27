@@ -1,19 +1,21 @@
-import { linkDOMNodeWithVirtualDOMNode } from '../virtual-node/members/link/link-dom-node-with-virtual-dom-node';
+import { IObserver } from '@lirx/core';
+import { createEventListener, isNullish } from '@lirx/utils';
 import { VirtualDOMNode } from '../virtual-dom-node/virtual-dom-node.class';
+import { linkDOMNodeWithVirtualDOMNode } from '../virtual-node/members/link/link-dom-node-with-virtual-dom-node';
 import { IVirtualShadowRootNodeInit, VirtualShadowRootNode } from '../virtual-shadow-root-node/virtual-shadow-root-node.class';
-import { IAttributeValue } from './members/attribute/attribute-value.type';
+import { IAttributeReadValue, IAttributeWriteValue } from './members/attribute/attribute-value.type';
 import { InferVirtualElementNodePropertyKeys } from './members/property/infer-virtual-element-node-property-keys.type';
 import { IGetStylePropertyOptions, ISetStylePropertyOrStringOrNull, IStyleProperty } from './members/style/style-property.type';
-
+import { IUnsubscribe } from '@lirx/unsubscribe';
 
 /**
  * Represents an abstract Element in an abstract DOM.
  * This is used as a wrapper for an Element.
  */
 export class VirtualElementNode<GElementNode extends Element> extends VirtualDOMNode {
-  protected readonly _elementNode: GElementNode;
-  protected _shadowRoot: VirtualShadowRootNode<this> | null;
-  protected readonly _selfDOMNodes: [GElementNode]; // computed
+  readonly #elementNode: GElementNode;
+  #shadowRoot: VirtualShadowRootNode<this> | null;
+  readonly #selfDOMNodes: [GElementNode]; // computed
 
   constructor(
     namespaceURI: string,
@@ -21,42 +23,60 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
     options?: ElementCreationOptions,
   ) {
     super();
-    this._elementNode = document.createElementNS(namespaceURI, name, options) as GElementNode;
-    this._shadowRoot = null;
-    this._selfDOMNodes = [
-      this._elementNode,
+    this.#elementNode = document.createElementNS(namespaceURI, name, options) as GElementNode;
+    this.#shadowRoot = null;
+    this.#selfDOMNodes = [
+      this.#elementNode,
     ];
 
-    linkDOMNodeWithVirtualDOMNode(this._elementNode, this);
+    linkDOMNodeWithVirtualDOMNode(this.#elementNode, this);
   }
 
   /**
    * Returns the Element of this node.
    */
   get elementNode(): GElementNode {
-    return this._elementNode;
+    return this.#elementNode;
   }
 
   get shadowRoot(): VirtualShadowRootNode<this> | null {
-    return this._shadowRoot;
+    return this.#shadowRoot;
   }
 
   override getSelfDOMNodes(): readonly Node[] {
-    return this._selfDOMNodes;
+    return this.#selfDOMNodes;
   }
 
   override getParentDOMNode(): ParentNode {
-    return this._elementNode;
+    return this.#elementNode;
   }
 
   override getReferenceDOMNode(): Node {
-    return this._elementNode;
+    return this.#elementNode;
   }
 
   attachShadow(
     options?: IVirtualShadowRootNodeInit,
   ): VirtualShadowRootNode<this> {
-    return this._shadowRoot = VirtualShadowRootNode.attachShadow<this>(this, options);
+    return this.#shadowRoot = VirtualShadowRootNode.attachShadow<this>(this, options);
+  }
+
+  /* EVENT */
+
+  /**
+   * Creates an EventListener of type "type" on the element of this node, whose listener is an Observer.
+   */
+  setEventListener<GEvent extends Event>(
+    type: string,
+    observer: IObserver<GEvent>,
+    options?: boolean | AddEventListenerOptions,
+  ): IUnsubscribe {
+    return createEventListener<string, GEvent>(
+      this.#elementNode as any,
+      type,
+      observer as any,
+      options,
+    );
   }
 
   /* PROPERTY */
@@ -67,7 +87,7 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
   getProperty<GPropertyKey extends InferVirtualElementNodePropertyKeys<GElementNode>>(
     propertyKey: GPropertyKey,
   ): GElementNode[GPropertyKey] {
-    return this._elementNode[propertyKey];
+    return this.#elementNode[propertyKey];
   }
 
   /**
@@ -77,7 +97,7 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
     propertyKey: GPropertyKey,
     value: GElementNode[GPropertyKey],
   ): void {
-    this._elementNode[propertyKey] = value;
+    this.#elementNode[propertyKey] = value;
   }
 
   /* ATTRIBUTE */
@@ -88,9 +108,9 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
    */
   getAttribute(
     name: string,
-  ): IAttributeValue {
-    return this._elementNode.hasAttribute(name)
-      ? this._elementNode.getAttribute(name)
+  ): IAttributeReadValue {
+    return this.#elementNode.hasAttribute(name)
+      ? this.#elementNode.getAttribute(name)
       : null;
   }
 
@@ -100,12 +120,12 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
    */
   setAttribute(
     name: string,
-    value: IAttributeValue,
+    value: IAttributeWriteValue,
   ): void {
-    if (value === null) {
-      this._elementNode.removeAttribute(name);
+    if (isNullish(value)) {
+      this.#elementNode.removeAttribute(name);
     } else {
-      this._elementNode.setAttribute(name, value);
+      this.#elementNode.setAttribute(name, value);
     }
   }
 
@@ -113,8 +133,8 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
    * Returns an Iterator on the list of attributes of the element of this node.
    */
   * getAttributesIterator(): Generator<[string, string]> {
-    for (let i = 0, l = this._elementNode.attributes.length; i < l; i++) {
-      const attr: Attr = this._elementNode.attributes[i];
+    for (let i = 0, l = this.#elementNode.attributes.length; i < l; i++) {
+      const attr: Attr = this.#elementNode.attributes[i];
       yield [attr.name, attr.value];
     }
   }
@@ -128,7 +148,7 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
   hasClass(
     name: string,
   ): boolean {
-    return this._elementNode.classList.contains(name);
+    return this.#elementNode.classList.contains(name);
   }
 
   /**
@@ -139,15 +159,15 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
     name: string,
     enabled: boolean,
   ): void {
-    this._elementNode.classList.toggle(name, enabled);
+    this.#elementNode.classList.toggle(name, enabled);
   }
 
   /**
    * Returns an Iterator on the list of css classes of the element of this node.
    */
   * getClassesIterator(): Generator<string> {
-    for (let i = 0, l = this._elementNode.classList.length; i < l; i++) {
-      yield this._elementNode.classList[i];
+    for (let i = 0, l = this.#elementNode.classList.length; i < l; i++) {
+      yield this.#elementNode.classList[i];
     }
   }
 
@@ -163,8 +183,8 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
     }: IGetStylePropertyOptions = {},
   ): IStyleProperty {
     const style: CSSStyleDeclaration = computed
-      ? getComputedStyle(this._elementNode as unknown as HTMLElement)
-      : (this._elementNode as unknown as HTMLElement).style;
+      ? getComputedStyle(this.#elementNode as unknown as HTMLElement)
+      : (this.#elementNode as unknown as HTMLElement).style;
     return {
       value: style.getPropertyValue(name),
       priority: style.getPropertyPriority(name),
@@ -178,7 +198,7 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
     name: string,
     property: ISetStylePropertyOrStringOrNull,
   ): void {
-    const style: CSSStyleDeclaration = (this._elementNode as unknown as HTMLElement).style;
+    const style: CSSStyleDeclaration = (this.#elementNode as unknown as HTMLElement).style;
 
     if (property === null) {
       style.removeProperty(
@@ -202,7 +222,7 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
    * Returns an Iterator on the list of style properties of the element of this node.
    */
   * getStylePropertiesIterator(): Generator<IStyleProperty> {
-    const style: CSSStyleDeclaration = (this._elementNode as unknown as HTMLElement).style;
+    const style: CSSStyleDeclaration = (this.#elementNode as unknown as HTMLElement).style;
     for (let i = 0, l = style.length; i < l; i++) {
       yield this.getStyleProperty(style[i]);
     }

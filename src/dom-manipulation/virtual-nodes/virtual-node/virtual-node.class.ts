@@ -1,34 +1,36 @@
 import {
   createMulticastReplayLastSource,
   distinctObservable,
-  empty,
   IMulticastReplayLastSource,
   IObservable,
   shareObservableWithMulticastReplayLastSource,
   single,
   switchMapObservable,
 } from '@lirx/core';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 import { IVirtualNodeOrNull } from './virtual-node-or-null.type';
 
 /**
  * Represents an abstract Node in a Tree.
  */
 export abstract class VirtualNode {
-  protected _$parentNode$: IMulticastReplayLastSource<IVirtualNodeOrNull>;
-  protected _previousNode: IVirtualNodeOrNull;
-  protected _nextNode: IVirtualNodeOrNull;
-  protected _firstChild: IVirtualNodeOrNull;
-  protected _lastChild: IVirtualNodeOrNull;
+  #$parentNode$: IMulticastReplayLastSource<IVirtualNodeOrNull>;
+  #previousNode: IVirtualNodeOrNull;
+  #nextNode: IVirtualNodeOrNull;
+  #firstChild: IVirtualNodeOrNull;
+  #lastChild: IVirtualNodeOrNull;
 
-  protected _isConnected$: IObservable<boolean> | undefined;
+  #isConnected$: IObservable<boolean> | undefined; // lazy
 
-  constructor() {
+  constructor(
+    parentNode: IVirtualNodeOrNull = null,
+  ) {
     // INFO lazy loading this prop doesn't improve perfs
-    this._$parentNode$ = createMulticastReplayLastSource<IVirtualNodeOrNull>(null);
-    this._previousNode = null;
-    this._nextNode = null;
-    this._firstChild = null;
-    this._lastChild = null;
+    this.#$parentNode$ = createMulticastReplayLastSource<IVirtualNodeOrNull>(parentNode);
+    this.#previousNode = null;
+    this.#nextNode = null;
+    this.#firstChild = null;
+    this.#lastChild = null;
   }
 
   /**
@@ -36,42 +38,42 @@ export abstract class VirtualNode {
    * This is useful to detect changes in the parent node.
    */
   get parentNode$(): IObservable<IVirtualNodeOrNull> {
-    return this._$parentNode$.subscribe;
+    return this.#$parentNode$.subscribe;
   }
 
   /**
    * Returns the parent node of this node
    */
   get parentNode(): IVirtualNodeOrNull {
-    return this._$parentNode$.getValue();
+    return this.#$parentNode$.getValue();
   }
 
   /**
    * Returns the node before this node, or null if none.
    */
   get previousNode(): IVirtualNodeOrNull {
-    return this._previousNode;
+    return this.#previousNode;
   }
 
   /**
    * Returns the node after this node, or null if none.
    */
   get nextNode(): IVirtualNodeOrNull {
-    return this._nextNode;
+    return this.#nextNode;
   }
 
   /**
    * Returns the first child node of this node, or null if none.
    */
   get firstChild(): IVirtualNodeOrNull {
-    return this._firstChild;
+    return this.#firstChild;
   }
 
   /**
    * Returns the last child node of this node, or null if none.
    */
   get lastChild(): IVirtualNodeOrNull {
-    return this._lastChild;
+    return this.#lastChild;
   }
 
   /**
@@ -89,33 +91,52 @@ export abstract class VirtualNode {
    * This is useful to detect changes in the "connected state" of this node.
    */
   get isConnected$(): IObservable<boolean> {
-    if (this._isConnected$ === void 0) { // micro-optimization
-      this._isConnected$ = shareObservableWithMulticastReplayLastSource(
-        distinctObservable(
-          switchMapObservable(this.parentNode$, (parentNode: IVirtualNodeOrNull): IObservable<boolean> => {
+    if (this.#isConnected$ === void 0) { // micro-optimization
+      this.#isConnected$ = shareObservableWithMulticastReplayLastSource<boolean>(
+        distinctObservable<boolean>(
+          switchMapObservable<IVirtualNodeOrNull, boolean>(this.parentNode$, (parentNode: IVirtualNodeOrNull): IObservable<boolean> => {
             if (parentNode === null) {
-              return single(this.isConnected);
+              return single(this.isConnected); // faster
+              // return reference((): boolean => this.isConnected);
             } else {
               return parentNode.isConnected$;
             }
           }),
         ));
     }
-    return this._isConnected$;
+    return this.#isConnected$;
   }
 
   /**
-   * Returns an Observable sending the values of the provided Observable "observable", only when this node is connected to a root node.
+   * Calls `factory` when the node is connected to a root node.
+   * Then, it calls the returned `IUnsubscribe` function when it is disconnected
    */
-  onConnected$<GValue>(
-    observable: IObservable<GValue>,
-  ): IObservable<GValue> {
-    // or conditionalObservable
-    return switchMapObservable(this.isConnected$, (connected: boolean): IObservable<GValue> => {
-      return connected
-        ? observable
-        : empty<GValue>();
+  onConnected(
+    factory: () => IUnsubscribe,
+  ): IUnsubscribe {
+    let running: boolean = true;
+    let _unsubscribeOfFactory: IUnsubscribe | undefined;
+
+    const unsubscribeOfFactory: IUnsubscribe = (): void => {
+      if (_unsubscribeOfFactory !== void 0) {
+        _unsubscribeOfFactory();
+      }
+    };
+
+    const unsubscribeOfConnected: IUnsubscribe = this.isConnected$((connected: boolean): void => {
+      unsubscribeOfFactory();
+      if (connected) {
+        _unsubscribeOfFactory = factory();
+      }
     });
+
+    return (): void => {
+      if (running) {
+        running = false;
+        unsubscribeOfFactory();
+        unsubscribeOfConnected();
+      }
+    };
   }
 
   /**
@@ -162,14 +183,14 @@ export abstract class VirtualNode {
     if (referenceNode === null) {
       if (
         (this.parentNode === parentNode)
-        && (this.parentNode._lastChild === this) // current node is already the last child of parentNode, so we have nothing to do
+        && (this.parentNode.#lastChild === this) // current node is already the last child of parentNode, so we have nothing to do
       ) {
         return false;
       }
     } else {
       if (
         (referenceNode === this)
-        || (this._nextNode === referenceNode)
+        || (this.#nextNode === referenceNode)
       ) { // current node is already before referenceNode, so we have nothing to do
         return false;
       }
@@ -181,44 +202,44 @@ export abstract class VirtualNode {
 
     // detach current node
     if (this.parentNode !== null) {
-      if (this._previousNode === null) { // current node is first child
-        this.parentNode._firstChild = this._nextNode;
+      if (this.#previousNode === null) { // current node is first child
+        this.parentNode.#firstChild = this.#nextNode;
       } else {
-        this._previousNode._nextNode = this._nextNode;
+        this.#previousNode.#nextNode = this.#nextNode;
       }
 
-      if (this._nextNode === null) { // current node is last child
-        this.parentNode._lastChild = this._previousNode;
+      if (this.#nextNode === null) { // current node is last child
+        this.parentNode.#lastChild = this.#previousNode;
       } else {
-        this._nextNode._previousNode = this._previousNode;
+        this.#nextNode.#previousNode = this.#previousNode;
       }
     }
 
-    this._nextNode = referenceNode;
+    this.#nextNode = referenceNode;
 
     if (referenceNode === null) {
-      this._previousNode = parentNode._lastChild;
+      this.#previousNode = parentNode.#lastChild;
 
-      if (parentNode._lastChild === null) { // empty list
-        parentNode._firstChild = this;
-        parentNode._lastChild = this;
+      if (parentNode.#lastChild === null) { // empty list
+        parentNode.#firstChild = this;
+        parentNode.#lastChild = this;
       } else {
-        parentNode._lastChild._nextNode = this;
-        parentNode._lastChild = this;
+        parentNode.#lastChild.#nextNode = this;
+        parentNode.#lastChild = this;
       }
     } else {
-      this._previousNode = referenceNode._previousNode;
+      this.#previousNode = referenceNode.#previousNode;
 
-      if (referenceNode._previousNode === null) { // referenceNode is first child
-        parentNode._firstChild = this;
+      if (referenceNode.#previousNode === null) { // referenceNode is first child
+        parentNode.#firstChild = this;
       } else {
-        referenceNode._previousNode._nextNode = this;
+        referenceNode.#previousNode.#nextNode = this;
       }
 
-      referenceNode._previousNode = this;
+      referenceNode.#previousNode = this;
     }
 
-    this._$parentNode$.emit(parentNode);
+    this.#$parentNode$.emit(parentNode);
 
     return true;
   }
@@ -232,21 +253,21 @@ export abstract class VirtualNode {
       if (this.parentNode === null) {
         return false;
       } else {
-        if (this._previousNode === null) { // current node is first child
-          this.parentNode._firstChild = this._nextNode;
+        if (this.#previousNode === null) { // current node is first child
+          this.parentNode.#firstChild = this.#nextNode;
         } else {
-          this._previousNode._nextNode = this._nextNode;
+          this.#previousNode.#nextNode = this.#nextNode;
         }
 
-        if (this._nextNode === null) { // current node is last child
-          this.parentNode._lastChild = this._previousNode;
+        if (this.#nextNode === null) { // current node is last child
+          this.parentNode.#lastChild = this.#previousNode;
         } else {
-          this._nextNode._previousNode = this._previousNode;
+          this.#nextNode.#previousNode = this.#previousNode;
         }
 
-        this._previousNode = null;
-        this._nextNode = null;
-        this._$parentNode$.emit(null);
+        this.#previousNode = null;
+        this.#nextNode = null;
+        this.#$parentNode$.emit(null);
 
         return true;
       }
@@ -259,10 +280,10 @@ export abstract class VirtualNode {
    * Returns an Iterator on the list of direct child nodes of this node.
    */
   * getChildren(): Generator<VirtualNode> {
-    let node: IVirtualNodeOrNull = this._firstChild;
+    let node: IVirtualNodeOrNull = this.#firstChild;
     while (node !== null) {
       yield node;
-      node = node._nextNode;
+      node = node.#nextNode;
     }
   }
 
@@ -271,10 +292,10 @@ export abstract class VirtualNode {
    * @see getChildren
    */
   * getChildrenReversed(): Generator<VirtualNode> {
-    let node: IVirtualNodeOrNull = this._lastChild;
+    let node: IVirtualNodeOrNull = this.#lastChild;
     while (node !== null) {
       yield node;
-      node = node._previousNode;
+      node = node.#previousNode;
     }
   }
 
@@ -295,9 +316,9 @@ export abstract class VirtualNode {
    * Detaches all the child nodes of this node.
    */
   detachChildren(): void {
-    let node: IVirtualNodeOrNull = this._firstChild;
+    let node: IVirtualNodeOrNull = this.#firstChild;
     while (node !== null) {
-      const nextNode: IVirtualNodeOrNull = node._nextNode;
+      const nextNode: IVirtualNodeOrNull = node.#nextNode;
       node.detach();
       node = nextNode;
     }

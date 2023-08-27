@@ -4,7 +4,7 @@ import {
   ITranspileSetReactiveStylePropertyToJSLinesFunction,
   ITranspileSetReactiveStylePropertyToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-style-property-to-js-lines.type';
-import { transpileToObservableToJSLines } from './transpile-to-observable-to-js-lines';
+import { transpileUnknownToObservableToJSLines } from './transpile-unknown-to-observable-to-js-lines';
 
 export const transpileSetReactiveStylePropertyToJSLines: ITranspileSetReactiveStylePropertyToJSLinesFunction = (
   {
@@ -18,7 +18,7 @@ export const transpileSetReactiveStylePropertyToJSLines: ITranspileSetReactiveSt
     [`.setReactiveStyleProperty(`],
     name,
     [', '],
-    transpileToObservableToJSLines({ value }),
+    transpileUnknownToObservableToJSLines({ value }),
     [');'],
   );
 };

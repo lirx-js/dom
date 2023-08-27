@@ -5,7 +5,7 @@ import {
   ITranspileCreateReactiveAsyncNodeToJSLinesFunction,
   ITranspileCreateReactiveAsyncNodeToJSLinesOptions,
 } from '../../transpilers/transpile-create-reactive-async-node-to-js-lines.type';
-import { transpileToObservableToJSLines } from './transpile-to-observable-to-js-lines';
+import { transpileUnknownToObservableToJSLines } from './transpile-unknown-to-observable-to-js-lines';
 
 export const transpileCreateReactiveAsyncNodeToJSLines: ITranspileCreateReactiveAsyncNodeToJSLinesFunction = (
   {
@@ -19,7 +19,7 @@ export const transpileCreateReactiveAsyncNodeToJSLines: ITranspileCreateReactive
     `new VirtualReactiveAsyncNode(`,
     ...indentLines([
       ...inlineLastLines(
-        transpileToObservableToJSLines({ value: expression }),
+        transpileUnknownToObservableToJSLines({ value: expression }),
         [','],
       ),
       ...inlineLastLines(

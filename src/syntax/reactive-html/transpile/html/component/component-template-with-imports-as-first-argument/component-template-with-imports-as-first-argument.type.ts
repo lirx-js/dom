@@ -1,4 +1,4 @@
-import { IComponentTemplate } from '../../../../../../component/types/options/component-template.type';
+import { IComponentTemplate } from '../../../../../../component/template/component-template.type';
 
 export interface IComponentTemplateWithImportsAsFirstArgument<GData extends object> {
   (

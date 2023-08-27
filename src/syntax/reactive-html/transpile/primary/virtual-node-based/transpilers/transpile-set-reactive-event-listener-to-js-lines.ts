@@ -15,9 +15,8 @@ export const transpileSetReactiveEventListenerToJSLines: ITranspileSetReactiveEv
 ): ILines => {
   return observableMode
     ? inlineLastLines(
-      [`virtualReactiveElementNodeSetReactiveEventListenerFromObservable(`],
       node,
-      [', '],
+      [`.setReactiveEventListener(`],
       name,
       [', '],
       value,
@@ -25,7 +24,7 @@ export const transpileSetReactiveEventListenerToJSLines: ITranspileSetReactiveEv
     )
     : inlineLastLines(
       node,
-      [`.setReactiveEventListener(`],
+      [`.setEventListener(`],
       name,
       [', '],
       value,

@@ -1,2 +1,0 @@
-export * from './create-shadow-component';
-export * from './functions/index';

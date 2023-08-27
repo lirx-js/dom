@@ -1,2 +1,0 @@
-export * from './virtual-dom-node-or-null.type';
-export * from './virtual-dom-node.class';

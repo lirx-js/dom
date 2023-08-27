@@ -100,6 +100,11 @@ const config = {
             position: 'left',
           },
           {
+            label: 'Syntax',
+            to: '/docs/documentation/syntax/rx-components/',
+            position: 'left',
+          },
+          {
             label: 'Reference',
             type: 'docSidebar',
             sidebarId: 'reference',
@@ -180,7 +185,7 @@ const config = {
               },
               {
                 label: 'Changelog',
-                to: '/docs/changelogs/0.8.0/',
+                to: '/docs/changelogs/0.9.0/',
               },
               {
                 label: 'GitHub',

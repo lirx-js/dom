@@ -1,32 +1,22 @@
-import { IObservable, IObservableLike, IObserver } from '@lirx/core';
-import { IUnsubscribe } from '@lirx/utils';
+import { IUnsubscribe } from '@lirx/unsubscribe';
 import {
-  IVirtualCustomElementNodeConfig
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/config/virtual-custom-element-node-config.type';
-import {
-  InferVirtualCustomElementNodeCaseInsensitiveInputValue
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/inputs/case-insensitive/infer-virtual-custom-element-node-case-insensitive-input-value.type';
-import {
-  virtualCustomElementNodeSetCaseInsensitiveReactiveInputLike
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/inputs/case-insensitive/virtual-custom-element-node-set-case-insensitive-reactive-input-like';
-import {
-  InferVirtualCustomElementNodeCaseInsensitiveOutputValue
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/outputs/case-insensitive/infer-virtual-custom-element-node-case-insensitive-output-value.type';
-import {
-  virtualCustomElementNodeSetCaseInsensitiveReactiveOutput
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/outputs/case-insensitive/virtual-custom-element-node-set-case-insensitive-reactive-output';
-import {
-  virtualCustomElementNodeSetCaseInsensitiveReactiveOutputFromObservable
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/members/outputs/case-insensitive/virtual-custom-element-node-set-case-insensitive-reactive-output-from-observable';
-import {
-  VirtualCustomElementNode
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-custom-element-node/virtual-custom-element-node.class';
+  VirtualComponentNode,
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-component-node/virtual-component-node.class';
 import { inlineLastLines } from '../../../../../misc/lines/functions/after-last-line';
 import { ILines } from '../../../../../misc/lines/lines.type';
 import {
   ITranspileSetReactiveOutputToJSLinesFunction,
   ITranspileSetReactiveOutputToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-output-to-js-lines.type';
+
+import {
+  bindCaseInsensitiveOutputWithObserverLike,
+  InferBindCaseInsensitiveOutputWithObserverLikeValue,
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-component-node/data/outputs/case-insensitive/bind/bind-case-insensitive-output-with-observer-like';
+import {
+  InferBindCaseInsensitiveOutputWithObservableOfObserverValue,
+  bindCaseInsensitiveOutputWithObservableOfObserver,
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-component-node/data/outputs/case-insensitive/bind/bind-case-insensitive-output-with-observable-of-observer';
 
 export const transpileAOTSetReactiveOutputToJSLines: ITranspileSetReactiveOutputToJSLinesFunction = (
   {
@@ -52,27 +42,32 @@ export const transpileAOTSetReactiveOutputToJSLines: ITranspileSetReactiveOutput
   );
 };
 
-
-export function aot_17<GConfig extends IVirtualCustomElementNodeConfig, GKey extends string>(
-  node: VirtualCustomElementNode<GConfig>,
-  key: GKey,
-  value$: IObservable<IObserver<InferVirtualCustomElementNodeCaseInsensitiveOutputValue<GConfig, GKey>>>,
+export function aot_17<GData extends object, GCaseInsensitiveKey extends string>(
+  node: VirtualComponentNode<any, GData>,
+  caseInsensitiveKey: GCaseInsensitiveKey,
+  $value: InferBindCaseInsensitiveOutputWithObservableOfObserverValue<GData, GCaseInsensitiveKey>,
 ): IUnsubscribe {
-  return virtualCustomElementNodeSetCaseInsensitiveReactiveOutputFromObservable<GConfig, GKey>(
+  return bindCaseInsensitiveOutputWithObservableOfObserver<GData, GCaseInsensitiveKey>(
     node,
-    key,
-    value$,
+    caseInsensitiveKey,
+    $value,
   );
 }
 
-export function aot_18<GConfig extends IVirtualCustomElementNodeConfig, GKey extends string>(
-  node: VirtualCustomElementNode<GConfig>,
-  key: GKey,
-  value$: IObservable<IObserver<InferVirtualCustomElementNodeCaseInsensitiveOutputValue<GConfig, GKey>>>,
+export function aot_18<GData extends object, GCaseInsensitiveKey extends string>(
+  node: VirtualComponentNode<any, GData>,
+  caseInsensitiveKey: GCaseInsensitiveKey,
+  $value: InferBindCaseInsensitiveOutputWithObserverLikeValue<GData, GCaseInsensitiveKey>,
 ): IUnsubscribe {
-  return virtualCustomElementNodeSetCaseInsensitiveReactiveOutput<GConfig, GKey>(
+  return bindCaseInsensitiveOutputWithObserverLike<GData, GCaseInsensitiveKey>(
     node,
-    key,
-    value$,
+    caseInsensitiveKey,
+    $value,
   );
 }
+
+
+
+
+
+

@@ -1,5 +1,4 @@
-import { IObservableLike, toObservableThrowIfUndefined } from '@lirx/core';
-import { INotAnObservable } from '@lirx/core/src/others/observable-like/observable-like.type';
+import { IObservableLike, unknownToObservableNotUndefined, IObservable } from '@lirx/core';
 import {
   IVirtualReactiveSwitchNodeTemplate,
   VirtualReactiveSwitchNode,
@@ -46,13 +45,13 @@ export const transpileAOTCreateReactiveSwitchNodeToJSLines: ITranspileCreateReac
   ];
 };
 
-export function aot_8<GValue extends INotAnObservable<GValue>>(
+export function aot_8<GValue>(
   value$: IObservableLike<GValue>,
   templatesMap: ReadonlyMap<GValue, IVirtualReactiveSwitchNodeTemplate>,
   defaultTemplate?: IVirtualReactiveSwitchNodeTemplate,
 ): VirtualReactiveSwitchNode<GValue> {
   return new VirtualReactiveSwitchNode<GValue>(
-    toObservableThrowIfUndefined(value$),
+    unknownToObservableNotUndefined(value$) as IObservable<GValue>,
     templatesMap,
     defaultTemplate,
   );

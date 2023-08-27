@@ -1,8 +1,8 @@
 import { getElementTagName } from '../../../dom-manipulation/helpers/misc/get-element-tag-name';
-import { nodesToHTML } from './nodes-to-html';
-import { attributesToHTML } from './attributes-to-html';
 import { indentLines } from '../lines/functions/indent-lines';
 import { ILines } from '../lines/lines.type';
+import { attributesToHTML } from './attributes-to-html';
+import { nodesToHTML } from './nodes-to-html';
 
 export function elementNodeToHTML(
   node: Element,

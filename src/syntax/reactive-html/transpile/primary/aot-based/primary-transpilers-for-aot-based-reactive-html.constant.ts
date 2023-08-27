@@ -1,5 +1,5 @@
 import { IPrimaryTranspilers } from '../primary-transpilers.type';
-import { transpileAOTApplyNodeModifierToJSLines } from './transpilers/transpile-apply-node-modifier-to-js-lines';
+import { transpileAOTApplyNodeModifiersToJSLines } from './transpilers/transpile-apply-node-modifiers-to-js-lines';
 import { transpileAOTAttachNodeToJSLines } from './transpilers/transpile-attach-node-to-js-lines';
 import { transpileAOTCreateReactiveAsyncNodeToJSLines } from './transpilers/transpile-create-reactive-async-node-to-js-lines';
 import {
@@ -23,7 +23,7 @@ import { transpileAOTSetReactiveStylePropertyToJSLines } from './transpilers/tra
 import { transpileAOTSetStaticAttributeToJSLines } from './transpilers/transpile-set-static-attribute-to-js-lines';
 
 export const PRIMARY_TRANSPILERS_FOR_AOT_BASED_REACTIVE_HTML: IPrimaryTranspilers = {
-  transpileApplyNodeModifierToJSLines: transpileAOTApplyNodeModifierToJSLines,
+  transpileApplyNodeModifiersToJSLines: transpileAOTApplyNodeModifiersToJSLines,
   transpileAttachNodeToJSLines: transpileAOTAttachNodeToJSLines,
   transpileCreateReactiveAsyncNodeToJSLines: transpileAOTCreateReactiveAsyncNodeToJSLines,
   transpileCreateReactiveCustomElementNodeToJSLines: transpileAOTCreateReactiveCustomElementNodeToJSLines,

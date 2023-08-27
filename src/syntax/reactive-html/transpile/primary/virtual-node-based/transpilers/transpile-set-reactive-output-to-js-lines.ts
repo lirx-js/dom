@@ -16,8 +16,8 @@ export const transpileSetReactiveOutputToJSLines: ITranspileSetReactiveOutputToJ
   return inlineLastLines(
     [
       observableMode
-        ? `virtualCustomElementNodeSetCaseInsensitiveReactiveOutputFromObservable(`
-        : `virtualCustomElementNodeSetCaseInsensitiveReactiveOutput(`,
+        ? `bindCaseInsensitiveOutputWithObservableOfObserver(`
+        : `bindCaseInsensitiveOutputWithObserverLike(`,
     ],
     [],
     node,
@@ -27,18 +27,6 @@ export const transpileSetReactiveOutputToJSLines: ITranspileSetReactiveOutputToJ
     value,
     [');'],
   );
-  // return inlineLastLines(
-  //   node,
-  //   [
-  //     observableMode
-  //       ? `.setCaseInsensitiveReactiveOutputFromObservable(`
-  //       : `.setCaseInsensitiveReactiveOutput(`,
-  //   ],
-  //   name,
-  //   [','],
-  //   value,
-  //   [');'],
-  // );
 };
 
 

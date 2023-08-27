@@ -1,3 +1,4 @@
+import { SHARED_VALUES_TO_IMPORT } from '../shared/values-to-import/shared-values-to-import.constant';
 import { aot_0 } from './transpilers/transpile-attach-node-to-js-lines';
 import { aot_1 } from './transpilers/transpile-create-reactive-async-node-to-js-lines';
 import { aot_2, aot_3, aot_4, aot_5 } from './transpilers/transpile-create-reactive-element-node-to-js-lines';
@@ -18,6 +19,7 @@ import { aot_21 } from './transpilers/transpile-set-reactive-style-property-to-j
 import { aot_22, aot_23 } from './transpilers/transpile-set-static-attribute-to-js-lines';
 
 export const VALUES_TO_IMPORT_FOR_AOT_BASED_REACTIVE_HTML = {
+  ...SHARED_VALUES_TO_IMPORT,
   aot_0,
   aot_1,
   aot_2,

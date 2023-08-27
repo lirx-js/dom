@@ -32,7 +32,7 @@ export function transpileReactiveHTMLToComponentTemplateModule(
     `{`,
     ...indentLines([
       `createCustomElement,`,
-      `applyNodeModifier,`,
+      `applyNodeModifiers,`,
     ]),
     `},`,
   ];

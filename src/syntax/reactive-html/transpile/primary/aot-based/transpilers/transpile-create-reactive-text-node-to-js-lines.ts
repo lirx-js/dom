@@ -1,4 +1,4 @@
-import { IObservableLike, toObservableThrowIfUndefined } from '@lirx/core';
+import { IObservableLike, unknownToObservableNotUndefined } from '@lirx/core';
 import {
   VirtualReactiveTextNode,
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-text-node/virtual-reactive-text-node.class';
@@ -25,6 +25,6 @@ export function aot_9(
   value$: IObservableLike<string>,
 ): VirtualReactiveTextNode {
   return new VirtualReactiveTextNode(
-    toObservableThrowIfUndefined(value$),
+    unknownToObservableNotUndefined(value$),
   );
 }

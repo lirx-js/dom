@@ -1,2 +1,0 @@
-export * from './virtual-dom-node-template/index';
-export * from './virtual-reactive-dom-node-template/index';

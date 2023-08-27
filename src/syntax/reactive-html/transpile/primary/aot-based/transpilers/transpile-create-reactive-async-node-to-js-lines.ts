@@ -1,4 +1,4 @@
-import { IDefaultNotificationsUnion, IObservableLike, toObservableThrowIfUndefined } from '@lirx/core';
+import { IDefaultNotificationsUnion, IObservableLike, unknownToObservableNotUndefined } from '@lirx/core';
 import {
   IVirtualReactiveAsyncNodeFulfilledTemplate,
   IVirtualReactiveAsyncNodePendingTemplate,
@@ -52,7 +52,7 @@ export function aot_1<GValue>(
   templateRejected: IVirtualReactiveAsyncNodeRejectedTemplate<GValue> | null = null,
 ): VirtualReactiveAsyncNode<GValue> {
   return new VirtualReactiveAsyncNode<GValue>(
-    toObservableThrowIfUndefined(value$),
+    unknownToObservableNotUndefined(value$),
     templatePending,
     templateFulfilled,
     templateRejected,

@@ -21,7 +21,7 @@ import {
 } from './transpilers/reactive-style/transpile-reactive-html-reactive-style-to-js-lines';
 
 export interface ITranspileReactiveHTMLBindPropertyToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  bindProperty: IBindProperty;
+  readonly bindProperty: IBindProperty;
 }
 
 export const transpileReactiveHTMLBindPropertyToJSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ITranspileReactiveHTMLBindPropertyToJSLinesOptions]>(() => [
@@ -35,7 +35,7 @@ export const transpileReactiveHTMLBindPropertyToJSLines = createGenericToLinesIt
 /*--------------------*/
 
 export interface ITranspileReactiveHTMLBindPropertyAttributeToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  attribute: Attr;
+  readonly attribute: Attr;
 }
 
 export const transpileReactiveHTMLBindPropertyAttributeToJSLines = (

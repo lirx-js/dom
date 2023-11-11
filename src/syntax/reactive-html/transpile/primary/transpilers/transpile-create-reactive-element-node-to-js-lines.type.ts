@@ -1,9 +1,9 @@
 import { ILines } from '../../../../misc/lines/lines.type';
 
 export interface ITranspileCreateReactiveElementNodeToJSLinesOptions {
-  namespaceURI: string,
-  name: string,
-  options?: ElementCreationOptions,
+  readonly namespaceURI: string,
+  readonly name: string,
+  readonly options?: ElementCreationOptions,
 }
 
 export interface ITranspileCreateReactiveElementNodeToJSLinesFunction {
@@ -13,5 +13,5 @@ export interface ITranspileCreateReactiveElementNodeToJSLinesFunction {
 }
 
 export interface ITranspileCreateReactiveElementNodeToJSLinesTrait {
-  transpileCreateReactiveElementNodeToJSLines: ITranspileCreateReactiveElementNodeToJSLinesFunction;
+  readonly transpileCreateReactiveElementNodeToJSLines: ITranspileCreateReactiveElementNodeToJSLinesFunction;
 }

@@ -3,7 +3,7 @@ import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-tr
 import { transpileReactiveHTMLReactiveTextToJSLines } from './transpile-reactive-html-reactive-text-to-js-lines';
 
 export interface ITranspileReactiveHTMLReactiveTextNodeToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Text;
+  readonly node: Text;
 }
 
 export function transpileReactiveHTMLReactiveTextNodeToJSLines(

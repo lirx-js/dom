@@ -26,14 +26,19 @@ They are truly similar to the Promises on their time: a completely new approach,
 
 In conclusion, this is an extremely powerful tool, and if you want to create really performants applications, then they are the way to go 👑.
 
+### A few words about the other frameworks
 
-### Coming from React ?
+We may notice than all the current frameworks try to **transition to a reactive model**: with the introduction of signal for example. 
+This means that `@lirx/dom` took the right direction, and was built especially for this paradigm.
+For example, `signals` natively exists and works immediately with this framework.
+
+#### Coming from React ?
 
 If you are a React developer, actually, you've already played with something very close to an Observable: the function `useState` is similar to a [Source](https://core.lirx.org/docs/documentation/getting-started/what-is-a-source/#let).
 
 You set the state, and then, the DOM is updated. Well, `@lirx/dom` uses a similar pattern, but much more refined and precise, where only the relevant node is updated, instead of the whole Virtual DOM.
 
-### Coming from Angular ?
+#### Coming from Angular ?
 
 If you are an angular developer, you've probably already played with the Observables through the library: [RxJS](https://rxjs.dev/).
 Typically, you'll use them, when you have to perform an HTTP request, send an event (`@Output` and `EventEmitter`), or use the `async` pipe.

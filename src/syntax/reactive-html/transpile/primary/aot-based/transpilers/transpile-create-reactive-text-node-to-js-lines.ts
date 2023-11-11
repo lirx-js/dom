@@ -8,6 +8,14 @@ import {
   ITranspileCreateReactiveTextNodeToJSLinesFunction,
   ITranspileCreateReactiveTextNodeToJSLinesOptions,
 } from '../../transpilers/transpile-create-reactive-text-node-to-js-lines.type';
+import {
+  VirtualReactiveIfNode,
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-if-node/virtual-reactive-if-node.class';
+import {
+  transpileAOTReactiveValueToJSLines,
+  transpileAOTReactiveValueTypeToFunctionName,
+} from './special/transpile-reactive-value-to-js-lines';
+import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
 
 export const transpileAOTCreateReactiveTextNodeToJSLines: ITranspileCreateReactiveTextNodeToJSLinesFunction = (
   {
@@ -15,8 +23,8 @@ export const transpileAOTCreateReactiveTextNodeToJSLines: ITranspileCreateReacti
   }: ITranspileCreateReactiveTextNodeToJSLinesOptions,
 ): ILines => {
   return inlineLastLines(
-    [`aot_9(`],
-    value,
+    [`${transpileAOTReactiveValueTypeToFunctionName('aot_9', value.type)}(`],
+    transpileAOTReactiveValueToJSLines(value),
     [')'],
   );
 };
@@ -26,5 +34,13 @@ export function aot_9(
 ): VirtualReactiveTextNode {
   return new VirtualReactiveTextNode(
     unknownToObservableNotUndefined(value$),
+  );
+}
+
+export function aot_9_computed(
+  value: () => string,
+): VirtualReactiveIfNode {
+  return new VirtualReactiveTextNode(
+    computedFunctionToObservable(value),
   );
 }

@@ -7,7 +7,7 @@ import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-tr
 import { generateJSLinesForElement } from '../shared/generate-js-lines-for-element';
 
 export interface ITranspileReactiveHTMLGenericElementToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLGenericElementToJSLines(

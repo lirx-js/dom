@@ -3,7 +3,7 @@ import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-tr
 import { generateJSLinesForStaticTextNode } from './generate-js-lines-for-static-text-node';
 
 export interface IGenerateJSLinesForStaticTextNodeIfNotEmptyOptions extends IHavingPrimaryTranspilersOptions {
-  value: string;
+  readonly value: string;
 }
 
 export function generateJSLinesForStaticTextNodeIfNotEmpty(

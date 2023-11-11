@@ -21,6 +21,7 @@ import { IMappedAttributes } from '../helpers/extract-attributes/mapped-attribut
 import { generateJSLinesForRXSwitch } from './generate-reactive-dom-js-lines-for-rx-switch';
 import { transpileReactiveHTMLRXSwitchCaseToJSLines } from './rx-switch-case/transpile-reactive-html-rx-switch-case-to-js-lines';
 import { transpileReactiveHTMLRXSwitchDefaultToJSLines } from './rx-switch-default/transpile-reactive-html-rx-switch-default-to-js-lines';
+import { extractReactiveValueFromString } from '../../../../misc/extract-reactive-value-from-string';
 
 const TAG_NAME: string = 'rx-switch';
 
@@ -31,7 +32,7 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 ]);
 
 export interface ITranspileReactiveHTMLRXSwitchToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLRXSwitchToJSLines(
@@ -97,7 +98,7 @@ export function transpileReactiveHTMLRXSwitchToJSLines(
 
     return generateJSLinesForRXSwitch({
       ...options,
-      expression,
+      expression: extractReactiveValueFromString(expression),
       templatesMap,
       defaultTemplate,
     });

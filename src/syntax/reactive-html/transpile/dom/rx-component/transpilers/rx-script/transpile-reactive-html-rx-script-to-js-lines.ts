@@ -18,7 +18,7 @@ const TAG_NAME: string = 'rx-script';
 const ATTRIBUTE_NAME: string = 'rx';
 
 export interface ITranspileReactiveHTMLRXScriptToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLRXScriptToJSLines(

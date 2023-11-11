@@ -9,6 +9,11 @@ import {
   ITranspileSetReactiveClassToJSLinesFunction,
   ITranspileSetReactiveClassToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-class-to-js-lines.type';
+import {
+  transpileAOTReactiveValueToJSLines,
+  transpileAOTReactiveValueTypeToFunctionName,
+} from './special/transpile-reactive-value-to-js-lines';
+import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
 
 export const transpileAOTSetReactiveClassToJSLines: ITranspileSetReactiveClassToJSLinesFunction = (
   {
@@ -18,12 +23,12 @@ export const transpileAOTSetReactiveClassToJSLines: ITranspileSetReactiveClassTo
   }: ITranspileSetReactiveClassToJSLinesOptions,
 ): ILines => {
   return inlineLastLines(
-    [`aot_13(`],
+    [`${transpileAOTReactiveValueTypeToFunctionName('aot_13', value.type)}(`],
     node,
     [`, `],
     name,
     [', '],
-    value,
+    transpileAOTReactiveValueToJSLines(value),
     [');'],
   );
 };
@@ -36,5 +41,16 @@ export function aot_13(
   return node.setReactiveClass(
     name,
     unknownToObservableNotUndefined(enabled$),
+  );
+}
+
+export function aot_13_computed(
+  node: IGenericVirtualReactiveElementNode,
+  name: string,
+  enabled: () => boolean,
+): IUnsubscribe {
+  return node.setReactiveClass(
+    name,
+    computedFunctionToObservable(enabled),
   );
 }

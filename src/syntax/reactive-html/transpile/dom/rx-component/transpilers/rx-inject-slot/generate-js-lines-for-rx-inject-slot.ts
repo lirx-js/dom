@@ -3,9 +3,9 @@ import { ILinesOrNull } from '../../../../../../misc/lines/lines-or-null.type';
 import { ILines } from '../../../../../../misc/lines/lines.type';
 
 export interface IGenerateJSLinesForRXInjectSlotOptions {
-  slotName: string;
-  letPropertiesLines: ILines;
-  defaultLines: ILinesOrNull;
+  readonly slotName: string;
+  readonly letPropertiesLines: ILines;
+  readonly defaultLines: ILinesOrNull;
 }
 
 export function generateJSLinesForRXInjectSlot(

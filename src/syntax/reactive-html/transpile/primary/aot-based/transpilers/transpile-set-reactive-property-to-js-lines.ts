@@ -1,11 +1,4 @@
-import { IObservable } from '@lirx/core';
 import { IUnsubscribe } from '@lirx/unsubscribe';
-import {
-  InferVirtualElementNodeSetCaseInsensitivePropertyValue,
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/members/property/case-insensitive/infer-virtual-element-node-set-case-insensitive-property-value.type';
-import {
-  virtualReactiveElementNodeSetCaseInsensitiveReactiveProperty,
-} from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/members/property/case-insensitive/virtual-reactive-element-node-set-case-insensitive-reactive-property';
 import {
   VirtualReactiveElementNode,
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/virtual-reactive-element-node.class';
@@ -15,6 +8,20 @@ import {
   ITranspileSetReactivePropertyToJSLinesFunction,
   ITranspileSetReactivePropertyToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-property-to-js-lines.type';
+import {
+  bindCaseInsensitivePropertyWithObservableLike,
+  InferBindCaseInsensitivePropertyWithObservableLikeValue,
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/members/property/case-insensitive/bind/bind-case-insensitive-property-with-observable-like';
+import {
+  transpileAOTReactiveValueTypeToFunctionName,
+  transpileAOTReactiveValueToJSLines,
+} from './special/transpile-reactive-value-to-js-lines';
+import { InferCaseInsensitiveObjectKey } from '../../../../../../misc/types/infer-case-insensitive-object-key.type';
+import {
+  bindCaseInsensitivePropertyWithObservable,
+  InferBindCaseInsensitivePropertyWithObservableValue,
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/members/property/case-insensitive/bind/bind-case-insensitive-property-with-observable';
+import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
 
 export const transpileAOTSetReactivePropertyToJSLines: ITranspileSetReactivePropertyToJSLinesFunction = (
   {
@@ -24,25 +31,37 @@ export const transpileAOTSetReactivePropertyToJSLines: ITranspileSetReactiveProp
   }: ITranspileSetReactivePropertyToJSLinesOptions,
 ): ILines => {
   return inlineLastLines(
-    [`aot_19(`],
+    [`${transpileAOTReactiveValueTypeToFunctionName('aot_19', value.type)}(`],
     node,
     [', '],
     name,
     [', '],
-    value,
+    transpileAOTReactiveValueToJSLines(value),
     [');'],
   );
 };
 
 export function aot_19<GElementNode extends Element, GCaseInsensitiveKey extends string>(
   node: VirtualReactiveElementNode<GElementNode>,
-  propertyKey: GCaseInsensitiveKey,
-  value$: IObservable<InferVirtualElementNodeSetCaseInsensitivePropertyValue<GElementNode, GCaseInsensitiveKey>>,
+  caseInsensitiveKey: GCaseInsensitiveKey,
+  value$: InferBindCaseInsensitivePropertyWithObservableLikeValue<GElementNode, GCaseInsensitiveKey>,
 ): IUnsubscribe {
-  return virtualReactiveElementNodeSetCaseInsensitiveReactiveProperty<GElementNode, GCaseInsensitiveKey>(
+  return bindCaseInsensitivePropertyWithObservableLike<GElementNode, GCaseInsensitiveKey>(
     node,
-    propertyKey,
+    caseInsensitiveKey,
     value$,
+  );
+}
+
+export function aot_19_computed<GElementNode extends Element, GCaseInsensitiveKey extends string>(
+  node: VirtualReactiveElementNode<GElementNode>,
+  caseInsensitiveKey: GCaseInsensitiveKey,
+  value: () => GElementNode[InferCaseInsensitiveObjectKey<GElementNode, GCaseInsensitiveKey>],
+): IUnsubscribe {
+  return bindCaseInsensitivePropertyWithObservable<GElementNode, GCaseInsensitiveKey>(
+    node,
+    caseInsensitiveKey,
+    computedFunctionToObservable(value) as InferBindCaseInsensitivePropertyWithObservableValue<GElementNode, GCaseInsensitiveKey>,
   );
 }
 

@@ -7,8 +7,8 @@ import { transpileReactiveStyleToCSSLines } from '../../syntax/reactive-style/tr
 export const COMPONENT_STYLES_ID = createCounter();
 
 export interface ICompiledReactiveCSS {
-  css: string;
-  id: string;
+  readonly css: string;
+  readonly id: string;
 }
 
 export function compileStyleAsCompiledReactiveCSS(

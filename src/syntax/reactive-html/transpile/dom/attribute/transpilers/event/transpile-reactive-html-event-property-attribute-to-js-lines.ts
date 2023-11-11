@@ -12,7 +12,7 @@ import {
 } from './transpilers/reactive-output/transpile-reactive-html-reactive-output-to-js-lines';
 
 export interface ITranspileReactiveHTMLEventPropertyToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  eventProperty: IEventProperty;
+  readonly eventProperty: IEventProperty;
 }
 
 export const transpileReactiveHTMLEventPropertyToJSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ITranspileReactiveHTMLEventPropertyToJSLinesOptions]>(() => [
@@ -23,7 +23,7 @@ export const transpileReactiveHTMLEventPropertyToJSLines = createGenericToLinesI
 /*--------------------*/
 
 export interface ITranspileReactiveHTMLEventPropertyAttributeToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  attribute: Attr;
+  readonly attribute: Attr;
 }
 
 export const transpileReactiveHTMLEventPropertyAttributeToJSLines = (

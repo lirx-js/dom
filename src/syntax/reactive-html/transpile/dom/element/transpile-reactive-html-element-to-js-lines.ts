@@ -9,7 +9,7 @@ import {
 } from './transpilers/generic/transpile-reactive-html-generic-element-to-dom-js-lines';
 
 export interface ITranspileReactiveHTMLElementToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export const transpileReactiveHTMLElementToJSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ITranspileReactiveHTMLElementToJSLinesOptions]>(() => [

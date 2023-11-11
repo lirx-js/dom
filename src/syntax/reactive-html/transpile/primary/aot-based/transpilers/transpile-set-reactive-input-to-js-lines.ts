@@ -12,6 +12,21 @@ import {
   bindCaseInsensitiveInputWithObservableLike,
   InferBindCaseInsensitiveInputWithObservableLikeValue,
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-component-node/data/inputs/case-insensitive/bind/bind-case-insensitive-input-with-observable-like';
+import {
+  InferDataInputGetValue,
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-component-node/data/inputs/infer-data-inputs.type';
+import {
+  InferCaseInsensitiveDataInputKey,
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-component-node/data/inputs/case-insensitive/infer-case-insensitive-data-input-key.type';
+import {
+  bindCaseInsensitiveInputWithObservable,
+  InferBindCaseInsensitiveInputWithObservableValue,
+} from '../../../../../../dom-manipulation/virtual-nodes/virtual-component-node/data/inputs/case-insensitive/bind/bind-case-insensitive-input-with-observable';
+import {
+  transpileAOTReactiveValueToJSLines,
+  transpileAOTReactiveValueTypeToFunctionName,
+} from './special/transpile-reactive-value-to-js-lines';
+import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
 
 export const transpileAOTSetReactiveInputToJSLines: ITranspileSetReactiveInputToJSLinesFunction = (
   {
@@ -21,12 +36,12 @@ export const transpileAOTSetReactiveInputToJSLines: ITranspileSetReactiveInputTo
   }: ITranspileSetReactiveInputToJSLinesOptions,
 ): ILines => {
   return inlineLastLines(
-    [`aot_16(`],
+    [`${transpileAOTReactiveValueTypeToFunctionName('aot_16', value.type)}(`],
     node,
     [', '],
     name,
     [', '],
-    value,
+    transpileAOTReactiveValueToJSLines(value),
     [');'],
   );
 };
@@ -40,6 +55,18 @@ export function aot_16<GData extends object, GCaseInsensitiveKey extends string>
     node,
     caseInsensitiveKey,
     value$,
+  );
+}
+
+export function aot_16_computed<GData extends object, GCaseInsensitiveKey extends string>(
+  node: VirtualComponentNode<any, GData>,
+  caseInsensitiveKey: GCaseInsensitiveKey,
+  value: () => InferDataInputGetValue<GData[InferCaseInsensitiveDataInputKey<GData, GCaseInsensitiveKey>]>,
+): IUnsubscribe {
+  return bindCaseInsensitiveInputWithObservable<GData, GCaseInsensitiveKey>(
+    node,
+    caseInsensitiveKey,
+    computedFunctionToObservable(value) as InferBindCaseInsensitiveInputWithObservableValue<GData, GCaseInsensitiveKey>,
   );
 }
 

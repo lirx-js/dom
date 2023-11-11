@@ -280,10 +280,10 @@ You should always prefer to write a proper `reactive-html` template.
 When defining a child component, it's possible to access the different slots using the property `slots` on the incoming `node` of the `init` function:
 
 ```ts
-export const AppChildComponent = createComponent<IAppChildComponentConfig>({
+export const AppChildComponent = new Component<HTMLElement, object, void>({
   name: 'app-child',
   template,
-  init: (node: VirtualCustomElementNode<IAppChildComponentConfig>): void => {
+  templateData: (node: VirtualCustomElementNode<HTMLElement, object>): void => {
     const bodySlot: IVirtualCustomElementNodeSlotTemplate | undefined = node.slots.get('body');
     if (bodySlot !== void 0) {
       bodySlot(node, {}); // create and append bodySlot into this node

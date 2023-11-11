@@ -1,6 +1,7 @@
 import { VirtualDOMNode } from '../virtual-dom-node/virtual-dom-node.class';
 import { linkDOMNodeWithVirtualDOMNode } from '../virtual-node/members/link/link-dom-node-with-virtual-dom-node';
 import { IVirtualNodeOrNull } from '../virtual-node/virtual-node-or-null.type';
+import { IObservable, single } from '@lirx/core';
 
 let BODY_ROOT: VirtualRootNode<HTMLBodyElement>;
 
@@ -19,6 +20,7 @@ export class VirtualRootNode<GRootNode extends ParentNode> extends VirtualDOMNod
     return BODY_ROOT;
   }
 
+  readonly #isConnected$: IObservable<boolean>;
   readonly #rootNode: GRootNode; // the associated DOM Node
   readonly #selfDOMNodes: [GRootNode]; // computed
 
@@ -27,6 +29,7 @@ export class VirtualRootNode<GRootNode extends ParentNode> extends VirtualDOMNod
     parentNode?: IVirtualNodeOrNull,
   ) {
     super(parentNode);
+    this.#isConnected$ = single(true);
     this.#rootNode = rootNode;
     this.#selfDOMNodes = [
       this.#rootNode,
@@ -35,7 +38,11 @@ export class VirtualRootNode<GRootNode extends ParentNode> extends VirtualDOMNod
   }
 
   override get isConnected(): boolean {
-    return this.#rootNode.isConnected;
+    return true;
+  }
+
+  override get isConnected$(): IObservable<boolean> {
+    return this.#isConnected$;
   }
 
   /**

@@ -3,7 +3,7 @@ import { IHavingHostSelectorOptions } from '../../types/having-host-selector-opt
 import { transpileReactiveStyleCSSStyleSheetToCSSLines } from '../css-style-sheet/transpile-reactive-style-css-style-sheet-to-js-lines';
 
 export interface ITranspileReactiveStyleStyleElementToCSSLinesOptions extends IHavingHostSelectorOptions {
-  node: HTMLStyleElement;
+  readonly node: HTMLStyleElement;
 }
 
 export function transpileReactiveStyleStyleElementToCSSLines(

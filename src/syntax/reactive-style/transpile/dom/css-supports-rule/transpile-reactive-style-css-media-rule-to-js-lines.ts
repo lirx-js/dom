@@ -7,7 +7,7 @@ import {
 } from './transpilers/transpile-reactive-style-generic-css-media-rule-to-js-lines';
 
 export interface ITranspileReactiveStyleCSSSupportsRuleToCSSLinesOptions extends IHavingHostSelectorOptions {
-  rule: CSSSupportsRule;
+  readonly rule: CSSSupportsRule;
 }
 
 export const transpileReactiveStyleCSSSupportsRuleToCSSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ITranspileReactiveStyleCSSSupportsRuleToCSSLinesOptions]>(() => [

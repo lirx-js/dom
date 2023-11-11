@@ -5,25 +5,27 @@ import {
   ICreateReplayLastSourceInitialValue,
   IMulticastReplayLastSource,
 } from '@lirx/core';
+import { AbstractInput } from './abstract-input.class';
 
-export class Input<GValue> {
+export class Input<GValue> extends AbstractInput<GValue> {
   readonly #source: IMulticastReplayLastSource<GValue>;
 
   constructor(
     ...initialValue: ICreateReplayLastSourceInitialValue<GValue>
   ) {
+    super();
     this.#source = createMulticastReplayLastSource<GValue>(...initialValue);
   }
 
-  get emit(): IObserver<GValue> {
+  override get emit(): IObserver<GValue> {
     return this.#source.emit;
   }
 
-  get subscribe(): IObservable<GValue> {
+  override get subscribe(): IObservable<GValue> {
     return this.#source.subscribe;
   }
 
-  get value(): GValue {
+  override get value(): GValue {
     return this.#source.getValue();
   }
 }

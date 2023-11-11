@@ -12,6 +12,11 @@ import {
   ITranspileSetReactiveClassNamesListToJSLinesFunction,
   ITranspileSetReactiveClassNamesListToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-class-names-list-to-js-lines.type';
+import {
+  transpileAOTReactiveValueToJSLines,
+  transpileAOTReactiveValueTypeToFunctionName,
+} from './special/transpile-reactive-value-to-js-lines';
+import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
 
 export const transpileAOTSetReactiveClassNamesListToJSLines: ITranspileSetReactiveClassNamesListToJSLinesFunction = (
   {
@@ -20,10 +25,10 @@ export const transpileAOTSetReactiveClassNamesListToJSLines: ITranspileSetReacti
   }: ITranspileSetReactiveClassNamesListToJSLinesOptions,
 ): ILines => {
   return inlineLastLines(
-    [`aot_12(`],
+    [`${transpileAOTReactiveValueTypeToFunctionName('aot_12', value.type)}(`],
     node,
     [`, `],
-    value,
+    transpileAOTReactiveValueToJSLines(value),
     [');'],
   );
 };
@@ -34,5 +39,14 @@ export function aot_12(
 ): IUnsubscribe {
   return node.setReactiveClassNamesList(
     unknownToObservableNotUndefined(classNamesList$),
+  );
+}
+
+export function aot_12_computed(
+  node: IGenericVirtualReactiveElementNode,
+  classNamesList: () => IClassNamesList,
+): IUnsubscribe {
+  return node.setReactiveClassNamesList(
+    computedFunctionToObservable(classNamesList),
   );
 }

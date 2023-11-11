@@ -1,3 +1,5 @@
+import { IReactiveValue, extractReactiveValueFromString } from '../../../../misc/extract-reactive-value-from-string';
+
 const LET_OF_PATTERN: string = 'let\\s+(\\S.*)\\s+of\\s+(\\S.*)';
 const VARIABLE_AS_PATTERN: string = '(\\S.*)\\s+as\\s+(\\S.*)';
 const OPTION_PATTERN: string = '(\\S.*)\\s*\\:\\s*(.*)';
@@ -6,11 +8,11 @@ const VARIABLE_AS_REGEXP: RegExp = new RegExp(`^${VARIABLE_AS_PATTERN}$`);
 const OPTION_REGEXP: RegExp = new RegExp(`^${OPTION_PATTERN}$`);
 
 export interface IRXForLoopCommand {
-  items: string;
-  trackBy: string | undefined;
+  readonly items: IReactiveValue;
+  readonly trackBy: string | undefined;
   // template variables
-  item: string;
-  index: string | undefined;
+  readonly item: string;
+  readonly index: string | undefined;
 }
 
 export function generateForCommandInvalidSyntaxError(
@@ -78,7 +80,7 @@ export function extractRXForLoopCommand(
   }
 
   return {
-    items,
+    items: extractReactiveValueFromString(items),
     trackBy,
     item,
     index,

@@ -1,8 +1,8 @@
 import { ILines } from '../../../../misc/lines/lines.type';
 
 export interface ITranspileAttachNodeToJSLinesOptions {
-  node: ILines;
-  parentNode: ILines;
+  readonly node: ILines;
+  readonly parentNode: ILines;
 }
 
 export interface ITranspileAttachNodeToJSLinesFunction {
@@ -12,7 +12,7 @@ export interface ITranspileAttachNodeToJSLinesFunction {
 }
 
 export interface ITranspileAttachNodeToJSLinesTrait {
-  transpileAttachNodeToJSLines: ITranspileAttachNodeToJSLinesFunction;
+  readonly transpileAttachNodeToJSLines: ITranspileAttachNodeToJSLinesFunction;
 }
 
 

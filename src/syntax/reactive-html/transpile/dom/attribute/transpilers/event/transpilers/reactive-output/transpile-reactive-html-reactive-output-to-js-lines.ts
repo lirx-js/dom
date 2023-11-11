@@ -10,7 +10,7 @@ import { IEventProperty } from '../../extract-event-property-from-reactive-html-
  */
 
 export interface ITranspileReactiveHTMLReactiveOutputToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  eventProperty: IEventProperty;
+  readonly eventProperty: IEventProperty;
 }
 
 export function transpileReactiveHTMLReactiveOutputToJSLines(

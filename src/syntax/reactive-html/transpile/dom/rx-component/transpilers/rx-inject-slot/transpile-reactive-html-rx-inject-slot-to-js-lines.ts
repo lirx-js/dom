@@ -39,7 +39,7 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 ]);
 
 export interface ITranspileReactiveHTMLRXInjectSlotToLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 // TODO migrate to transpileReactiveHTMLRXChildTemplateToJSLines

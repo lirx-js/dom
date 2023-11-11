@@ -55,7 +55,9 @@
     "run:verdaccio": "verdaccio",
     "_________________OTHERS_________________": "",
     "clean:dist": "echo 'clean:dist' && find ../ -path '../dist/*' -delete",
-    "ncu": "npx npm-check-updates"
+    "ncu": "npx npm-check-updates",
+    "doc": "yarn run generate:index-file && yarn run generate:doc && yarn run remove:index-file",
+    "generate:doc": "typedoc ../index.ts --json ../dist/doc.json --tsconfig ./tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -78,6 +80,7 @@
     "ts-jest": "^29.1.1",
     "tsc-watch": "^6.0.4",
     "tslib": "^2.6.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "typedoc": "^0.25.3"
   }
 }

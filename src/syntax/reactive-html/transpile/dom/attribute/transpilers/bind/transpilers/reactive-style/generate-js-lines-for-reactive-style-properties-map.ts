@@ -1,8 +1,9 @@
 import { ILines } from '../../../../../../../../misc/lines/lines.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../../../primary/primary-transpilers.type';
+import { IReactiveValue } from '../../../../../../misc/extract-reactive-value-from-string';
 
 export interface IGenerateJSLinesForReactiveStylePropertiesMapOptions extends IHavingPrimaryTranspilersOptions {
-  value: string;
+  readonly value: IReactiveValue;
 }
 
 export function generateJSLinesForReactiveStylePropertiesMap(
@@ -19,7 +20,7 @@ export function generateJSLinesForReactiveStylePropertiesMap(
     `// reactive style properties map`,
     ...transpileSetReactiveStylePropertiesMapToJSLines({
       node: ['node'],
-      value: [value],
+      value,
     }),
   ];
 }

@@ -47,16 +47,20 @@ export class VirtualShadowRootNode<GParentNode extends IGenericVirtualElementNod
     );
   }
 
-  get parentNode$(): IObservable<GParentNode> {
+  override get parentNode$(): IObservable<GParentNode> {
     return super.parentNode$ as IObservable<GParentNode>;
   }
 
-  get parentNode(): GParentNode {
+  override get parentNode(): GParentNode {
     return super.parentNode as GParentNode;
   }
 
   override get isConnected(): boolean {
     return this.parentNode.isConnected;
+  }
+
+  override get isConnected$(): IObservable<boolean> {
+    return this.parentNode.isConnected$;
   }
 }
 

@@ -4,8 +4,8 @@ import { IHavingPrimaryTranspilersOptions } from '../../../../../primary/primary
 import { transpileReactiveHTMLTextNodeToJSLines } from '../../../../text-node/transpile-reactive-html-text-node-to-js-lines';
 
 export interface ITranspileReactiveHTMLCustomElementChildTextToSlotsOfJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Text;
-  defaultSlotBodyLines: ILines; // mutable reference
+  readonly node: Text;
+  readonly defaultSlotBodyLines: ILines; // mutable reference
 }
 
 export function transpileReactiveHTMLCustomElementChildTextToSlotsOfJSLines(

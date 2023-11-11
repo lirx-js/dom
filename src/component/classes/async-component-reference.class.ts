@@ -5,11 +5,32 @@ import {
 import { DEFAULT_SLOTS } from './types/slots/default-slots.constant';
 import { IComponentVirtualComponentNode } from './types/component-virtual-component-node.type';
 import { createNamesMismatchError } from '../errors/create-names-mismatch-error';
-import { IDefaultNotificationsUnion, IObservable, fulfilledObservable, throwError, singleN } from '@lirx/core';
+import {
+  IDefaultNotificationsUnion,
+  IObservable,
+  fulfilledObservable,
+  throwError,
+  singleN,
+  IFromPromiseFactoryCreatePromiseFunction,
+  fromPromiseFactory,
+  IFromPromiseFactoryObservableOptions,
+} from '@lirx/core';
 
 export type IAsyncComponent<GElement extends Element, GData extends object> = IObservable<IDefaultNotificationsUnion<AbstractComponent<GElement, GData>>>;
 
 export class AsyncComponentReference<GElement extends Element, GData extends object> extends AbstractComponent<GElement, GData> {
+
+  static fromPromiseFactory<GElement extends Element, GData extends object>(
+    name: string,
+    factory: IFromPromiseFactoryCreatePromiseFunction<AbstractComponent<GElement, GData>>,
+    options?: IFromPromiseFactoryObservableOptions,
+  ): AsyncComponentReference<GElement, GData> {
+    return new AsyncComponentReference<GElement, GData>(
+      name,
+      fromPromiseFactory<AbstractComponent<GElement, GData>>(factory, options),
+    );
+  }
+
   #component: AbstractComponent<GElement, GData> | undefined;
   readonly #component$: IAsyncComponent<GElement, GData>;
 

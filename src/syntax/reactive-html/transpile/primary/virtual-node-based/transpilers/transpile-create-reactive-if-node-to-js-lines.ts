@@ -5,7 +5,7 @@ import {
   ITranspileCreateReactiveIfNodeToJSLinesFunction,
   ITranspileCreateReactiveIfNodeToJSLinesOptions,
 } from '../../transpilers/transpile-create-reactive-if-node-to-js-lines.type';
-import { transpileUnknownToObservableToJSLines } from './transpile-unknown-to-observable-to-js-lines';
+import { transpileReactiveValueToJSLines } from './special/transpile-reactive-value-to-js-lines';
 
 export const transpileCreateReactiveIfNodeToJSLines: ITranspileCreateReactiveIfNodeToJSLinesFunction = (
   {
@@ -18,7 +18,7 @@ export const transpileCreateReactiveIfNodeToJSLines: ITranspileCreateReactiveIfN
     `new VirtualReactiveIfNode(`,
     ...indentLines([
       ...inlineLastLines(
-        transpileUnknownToObservableToJSLines({ value: condition }),
+        transpileReactiveValueToJSLines(condition),
         [','],
       ),
       ...inlineLastLines(

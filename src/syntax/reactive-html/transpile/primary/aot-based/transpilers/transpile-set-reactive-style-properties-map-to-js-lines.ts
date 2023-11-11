@@ -12,6 +12,11 @@ import {
   ITranspileSetReactiveStylePropertiesMapToJSLinesFunction,
   ITranspileSetReactiveStylePropertiesMapToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-style-properties-map-to-js-lines.type';
+import {
+  transpileAOTReactiveValueTypeToFunctionName,
+  transpileAOTReactiveValueToJSLines,
+} from './special/transpile-reactive-value-to-js-lines';
+import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
 
 export const transpileAOTSetReactiveStylePropertiesMapToJSLines: ITranspileSetReactiveStylePropertiesMapToJSLinesFunction = (
   {
@@ -20,10 +25,10 @@ export const transpileAOTSetReactiveStylePropertiesMapToJSLines: ITranspileSetRe
   }: ITranspileSetReactiveStylePropertiesMapToJSLinesOptions,
 ): ILines => {
   return inlineLastLines(
-    [`aot_20(`],
+    [`${transpileAOTReactiveValueTypeToFunctionName('aot_20', value.type)}(`],
     node,
     [`, `],
-    value,
+    transpileAOTReactiveValueToJSLines(value),
     [');'],
   );
 };
@@ -36,3 +41,13 @@ export function aot_20(
     unknownToObservableNotUndefined(stylePropertiesMap$),
   );
 }
+
+export function aot_20_computed(
+  node: IGenericVirtualReactiveElementNode,
+  stylePropertiesMap: () => IStylePropertiesMap,
+): IUnsubscribe {
+  return node.setReactiveStylePropertiesMap(
+    computedFunctionToObservable(stylePropertiesMap),
+  );
+}
+

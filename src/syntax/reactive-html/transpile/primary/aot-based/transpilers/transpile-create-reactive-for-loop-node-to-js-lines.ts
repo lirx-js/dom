@@ -11,6 +11,11 @@ import {
   ITranspileCreateReactiveForLoopNodeToJSLinesFunction,
   ITranspileCreateReactiveForLoopNodeToJSLinesOptions,
 } from '../../transpilers/transpile-create-reactive-for-loop-node-to-js-lines.type';
+import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
+import {
+  transpileAOTReactiveValueToJSLines,
+  transpileAOTReactiveValueTypeToFunctionName,
+} from './special/transpile-reactive-value-to-js-lines';
 
 export const transpileAOTCreateReactiveForLoopNodeToJSLines: ITranspileCreateReactiveForLoopNodeToJSLinesFunction = (
   {
@@ -20,10 +25,10 @@ export const transpileAOTCreateReactiveForLoopNodeToJSLines: ITranspileCreateRea
   }: ITranspileCreateReactiveForLoopNodeToJSLinesOptions,
 ): ILines => {
   return [
-    `aot_6(`,
+    `${transpileAOTReactiveValueTypeToFunctionName('aot_6', items.type)}(`,
     ...indentLines([
       ...inlineLastLines(
-        items,
+        transpileAOTReactiveValueToJSLines(items),
         [','],
       ),
       ...inlineLastLines(
@@ -50,6 +55,18 @@ export function aot_6<GItem>(
 ): VirtualReactiveForLoopNode<GItem> {
   return new VirtualReactiveForLoopNode<GItem>(
     unknownToObservableNotUndefined(items$),
+    template,
+    trackBy,
+  );
+}
+
+export function aot_6_computed<GItem>(
+  items: () => Iterable<GItem>,
+  template: IVirtualReactiveForLoopNodeTemplate<GItem>,
+  trackBy?: IVirtualReactiveForLoopNodeOptionsTrackByFunction<GItem>,
+): VirtualReactiveForLoopNode<GItem> {
+  return new VirtualReactiveForLoopNode<GItem>(
+    computedFunctionToObservable(items),
     template,
     trackBy,
   );

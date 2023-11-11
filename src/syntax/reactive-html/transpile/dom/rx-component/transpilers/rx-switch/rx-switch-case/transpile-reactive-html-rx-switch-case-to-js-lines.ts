@@ -38,8 +38,8 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 ]);
 
 export interface ITranspileReactiveHTMLRXSwitchCaseToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
-  templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap;
+  readonly node: Element;
+  readonly templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap;
 }
 
 export function transpileReactiveHTMLRXSwitchCaseToJSLines(
@@ -59,7 +59,7 @@ export function transpileReactiveHTMLRXSwitchCaseToJSLines(
 /* TEMPLATE */
 
 interface IGetOnTagFunctionForRXSwitchCaseOptions {
-  templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap;
+  readonly templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap;
 }
 
 function getOnTagFunctionForRXSwitchCase(
@@ -122,7 +122,7 @@ function getOnTagFunctionForRXSwitchCase(
 /* COMMAND */
 
 interface IGetOnCommandFunctionForRXSwitchCaseOptions {
-  templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap;
+  readonly templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap;
 }
 
 function getOnCommandFunctionForRXSwitchCase(

@@ -1,8 +1,9 @@
 import { ILines } from '../../../../../../misc/lines/lines.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
+import { IReactiveValue } from '../../../../misc/extract-reactive-value-from-string';
 
 export interface IGenerateJSLinesForReactiveTextNodeOptions extends IHavingPrimaryTranspilersOptions {
-  value: ILines;
+  readonly value: IReactiveValue;
 }
 
 export function generateJSLinesForReactiveTextNode(

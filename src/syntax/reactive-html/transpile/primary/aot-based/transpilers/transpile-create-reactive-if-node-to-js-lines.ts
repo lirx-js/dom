@@ -10,6 +10,11 @@ import {
   ITranspileCreateReactiveIfNodeToJSLinesFunction,
   ITranspileCreateReactiveIfNodeToJSLinesOptions,
 } from '../../transpilers/transpile-create-reactive-if-node-to-js-lines.type';
+import {
+  transpileAOTReactiveValueToJSLines,
+  transpileAOTReactiveValueTypeToFunctionName,
+} from './special/transpile-reactive-value-to-js-lines';
+import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
 
 export const transpileAOTCreateReactiveIfNodeToJSLines: ITranspileCreateReactiveIfNodeToJSLinesFunction = (
   {
@@ -19,10 +24,10 @@ export const transpileAOTCreateReactiveIfNodeToJSLines: ITranspileCreateReactive
   }: ITranspileCreateReactiveIfNodeToJSLinesOptions,
 ): ILines => {
   return [
-    `aot_7(`,
+    `${transpileAOTReactiveValueTypeToFunctionName('aot_7', condition.type)}(`,
     ...indentLines([
       ...inlineLastLines(
-        condition,
+        transpileAOTReactiveValueToJSLines(condition),
         [','],
       ),
       ...inlineLastLines(
@@ -47,6 +52,18 @@ export function aot_7(
 ): VirtualReactiveIfNode {
   return new VirtualReactiveIfNode(
     unknownToObservableNotUndefined(condition$),
+    templateTrue,
+    templateFalse,
+  );
+}
+
+export function aot_7_computed(
+  condition: () => boolean,
+  templateTrue?: IVirtualReactiveIfNodeTemplate,
+  templateFalse?: IVirtualReactiveIfNodeTemplate,
+): VirtualReactiveIfNode {
+  return new VirtualReactiveIfNode(
+    computedFunctionToObservable(condition),
     templateTrue,
     templateFalse,
   );

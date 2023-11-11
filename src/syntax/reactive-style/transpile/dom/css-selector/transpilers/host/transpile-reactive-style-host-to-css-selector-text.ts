@@ -4,7 +4,7 @@ import { IHavingHostSelectorOptions } from '../../../../types/having-host-select
 const HOST_SELECTOR = ':host';
 
 export interface ITranspileReactiveStyleHostToCSSSelectorTextOptions extends IHavingHostSelectorOptions {
-  selector: string;
+  readonly selector: string;
 }
 
 export function transpileReactiveStyleHostToCSSSelectorText(

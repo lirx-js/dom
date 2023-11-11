@@ -20,7 +20,7 @@ const REACTIVE_CLASS_PREFIXED_REGEXP: RegExp = new RegExp('^class-(.*)');
  */
 
 export interface ITranspileReactiveHTMLReactiveClassToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  bindProperty: IBindProperty;
+  readonly bindProperty: IBindProperty;
 }
 
 export function transpileReactiveHTMLReactiveClassToJSLines(

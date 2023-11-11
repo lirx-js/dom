@@ -1,7 +1,7 @@
 import { ILines } from '../../../../misc/lines/lines.type';
 
 export interface ITranspileCreateStaticTextNodeToJSLinesOptions {
-  value: ILines;
+  readonly value: ILines;
 }
 
 export interface ITranspileCreateStaticTextNodeToJSLinesFunction {
@@ -11,5 +11,5 @@ export interface ITranspileCreateStaticTextNodeToJSLinesFunction {
 }
 
 export interface ITranspileCreateStaticTextNodeToJSLinesTrait {
-  transpileCreateStaticTextNodeToJSLines: ITranspileCreateStaticTextNodeToJSLinesFunction;
+  readonly transpileCreateStaticTextNodeToJSLines: ITranspileCreateStaticTextNodeToJSLinesFunction;
 }

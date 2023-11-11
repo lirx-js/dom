@@ -3,7 +3,7 @@ import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-tr
 import { generateJSLinesForStaticTextNodeIfNotEmpty } from './generate-js-lines-for-static-text-node-if-not-empty';
 
 export interface ITranspileReactiveHTMLStaticTextNodeToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Text;
+  readonly node: Text;
 }
 
 export function transpileReactiveHTMLStaticTextNodeToJSLines(

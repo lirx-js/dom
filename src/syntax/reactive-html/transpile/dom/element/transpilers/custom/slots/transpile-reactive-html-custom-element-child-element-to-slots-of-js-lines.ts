@@ -58,9 +58,9 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 ]);
 
 export interface ITranspileReactiveHTMLCustomElementChildElementToSlotsOfJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
-  defaultSlotBodyLines: ILines; // mutable reference
-  slots: ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap;
+  readonly node: Element;
+  readonly defaultSlotBodyLines: ILines; // mutable reference
+  readonly slots: ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap;
 }
 
 export function transpileReactiveHTMLCustomElementChildElementToSlotsOfJSLines(
@@ -150,10 +150,10 @@ export function transpileReactiveHTMLCustomElementChildElementToSlotsOfJSLines(
 /*---*/
 
 interface IGenerateProxySlotOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
-  slots: ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap;
-  proxyName: string;
-  letProperties: ILetProperty[];
+  readonly node: Element;
+  readonly slots: ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap;
+  readonly proxyName: string;
+  readonly letProperties: ILetProperty[];
 }
 
 function generateProxySlot(

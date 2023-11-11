@@ -2,17 +2,17 @@
 
 ```html
 <div
-  [prop]="observable$"
+  [prop]="$.property$"
 ></div>
 ```
 
-To update an **element's property** whose value is updated by an `Observable<any>`, enclose it in square brackets, `[]`.
-When the right-hand side (the Observable), emits a value, the property is set with this value. 
+To update an **element's property** whose value is updated by a [reactive value](/docs/documentation/syntax/reactive-value/), enclose it in square brackets, `[]`.
+When the right-hand side (the reactive value), emits a value, the property is set with this value. 
 
 It's converted to something similar to this:
 
 ```ts
-observable$((value) => div.prop = value);
+toObservable($.property$)((value) => div.prop = value);
 ```
 
 
@@ -36,7 +36,7 @@ Output:
 
 ```html
 <div
-  bind-prop="observable$"
+  bind-prop="$.property$"
 ></div>
 ```
 

@@ -10,12 +10,12 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Like No Other',
+    title: 'Designed to be fast',
     Svg: require('@site/static/img/illustrations/undraw/blue/undraw_the_world_is_mine_re_j5cr.svg').default,
     description: (
       <>
         LiRX/dom is a framework to create performant web applications, purely based on reactive programming:
-        update only what's required on nothing more.
+        update only what's required and nothing more.
       </>
     ),
   },

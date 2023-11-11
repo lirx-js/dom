@@ -6,8 +6,8 @@ import { generateJSLinesForRXTemplateFromElement } from './generate-js-lines-for
 import { generateJSLinesForRXTemplateFromNodes } from './generate-js-lines-for-rx-template-from-nodes';
 
 export interface IGenerateJSLinesForRXTemplateFromRXContainerElementOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
-  argumentsLines: ILinesOrNull;
+  readonly node: Element;
+  readonly argumentsLines: ILinesOrNull;
 }
 
 export function generateJSLinesForRXTemplateFromRXContainerOrElement(

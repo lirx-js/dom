@@ -16,11 +16,11 @@ import {
 } from './modifiers/transpile-reactive-html-generic-element-modifiers-to-dom-js-lines';
 
 export interface IGenerateJSLinesForElementOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
-  elementLines: ILines;
-  modifiers?: IModifierProperty[];
-  attributesLines?: ILines;
-  childrenLines?: ILines;
+  readonly node: Element;
+  readonly elementLines: ILines;
+  readonly modifiers?: IModifierProperty[];
+  readonly attributesLines?: ILines;
+  readonly childrenLines?: ILines;
 }
 
 export function generateJSLinesForElement(

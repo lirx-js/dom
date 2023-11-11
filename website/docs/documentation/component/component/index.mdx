@@ -146,20 +146,27 @@ A component is nothing without style, so let's add some to it:
 
 The css of the component is the same as one for a [custom element](https://developer.mozilla.org/en-US/docs/Web/CSS/:host_function).
 It supports `:host` and `:host-context` to select the element.
-However, unlike custom elements using the shadowDOM, the css is not purely scoped and strictly limited to the component.
 
-In consequence, **without attention**, some style may **leak** on the descendants or on the global scope.
+:::info
+
+By default, a component does not use the ShadowDOM, so the css is not purely scoped and strictly limited to this component.
+Yet, it's possible to enable the ShadowDOM per component with the option `mode: 'shadow'`.
+
+:::
+
+In consequence, by default, **without attention**, some style may **leak** on the descendants or on the global scope.
 This would result in unwanted behaviour,
 so we encourage the developers to follow these rules:
 
 - always put the style and selectors into an `:host`.
  If we write a selector outside an `:host`, it won't be scoped to the component, and it will apply globally.
  Sometimes it may be useful, if, for example, we want to style some elements outside our component, but it must be used with extreme precautions.
-- always use the `>` ([child combinator](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_combinator)) selector.
+- use the [@scope](https://drafts.csswg.org/css-cascade-6/#scoped-styles) rule,
+  or use the `>` ([child combinator](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_combinator)) selector.
  Else, we may select deep children, and apply unwanted style to them.
 - always [set a display](https://web.dev/custom-elements-best-practices/#:~:text=Custom%20elements%20are%20display%3A%20inline,to%20laying%20out%20the%20page.) to the component.
 
-We chose to remove the constraints imposed by the shadowDOM, as we want the developers to be able to style external components (coming from an external library),
+We chose to remove by default the constraints imposed by the shadowDOM, as we want the developers to be able to style external components (coming from an external library),
 which is common, and especially useful on unmaintained ones.
 However, with great power comes great responsibility, so it's your role to take care not to leak any css outside your component's scope.
 
@@ -182,12 +189,32 @@ import style from './todo-list-item.component.scss?inline';
 Using [vitejs](https://vitejs.dev/guide/assets.html#importing-asset-as-string) or the [aot compiler](/docs/documentation/aot-compiler/),
 we may import various file contents using the esm syntax.
 
-#### Define the component's configuration
+#### Define the component's inputs and outputs
+
+After importing our template and style(s), we have to define [the inputs and the outputs](/docs/documentation/component/inputs-outputs/) of the component:
+
+- an `Input` is similar to the property of an element like `input.value`, but is reactive, and can be controlled by a parent component.
+- an `Output` is similar to an `Event` dispatched with `dispatchEvent`, and is usually intercepted too by the parent component.
+
+Let's create an interface for the inputs and outputs of our component:
+
+```ts
+interface ITodoListItemComponentData {
+  readonly message: Input<string>;
+  readonly remove: Output<void>;
+}
+```
+
+The `message` input, of type `string`, contains the message to display on this "todo-list-item",
+and the `remove` output, emits when the user clicks on the "remove" button of this component.
+
+
+#### Define the component's template data
 
 Then, we'll define the interface of the data (`$`) required by our template:
 
 ```ts
-interface IData {
+interface ITemplateData {
   readonly message$: IObservable<string>;
   readonly $onClickRemoveButton: IObserver<any>;
 }
@@ -199,80 +226,30 @@ In consequence, we'll have to provide an `Observable<string>` to fill this conte
 Furthermore, we want to intercept the user's clicks on the remove button.
 So we'll use the Observer `$.$onClickRemoveButton` for this usage.
 
-The next step consists of defining the configuration of the component itself:
-
-```ts
-interface ITodoListItemComponentConfig {
-  element: HTMLElement;
-  inputs: [
-    ['message', string],
-  ];
-  outputs: [
-    ['remove', void],
-  ];
-  data: IData;
-}
-```
-
-Let's break down each line:
-
-```ts
-element: HTMLElement;
-```
-
-The component is an `HTMLElement` (it's the default element's type).
-We could have written `element: HTMLButtonElement` if we wanted to extend a button instead.
-
-```ts
-inputs: [
-  ['message', string],
-];
-```
-
-The component accepts one input of type `string`, called "*message*".
-An input is an entry point to send values to the components through named properties.
-In our example, the parent component will set this property, and it will be displayed in our component.
-
-```ts
-outputs: [
-  ['remove', void],
-];
-```
-
-As an output, we have "*remove*". It may be seen as an Event dispatched and listened by EventListeners like `onclick`, `onkeydown`, etc.
-In our example, the parent component will receive this event when the user clicks on the remove button.
-
-```ts
-data: IData;
-```
-
-Finally, in the component's interface, we have to set the data type required by its template.
-
 :::info
 
 `@lirx/dom` aims to be strongly typed. It's more verbose, but it grants pre-compilation bug detection, and guaranties more robust applications.
+Component's template and inputs/outputs should have their own interfaces.
+It will help other developers and yourself understanding in one look what your component is capable of.
 
 :::
 
 #### Create the component
 
-To create a component, we'll use the function [createComponent](/docs/reference/create-component/), with a configuration's object,
-matching our previously defined interface:
+To create a component, we'll use the class [Component](/docs/reference/component/) and some options:
 
 ```ts
-export const TodoListItemComponent = createComponent<ITodoListItemComponentConfig>({
+export const TodoListItemComponent = new Component<HTMLElement, ITodoListItemComponentData, ITemplateData>({
   name: 'app-todo-list-item',
   template: compileReactiveHTMLAsComponentTemplate({ html }),
   styles: [compileStyleAsComponentStyle(style)],
-  inputs: [
-    ['message'],
-  ],
-  outputs: [
-    'remove',
-  ],
-  init: (node: VirtualCustomElementNode<ITodoListItemComponentConfig>): IData => {
-    const message$ = node.inputs.get$('message');
-    const $onClickRemoveButton = node.outputs.$set('remove');
+  componentData: (): ITodoListItemComponentData => ({
+    message: input<string>(),
+    remove: output<void>(),
+  }),
+  templateData: (node: VirtualComponentNode<HTMLElement, ITodoListItemComponentData>): ITemplateData => {
+    const message$ = node.input$('message');
+    const $onClickRemoveButton = node.$output('remove');
 
     return {
       message$,
@@ -285,14 +262,20 @@ export const TodoListItemComponent = createComponent<ITodoListItemComponentConfi
 Alright, we'll explain the lines one by one:
 
 ```ts
+new Component<HTMLElement, ITodoListItemComponentData, ITemplateData>(...)
+```
+
+We start by creating a new component of type `HTMLElement` with the inputs/outputs defined in `ITodoListItemComponentData` and the template's data `ITemplateData`.
+
+```ts
 name: 'app-todo-list-item',
 ```
 
-This is the name of our component.
+Then we set a name for the component.
 
 :::note
 
-We recommend to **always prefix** the components with the **same characters**.
+We recommend to **always prefix** the components with the **same string**.
 Usually it will be `app-`. It permits to easily do the distinction between the native elements, our app's components,
 and the components coming from external libraries. This is similar to a namespace, but for components.
 
@@ -305,36 +288,43 @@ template: compileReactiveHTMLAsComponentTemplate({ html }),
 Before being assigned to the component, **a template requires to be compiled** using the function [compileReactiveHTMLAsComponentTemplate](/docs/reference/compile-reactive-html-as-component-template/).
 Compiling the templates to executable javascript, allows many internal optimizations, permits AOT compilation, and drastically increase the performances of the application.
 
-
 ```ts
 styles: [compileStyleAsComponentStyle(style)],
 ```
 
 Styles requires to be compiled too, using the function [compileStyleAsComponentStyle](/docs/reference/compile-style-as-component-style/).
 
+:::note
+
+The compilation of the html template as well as the css is not done by the class `Component`.
+It must be done by the developer using the corresponding functions.
+This is a design choice which allows the developers to share and reuse templates and styles across many components.
+
+:::
+
 ```ts
-inputs: [
-  ['message' /*, initialValue */],
-],
-outputs: [
-  'remove',
-],
+componentData: (): ITodoListItemComponentData => ({
+  message: input<string>(),
+  remove: output<void>(),
+}),
 ```
 
-If our component has inputs and/or outputs, we have to define them, and we may set an initial value for our "*message*" input (optional).
+If our component has inputs and/or outputs, we have to define them using the function `componentData`.
+
+This function is called immediately when we create a component, and must return the inputs/outputs defined in the `Data` interface (here `ITodoListItemComponentData`).
 
 ```ts
-init: (node: VirtualCustomElementNode<ITodoListItemComponentConfig>): IData => {
+templateData: (node: VirtualComponentNode<HTMLElement, ITodoListItemComponentData>): ITemplateData => {
   // ...
 },
 ```
 
-Finally, we have the `init` function.
-This is where we'll define the interactions, the data, the pipelines, etc.
-In short: control everything that appends in the component.
+Finally, we have the `templateData` function.
+This is where we'll define the interactions, the data, the pipelines, etc. of our component,
+and return the data used in the template.
 
-This *init* function is called when the component is instanced, and
-receives a single argument: `node: VirtualCustomElementNode`.
+This *templateData* function is called when the component is instanced, and
+receives a single argument: `node: VirtualComponentNode<HTMLElement, ITodoListItemComponentData>`.
 This is a representation of the node in the DOM.
 It has some useful methods and properties to: bind Observables with this node, listen to events, subscribes to inputs, dispatch outputs, etc.
 Then, this function returns the data required by the template.
@@ -343,10 +333,10 @@ So, we'll use this function to bind the inputs and outputs with the data require
 
 
 ```ts
-// get the 'message' input as an Observable
-const message$ = node.inputs.get$('message');
-// get the 'remove' output as an Observer
-const $onClickRemoveButton = node.outputs.$set('remove');
+// gets the 'message' input as an Observable
+const message$ = node.input$('message');
+// gets the 'remove' output as an Observer
+const $onClickRemoveButton = node.$output('remove');
 
 // returns the data required by the template
 return {
@@ -375,7 +365,7 @@ this item will be removed from this list.
 
 ![](./assets/todo-list-component.png)
 
-Let's begin by creating the correct directory, and it's associated files for this component:
+Let's begin by creating the correct directory, and its associated files for this component:
 
 ```bash
 cd ..
@@ -604,3 +594,4 @@ You've learned the basics, and know perfectly:
 
 Now, it's time to create your own application 🚀.
 
+[//]: # (TODO stackblitz link)

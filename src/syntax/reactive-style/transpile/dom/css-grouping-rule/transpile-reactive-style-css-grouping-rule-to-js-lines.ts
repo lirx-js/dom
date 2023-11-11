@@ -7,7 +7,7 @@ import {
 } from './transpilers/transpile-reactive-style-generic-css-grouping-rule-to-js-lines';
 
 export interface ITranspileReactiveStyleCSSGroupingRuleToCSSLinesOptions extends IHavingHostSelectorOptions {
-  rule: CSSGroupingRule;
+  readonly rule: CSSGroupingRule;
 }
 
 export const transpileReactiveStyleCSSGroupingRuleToCSSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ITranspileReactiveStyleCSSGroupingRuleToCSSLinesOptions]>(() => [

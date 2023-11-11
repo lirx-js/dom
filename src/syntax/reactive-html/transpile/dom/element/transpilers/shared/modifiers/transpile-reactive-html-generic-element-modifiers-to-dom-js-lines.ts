@@ -8,8 +8,8 @@ import { IModifierProperty } from './extract-modifier-property-from-reactive-htm
 const TMP_NODE_NAME = '_node';
 
 export interface ITranspileReactiveHTMLGenericElementModifiersToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  modifiers: IModifierProperty[];
-  lines: ILines;
+  readonly modifiers: IModifierProperty[];
+  readonly lines: ILines;
 }
 
 export function transpileReactiveHTMLGenericElementModifiersToJSLines(

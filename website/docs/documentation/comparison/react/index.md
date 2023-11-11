@@ -142,7 +142,7 @@ export function Example() {
 The same example using `@lirx/dom`:
 
 ```ts
-export const ExampleComponent = createComponent({
+export const ExampleComponent = new Component({
   name: 'app-example',
   template: compileReactiveHTMLAsComponentTemplate({
     html: `
@@ -154,7 +154,7 @@ export const ExampleComponent = createComponent({
       </div>
     `,
   }),
-  init: () => {
+  templateData: () => {
     const [$count, count$, getCount] = let$$(0);
 
     return {

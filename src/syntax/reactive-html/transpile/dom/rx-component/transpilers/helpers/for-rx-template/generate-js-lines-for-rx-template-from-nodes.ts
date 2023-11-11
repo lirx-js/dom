@@ -5,8 +5,8 @@ import { transpileReactiveHTMLNodesToJSLines } from '../../../../nodes/transpile
 import { generateJSLinesForRXTemplate } from './generate-js-lines-for-rx-template';
 
 export interface IGenerateJSLinesForRXTemplateFromNodesOptions extends IHavingPrimaryTranspilersOptions {
-  nodes: ArrayLike<Node>;
-  argumentsLines: ILinesOrNull,
+  readonly nodes: ArrayLike<Node>;
+  readonly argumentsLines: ILinesOrNull,
 }
 
 export function generateJSLinesForRXTemplateFromNodes(

@@ -1,10 +1,10 @@
 import { ILines } from '../../../../misc/lines/lines.type';
 
 export interface ITranspileCreateReactiveAsyncNodeToJSLinesOptions {
-  expression: ILines;
-  templatePending: ILines;
-  templateFulfilled: ILines;
-  templateRejected: ILines;
+  readonly expression: ILines;
+  readonly templatePending: ILines;
+  readonly templateFulfilled: ILines;
+  readonly templateRejected: ILines;
 }
 
 export interface ITranspileCreateReactiveAsyncNodeToJSLinesFunction {
@@ -14,5 +14,5 @@ export interface ITranspileCreateReactiveAsyncNodeToJSLinesFunction {
 }
 
 export interface ITranspileCreateReactiveAsyncNodeToJSLinesTrait {
-  transpileCreateReactiveAsyncNodeToJSLines: ITranspileCreateReactiveAsyncNodeToJSLinesFunction;
+  readonly transpileCreateReactiveAsyncNodeToJSLines: ITranspileCreateReactiveAsyncNodeToJSLinesFunction;
 }

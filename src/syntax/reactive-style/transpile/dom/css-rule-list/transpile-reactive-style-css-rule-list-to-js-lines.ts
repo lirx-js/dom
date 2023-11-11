@@ -7,7 +7,7 @@ import {
 } from './transpilers/transpile-reactive-style-generic-css-rule-list-to-js-lines';
 
 export interface ITranspileReactiveStyleCSSRuleListToCSSLinesOptions extends IHavingHostSelectorOptions {
-  rules: ArrayLike<CSSRule>;
+  readonly rules: ArrayLike<CSSRule>;
 }
 
 export const transpileReactiveStyleCSSRuleListToCSSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ITranspileReactiveStyleCSSRuleListToCSSLinesOptions]>(() => [

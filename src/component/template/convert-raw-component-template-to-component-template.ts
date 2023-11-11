@@ -11,7 +11,7 @@ import {
 } from './create-custom-element-function/generate-create-custom-element-function-from-component-list';
 
 export interface IConvertRawComponentTemplateToComponentTemplateOptions extends Omit<ICompileReactiveHTMLAsComponentTemplateOptions, 'html'> {
-  template: IGenericComponentTemplateWithImportsAsFirstArgument;
+  readonly template: IGenericComponentTemplateWithImportsAsFirstArgument;
 }
 
 export function convertRawComponentTemplateToComponentTemplate<GData extends object>(

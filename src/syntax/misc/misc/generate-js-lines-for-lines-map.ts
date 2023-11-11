@@ -5,7 +5,7 @@ import { ILines } from '../lines/lines.type';
 export type ILinesMap = Map<string, ILines>;
 
 export interface IGenerateJSLinesFoMapOptions extends Omit<IGenerateJSLinesFoMapEntriesOptions, 'linesMapEntries'> {
-  linesMap: ILinesMap;
+  readonly linesMap: ILinesMap;
 }
 
 export function generateJSLinesForLinesMap(

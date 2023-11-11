@@ -15,7 +15,7 @@ Syntax:
  */
 
 export interface ITranspileReactiveHTMLRXContainerToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLRXContainerToJSLines(

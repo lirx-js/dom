@@ -1,7 +1,7 @@
 # rx-switch
 
 ```html
-<rx-switch expression="observable$">
+<rx-switch expression="$.expression$">
   <rx-switch-case
     case="valueA"
     template="templateReferenceA"
@@ -19,7 +19,7 @@
 Short syntax:
 
 ```html
-<rx-switch expression="observable$">
+<rx-switch expression="$.expression$">
   <div *switch-case="valueA">
     value A
   </div>
@@ -36,7 +36,7 @@ This is used to display **conditionally** an element or a node, **switching** on
 
 Under the hoods, it creates a virtual Node which:
 
-- subscribes to `observable$`
+- subscribes to `$.expression$`
 - and injects `templateReferenceA`, `templateReferenceB` or `templateReferenceC` according to the received value
 
 :::note
@@ -48,7 +48,7 @@ The previously injected template is always removed from the DOM before the new o
 Attributes:
 
 - rx-switch
-  - `expression`: the Observable to listen to
+  - `expression`: the [reactive value](/docs/documentation/syntax/reactive-value/) to listen to
 - rx-switch-case
   - `case`: the value for this template
   - `template`: the template reference to inject
@@ -65,7 +65,7 @@ It's converted to something similar to this:
 
 ```ts
 new VirtualReactiveSwitchNode(
-  observable$,
+  $.expression$,
   new Map([
     [valueA, templateReferenceA],
     [valueB, templateReferenceB],
@@ -104,7 +104,7 @@ Output:
 ##### Using \*switch-case and \*switch-default
 
 ```html
-<rx-switch expression="observable$">
+<rx-switch expression="$.expression$">
   <tag-name-a
     *switch-case="valueA"
     ...otherAttributesA
@@ -161,7 +161,7 @@ Output:
 </rx-template>
 
 <rx-switch
-  expression="observable$"
+  expression="$.expression$"
 >
   <rx-switch-case
     case="valueA"
@@ -183,7 +183,7 @@ Output:
 ##### Using rx-switch-case and rx-switch-default with in-place template
 
 ```html
-<rx-switch expression="observable$">
+<rx-switch expression="$.expression$">
   <rx-switch-case case="valueA">
     ...contentA
   </rx-switch-case>

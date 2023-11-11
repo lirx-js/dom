@@ -13,7 +13,7 @@ const COMMAND_NAME: string = '*if-true';
 const TEMPLATE_ATTRIBUTE_NAME: string = 'template';
 
 export interface ITranspileReactiveHTMLRXIfTrueToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLRXIfTrueToJSLines(

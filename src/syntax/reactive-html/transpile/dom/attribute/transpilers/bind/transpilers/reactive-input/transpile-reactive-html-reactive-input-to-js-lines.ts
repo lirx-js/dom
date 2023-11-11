@@ -31,7 +31,7 @@ export function transpileReactiveHTMLReactiveInputToJSLines(
       ...transpileSetReactiveInputToJSLines({
         node: ['node'],
         name: [JSON.stringify(name)],
-        value: [bindProperty.value],
+        value: bindProperty.value,
       }),
     ];
   } else {

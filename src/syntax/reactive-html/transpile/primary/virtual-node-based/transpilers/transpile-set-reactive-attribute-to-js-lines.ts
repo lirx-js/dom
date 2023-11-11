@@ -4,7 +4,7 @@ import {
   ITranspileSetReactiveAttributeToJSLinesFunction,
   ITranspileSetReactiveAttributeToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-attribute-to-js-lines.type';
-import { transpileUnknownToObservableToJSLines } from './transpile-unknown-to-observable-to-js-lines';
+import { transpileReactiveValueToJSLines } from './special/transpile-reactive-value-to-js-lines';
 
 export const transpileSetReactiveAttributeToJSLines: ITranspileSetReactiveAttributeToJSLinesFunction = (
   {
@@ -18,7 +18,7 @@ export const transpileSetReactiveAttributeToJSLines: ITranspileSetReactiveAttrib
     [`.setReactiveAttribute(`],
     name,
     [', '],
-    transpileUnknownToObservableToJSLines({ value }),
+    transpileReactiveValueToJSLines(value),
     [');'],
   );
 };

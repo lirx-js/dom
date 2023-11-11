@@ -57,7 +57,7 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 ]);
 
 export interface ITranspileReactiveHTMLRXAsyncToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLRXAsyncToJSLines(

@@ -13,7 +13,7 @@ const COMMAND_NAME: string = '*async-pending';
 const TEMPLATE_ATTRIBUTE_NAME: string = 'template';
 
 export interface ITranspileReactiveHTMLRXAsyncPendingToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLRXAsyncPendingToJSLines(

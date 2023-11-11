@@ -5,8 +5,8 @@ import { IHavingPrimaryTranspilersOptions } from '../../../primary/primary-trans
 import { transpileReactiveHTMLToJSLines } from '../../transpile-reactive-html-to-js-lines';
 
 export interface ITranspileReactiveHTMLToJSLinesAsComponentTemplateWithImportsAsFirstArgumentOptions extends IHavingPrimaryTranspilersOptions {
-  html: string;
-  functionImportLines: ILines;
+  readonly html: string;
+  readonly functionImportLines: ILines;
 }
 
 export function transpileReactiveHTMLToJSLinesAsComponentTemplateWithImportsAsFirstArgument(

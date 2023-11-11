@@ -4,7 +4,7 @@ import { transpileReactiveHTMLElementToJSLines } from '../../element/transpile-r
 import { transpileReactiveHTMLTextNodeToJSLines } from '../../text-node/transpile-reactive-html-text-node-to-js-lines';
 
 export interface ITranspileReactiveHTMLGenericNodeToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Node;
+  readonly node: Node;
 }
 
 export function transpileReactiveHTMLGenericNodeToJSLines(

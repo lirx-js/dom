@@ -5,7 +5,7 @@ import { IHavingHostSelectorOptions } from '../../types/having-host-selector-opt
 import { transpileReactiveStyleGenericCSSRuleToCSSLines } from './transpilers/transpile-reactive-style-generic-css-rule-to-js-lines';
 
 export interface ITranspileReactiveStyleCSSRuleToCSSLinesOptions extends IHavingHostSelectorOptions {
-  rule: CSSRule;
+  readonly rule: CSSRule;
 }
 
 export const transpileReactiveStyleCSSRuleToCSSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ITranspileReactiveStyleCSSRuleToCSSLinesOptions]>(() => [

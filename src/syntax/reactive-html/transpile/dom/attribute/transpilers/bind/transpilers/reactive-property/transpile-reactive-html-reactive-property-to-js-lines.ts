@@ -30,7 +30,7 @@ export function transpileReactiveHTMLReactivePropertyToJSLines(
     ...transpileSetReactivePropertyToJSLines({
       node: ['node'],
       name: [JSON.stringify(name)],
-      value: [bindProperty.value],
+      value: bindProperty.value,
     }),
   ];
 }

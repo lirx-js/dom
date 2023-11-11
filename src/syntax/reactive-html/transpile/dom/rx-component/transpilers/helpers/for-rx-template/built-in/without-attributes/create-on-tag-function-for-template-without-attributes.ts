@@ -12,7 +12,7 @@ import {
 } from '../../transpile-reactive-html-rx-child-template-to-js-lines';
 
 export interface ICreateOnTagFunctionForTemplateWithoutAttributesGetArgumentsLinesFunctionOptions extends Pick<ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunctionOptions, 'node'> {
-  attributes: IMappedAttributes;
+  readonly attributes: IMappedAttributes;
 }
 
 export interface ICreateOnTagFunctionForTemplateWithoutAttributesGetArgumentsLinesFunction {
@@ -22,9 +22,9 @@ export interface ICreateOnTagFunctionForTemplateWithoutAttributesGetArgumentsLin
 }
 
 export interface ICreateOnTagFunctionForTemplateWithoutAttributes {
-  templateAttributeName: string;
-  extraAttributes?: readonly string[];
-  getArgumentsLines?: ICreateOnTagFunctionForTemplateWithoutAttributesGetArgumentsLinesFunction;
+  readonly templateAttributeName: string;
+  readonly extraAttributes?: readonly string[];
+  readonly getArgumentsLines?: ICreateOnTagFunctionForTemplateWithoutAttributesGetArgumentsLinesFunction;
 }
 
 export function createOnTagFunctionForTemplateWithoutAttributes(

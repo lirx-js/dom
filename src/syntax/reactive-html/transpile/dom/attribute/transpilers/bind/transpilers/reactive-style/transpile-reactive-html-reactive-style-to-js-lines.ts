@@ -19,7 +19,7 @@ const REACTIVE_STYLE_PREFIXED_REGEXP: RegExp = new RegExp('^style-(.*)');
  */
 
 export interface ITranspileReactiveHTMLReactiveStyleToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  bindProperty: IBindProperty;
+  readonly bindProperty: IBindProperty;
 }
 
 export function transpileReactiveHTMLReactiveStyleToJSLines(

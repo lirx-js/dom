@@ -5,7 +5,7 @@ import { IHavingHostSelectorOptions } from '../../../types/having-host-selector-
 import { transpileReactiveStyleCSSRuleToCSSLines } from '../../css-rule/transpile-reactive-style-css-rule-to-js-lines';
 
 export interface ITranspileReactiveStyleGenericCSSRuleListToCSSLinesOptions extends IHavingHostSelectorOptions {
-  rules: ArrayLike<CSSRule>;
+  readonly rules: ArrayLike<CSSRule>;
 }
 
 export function transpileReactiveStyleGenericCSSRuleListToCSSLines(

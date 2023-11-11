@@ -8,7 +8,7 @@ import { generateJSLinesForRXTemplateFromRXContainerOrElement } from './generate
 /* SHARED */
 
 export interface ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsGenerateTemplateFunctionOptions {
-  argumentsLines: ILinesOrNull;
+  readonly argumentsLines: ILinesOrNull;
 }
 
 export interface ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsGenerateTemplateFunction {
@@ -18,13 +18,13 @@ export interface ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsGenerateTe
 }
 
 export interface ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsSharedFunctionOptions {
-  generateTemplate: ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsGenerateTemplateFunction;
+  readonly generateTemplate: ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsGenerateTemplateFunction;
 }
 
 /* TAG */
 
 export interface ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunctionOptions extends ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsSharedFunctionOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export interface ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunction {
@@ -36,8 +36,8 @@ export interface ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunct
 /* COMMAND */
 
 export interface ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunctionOptions extends ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsSharedFunctionOptions {
-  node: Element;
-  attributeValue: string;
+  readonly node: Element;
+  readonly attributeValue: string;
 }
 
 export interface ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunction {
@@ -49,12 +49,12 @@ export interface ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandF
 /* OPTIONS */
 
 export interface ITranspileReactiveHTMLRXChildTemplateToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
-  tagName: string;
-  commandName: string;
-  templateName?: string;
-  onTag: ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunction;
-  onCommand: ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunction;
+  readonly node: Element;
+  readonly tagName: string;
+  readonly commandName: string;
+  readonly templateName?: string;
+  readonly onTag: ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnTagFunction;
+  readonly onCommand: ITranspileReactiveHTMLRXChildTemplateToJSLinesOptionsOnCommandFunction;
 }
 
 export function transpileReactiveHTMLRXChildTemplateToJSLines(

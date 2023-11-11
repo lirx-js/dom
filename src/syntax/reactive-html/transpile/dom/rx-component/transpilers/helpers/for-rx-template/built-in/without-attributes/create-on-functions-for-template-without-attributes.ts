@@ -9,8 +9,8 @@ import {
 } from './create-on-tag-function-for-template-without-attributes';
 
 export interface ICreateOnFunctionsForTemplateWithoutAttributes {
-  tag: ICreateOnTagFunctionForTemplateWithoutAttributes;
-  command: ICreateOnCommandFunctionForTemplateWithoutAttributes;
+  readonly tag: ICreateOnTagFunctionForTemplateWithoutAttributes;
+  readonly command: ICreateOnCommandFunctionForTemplateWithoutAttributes;
 }
 
 export type ICreateOnFunctionsForTemplateWithoutAttributesResult = Pick<ITranspileReactiveHTMLRXChildTemplateToJSLinesOptions, 'onTag' | 'onCommand'>;

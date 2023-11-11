@@ -14,7 +14,7 @@ Syntax:
 const TAG_NAME: string = 'rx-';
 
 export interface ITranspileReactiveHTMLRXUnknownToLinesOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLRXUnknownToLines(

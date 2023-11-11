@@ -122,10 +122,12 @@ export class VirtualElementNode<GElementNode extends Element> extends VirtualDOM
     name: string,
     value: IAttributeWriteValue,
   ): void {
-    if (isNullish(value)) {
+    if (isNullish(value) || (value === false)) {
       this.#elementNode.removeAttribute(name);
+    } else if (value === true) {
+      this.#elementNode.setAttribute(name, '');
     } else {
-      this.#elementNode.setAttribute(name, value);
+      this.#elementNode.setAttribute(name, String(value));
     }
   }
 

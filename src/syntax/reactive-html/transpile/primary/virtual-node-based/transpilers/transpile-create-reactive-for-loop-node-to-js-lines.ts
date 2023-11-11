@@ -5,7 +5,7 @@ import {
   ITranspileCreateReactiveForLoopNodeToJSLinesFunction,
   ITranspileCreateReactiveForLoopNodeToJSLinesOptions,
 } from '../../transpilers/transpile-create-reactive-for-loop-node-to-js-lines.type';
-import { transpileUnknownToObservableToJSLines } from './transpile-unknown-to-observable-to-js-lines';
+import { transpileReactiveValueToJSLines } from './special/transpile-reactive-value-to-js-lines';
 
 export const transpileCreateReactiveForLoopNodeToJSLines: ITranspileCreateReactiveForLoopNodeToJSLinesFunction = (
   {
@@ -18,7 +18,7 @@ export const transpileCreateReactiveForLoopNodeToJSLines: ITranspileCreateReacti
     `new VirtualReactiveForLoopNode(`,
     ...indentLines([
       ...inlineLastLines(
-        transpileUnknownToObservableToJSLines({ value: items }),
+        transpileReactiveValueToJSLines(items),
         [','],
       ),
       ...inlineLastLines(

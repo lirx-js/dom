@@ -16,7 +16,7 @@ import { transpileReactiveHTMLRXTemplateToJSLines } from './transpilers/rx-templ
 import { transpileReactiveHTMLRXUnknownToLines } from './transpilers/rx-unknown/transpile-reactive-html-rx-unknown-to-lines';
 
 export interface ITranspileReactiveHTMLRXComponentToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export const transpileReactiveHTMLRXComponentToJSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ITranspileReactiveHTMLRXComponentToJSLinesOptions]>(() => [

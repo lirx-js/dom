@@ -18,6 +18,7 @@ Syntax:
 
 <rx-template
   name="templateReference"
+  as="name"
   export="$.$observer"
   let-var1
   let-var2
@@ -40,7 +41,7 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 ]);
 
 export interface ITranspileReactiveHTMLRXTemplateToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLRXTemplateToJSLines(

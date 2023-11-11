@@ -5,7 +5,7 @@ import { IHavingPrimaryTranspilersOptions } from '../../../primary/primary-trans
 import { transpileReactiveHTMLAttributeToJSLines } from '../../attribute/transpile-reactive-html-attribute-to-js-lines';
 
 export interface ITranspileReactiveHTMLGenericAttributesToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  attributes: ArrayLike<Attr>;
+  readonly attributes: ArrayLike<Attr>;
 }
 
 export function transpileReactiveHTMLGenericAttributesToJSLines(

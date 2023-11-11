@@ -50,6 +50,6 @@ export interface IPrimaryTranspilers extends
 }
 
 export interface IHavingPrimaryTranspilersOptions {
-  transpilers: IPrimaryTranspilers;
+  readonly transpilers: IPrimaryTranspilers;
 }
 

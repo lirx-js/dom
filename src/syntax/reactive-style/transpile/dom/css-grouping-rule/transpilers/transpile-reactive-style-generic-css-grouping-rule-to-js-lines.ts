@@ -3,7 +3,7 @@ import { IHavingHostSelectorOptions } from '../../../types/having-host-selector-
 import { transpileReactiveStyleCSSRuleListToCSSLines } from '../../css-rule-list/transpile-reactive-style-css-rule-list-to-js-lines';
 
 export interface ITranspileReactiveStyleGenericCSSGroupingRuleToCSSLinesOptions extends IHavingHostSelectorOptions {
-  rule: CSSGroupingRule;
+  readonly rule: CSSGroupingRule;
 }
 
 export function transpileReactiveStyleGenericCSSGroupingRuleToCSSLines(

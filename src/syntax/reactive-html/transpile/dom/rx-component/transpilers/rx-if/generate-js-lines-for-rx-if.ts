@@ -1,10 +1,11 @@
 import { ILines } from '../../../../../../misc/lines/lines.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
+import { IReactiveValue } from '../../../../misc/extract-reactive-value-from-string';
 
 export interface IGenerateJSLinesForRXIfOptions extends IHavingPrimaryTranspilersOptions {
-  condition: string;
-  templateTrue: ILines;
-  templateFalse: ILines;
+  readonly condition: IReactiveValue;
+  readonly templateTrue: ILines;
+  readonly templateFalse: ILines;
 }
 
 export function generateJSLinesForRXIf(
@@ -24,7 +25,7 @@ export function generateJSLinesForRXIf(
     `// reactive if node`,
     ...transpileAttachNodeToJSLines({
       node: transpileCreateReactiveIfNodeToJSLines({
-        condition: [condition],
+        condition,
         templateTrue,
         templateFalse,
       }),

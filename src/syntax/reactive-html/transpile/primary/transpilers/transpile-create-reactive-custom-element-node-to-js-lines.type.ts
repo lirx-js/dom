@@ -4,8 +4,8 @@ import { ILinesMap } from '../../../../misc/misc/generate-js-lines-for-lines-map
 export type ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap = ILinesMap;
 
 export interface ITranspileCreateReactiveCustomElementNodeToJSLinesOptions {
-  name: string,
-  slots: ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap;
+  readonly name: string,
+  readonly slots: ITranspileCreateReactiveCustomElementNodeToJSLinesOptionsSlotsMap;
 }
 
 export interface ITranspileCreateReactiveCustomElementNodeToJSLinesFunction {
@@ -15,5 +15,5 @@ export interface ITranspileCreateReactiveCustomElementNodeToJSLinesFunction {
 }
 
 export interface ITranspileCreateReactiveCustomElementNodeToJSLinesTrait {
-  transpileCreateReactiveCustomElementNodeToJSLines: ITranspileCreateReactiveCustomElementNodeToJSLinesFunction;
+  readonly transpileCreateReactiveCustomElementNodeToJSLines: ITranspileCreateReactiveCustomElementNodeToJSLinesFunction;
 }

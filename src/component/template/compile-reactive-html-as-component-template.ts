@@ -27,8 +27,8 @@ import {
 } from './create-custom-element-function/generate-create-custom-element-function-from-component-list';
 
 export interface ICompileReactiveHTMLAsComponentTemplateOptions extends Omit<ITranspileReactiveHTMLToJSLinesOptions, 'transpilers'> {
-  components?: IGenericAbstractComponentList;
-  modifiers?: IGenericVirtualDOMNodeModifierList;
+  readonly components?: IGenericAbstractComponentList;
+  readonly modifiers?: IGenericVirtualDOMNodeModifierList;
 }
 
 export function compileReactiveHTMLAsComponentTemplate<GData extends object>(

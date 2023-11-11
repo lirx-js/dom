@@ -4,6 +4,7 @@ import {
   ITranspileSetReactiveInputToJSLinesFunction,
   ITranspileSetReactiveInputToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-input-to-js-lines.type';
+import { transpileReactiveValueToJSLines } from './special/transpile-reactive-value-to-js-lines';
 
 export const transpileSetReactiveInputToJSLines: ITranspileSetReactiveInputToJSLinesFunction = (
   {
@@ -13,12 +14,12 @@ export const transpileSetReactiveInputToJSLines: ITranspileSetReactiveInputToJSL
   }: ITranspileSetReactiveInputToJSLinesOptions,
 ): ILines => {
   return inlineLastLines(
-    [`bindCaseInsensitiveInputWithObservableLike(`],
+    [`bindCaseInsensitiveInputWithObservable(`],
     node,
     [', '],
     name,
     [', '],
-    value,
+    transpileReactiveValueToJSLines(value),
     [');'],
   );
 };

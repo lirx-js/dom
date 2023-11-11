@@ -2,7 +2,7 @@ import { ILines } from '../../../../../../misc/lines/lines.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
 
 export interface IGenerateJSLinesForStaticTextNodeOptions extends IHavingPrimaryTranspilersOptions {
-  value: string;
+  readonly value: string;
 }
 
 export function generateJSLinesForStaticTextNode(

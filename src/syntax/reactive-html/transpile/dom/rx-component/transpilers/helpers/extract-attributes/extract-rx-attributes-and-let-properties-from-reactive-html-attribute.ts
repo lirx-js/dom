@@ -3,8 +3,8 @@ import { extractLetPropertyFromReactiveHTMLAttribute, ILetProperty } from './ext
 import { IMappedAttributes } from './mapped-attributes.type';
 
 export interface IExtractRXAttributesAndLetPropertiesFromReactiveHTMLAttributeResult {
-  attributes: IMappedAttributes;
-  letProperties: ILetProperty[];
+  readonly attributes: IMappedAttributes;
+  readonly letProperties: ILetProperty[];
 }
 
 export function extractRXAttributesAndLetPropertiesFromReactiveHTMLAttribute(

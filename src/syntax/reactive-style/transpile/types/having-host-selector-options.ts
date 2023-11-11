@@ -1,3 +1,3 @@
 export interface IHavingHostSelectorOptions {
-  hostSelector: string;
+  readonly hostSelector: string;
 }

@@ -17,7 +17,7 @@ export interface ITranspileReactiveHTMLToComponentTemplateModuleOptions extends 
   Partial<Pick<ITranspileReactiveHTMLToJSLinesAsComponentTemplateModuleOptions, 'transpilers'>>
 //
 {
-  importLines?: ILines;
+  readonly importLines?: ILines;
 }
 
 export function transpileReactiveHTMLToComponentTemplateModule(

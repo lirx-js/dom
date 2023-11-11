@@ -5,7 +5,7 @@ import { IHavingPrimaryTranspilersOptions } from '../../../primary/primary-trans
 import { transpileReactiveHTMLNodeToJSLines } from '../../node/transpile-reactive-html-node-to-js-lines';
 
 export interface ITranspileReactiveHTMLGenericNodesToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  nodes: ArrayLike<Node>;
+  readonly nodes: ArrayLike<Node>;
 }
 
 export function transpileReactiveHTMLGenericNodesToJSLines(

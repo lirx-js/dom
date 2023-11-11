@@ -15,7 +15,7 @@ import {
 } from './transpile-reactive-html-custom-element-child-text-to-slots-of-js-lines';
 
 export interface ITranspileReactiveHTMLCustomElementChildrenToSlotsOfJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  nodes: ArrayLike<Node>;
+  readonly nodes: ArrayLike<Node>;
 }
 
 export function transpileReactiveHTMLCustomElementChildrenToSlotsOfJSLines(

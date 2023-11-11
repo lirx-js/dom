@@ -10,7 +10,7 @@ import {
 } from './transpilers/static-text/transpile-reactive-html-static-text-node-to-js-lines';
 
 export interface ITranspileReactiveHTMLTextNodeToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Text;
+  readonly node: Text;
 }
 
 export const transpileReactiveHTMLTextNodeToJSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ITranspileReactiveHTMLTextNodeToJSLinesOptions]>(() => [

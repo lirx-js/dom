@@ -1,8 +1,9 @@
 import { ILines } from '../../../../../../../../misc/lines/lines.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../../../primary/primary-transpilers.type';
+import { IReactiveValue } from '../../../../../../misc/extract-reactive-value-from-string';
 
 export interface IGenerateJSLinesForReactiveClassNamesListOptions extends IHavingPrimaryTranspilersOptions {
-  value: string;
+  readonly value: IReactiveValue;
 }
 
 export function generateJSLinesForReactiveClassNamesList(
@@ -19,7 +20,7 @@ export function generateJSLinesForReactiveClassNamesList(
     `// reactive class names list`,
     ...transpileSetReactiveClassNamesListToJSLines({
       node: ['node'],
-      value: [value],
+      value,
     }),
   ];
 }

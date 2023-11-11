@@ -4,7 +4,7 @@ import { IBindProperty } from '../../extract-bind-property-from-reactive-html-at
 import { generateJSLinesForReactiveAttribute } from './generate-js-lines-for-reactive-attribute';
 
 const REACTIVE_ATTRIBUTE_STANDARD_REGEXP: RegExp = new RegExp('^attr\\.(.*)$');
-const REACTIVE_ATTRIBUTE_PREFIXED_REGEXP: RegExp = new RegExp('^attr-(.*)');
+const REACTIVE_ATTRIBUTE_PREFIXED_REGEXP: RegExp = new RegExp('^attr-(.*)$');
 
 /**
  * Syntax:
@@ -18,7 +18,7 @@ const REACTIVE_ATTRIBUTE_PREFIXED_REGEXP: RegExp = new RegExp('^attr-(.*)');
  */
 
 export interface ITranspileReactiveHTMLReactiveAttributeToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  bindProperty: IBindProperty;
+  readonly bindProperty: IBindProperty;
 }
 
 export function transpileReactiveHTMLReactiveAttributeToJSLines(
@@ -36,8 +36,10 @@ export function transpileReactiveHTMLReactiveAttributeToJSLines(
   } else {
     let attributeName: string = match[1];
 
-    if (bindProperty.prefixMode && (attributeName === '--')) {
-      attributeName = '..';
+    if (bindProperty.prefixMode) {
+      if (attributeName === '--') {
+        attributeName = '..';
+      }
     }
 
     if (attributeName === '..') {

@@ -5,11 +5,12 @@ import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-tr
 import {
   ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap,
 } from '../../../../primary/transpilers/transpile-create-reactive-switch-node-to-js-lines.type';
+import { IReactiveValue } from '../../../../misc/extract-reactive-value-from-string';
 
 export interface IGenerateJSLinesForRXSwitchOptions extends IHavingPrimaryTranspilersOptions {
-  expression: string;
-  templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap;
-  defaultTemplate: ILinesOrNull;
+  readonly expression: IReactiveValue;
+  readonly templatesMap: ITranspileCreateReactiveSwitchNodeToJSLinesOptionsTemplatesMap;
+  readonly defaultTemplate: ILinesOrNull;
 }
 
 export function generateJSLinesForRXSwitch(
@@ -29,7 +30,7 @@ export function generateJSLinesForRXSwitch(
     `// reactive switch node`,
     ...transpileAttachNodeToJSLines({
       node: transpileCreateReactiveSwitchNodeToJSLines({
-        expression: [expression],
+        expression,
         templatesMap,
         defaultTemplate,
       }),

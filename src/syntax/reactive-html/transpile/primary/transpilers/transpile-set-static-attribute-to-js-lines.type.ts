@@ -1,9 +1,9 @@
 import { ILines } from '../../../../misc/lines/lines.type';
 
 export interface ITranspileSetStaticAttributeToJSLinesOptions {
-  node: ILines;
-  name: ILines;
-  value: ILines;
+  readonly node: ILines;
+  readonly name: ILines;
+  readonly value: ILines;
 }
 
 export interface ITranspileSetStaticAttributeToJSLinesFunction {
@@ -13,5 +13,5 @@ export interface ITranspileSetStaticAttributeToJSLinesFunction {
 }
 
 export interface ITranspileSetStaticAttributeToJSLinesTrait {
-  transpileSetStaticAttributeToJSLines: ITranspileSetStaticAttributeToJSLinesFunction;
+  readonly transpileSetStaticAttributeToJSLines: ITranspileSetStaticAttributeToJSLinesFunction;
 }

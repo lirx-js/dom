@@ -6,10 +6,10 @@ import {
 } from '../component-template-with-imports-as-first-argument/transpile-reactive-html-to-js-lines-as-component-template-with-imports-as-first-argument';
 
 export interface ITranspileReactiveHTMLToJSLinesAsComponentTemplateModuleOptions extends IHavingPrimaryTranspilersOptions {
-  html: string;
-  commentLines?: ILines;
-  importLines: ILines;
-  functionImportLines: ILines;
+  readonly html: string;
+  readonly commentLines?: ILines;
+  readonly importLines: ILines;
+  readonly functionImportLines: ILines;
 }
 
 export function transpileReactiveHTMLToJSLinesAsComponentTemplateModule(

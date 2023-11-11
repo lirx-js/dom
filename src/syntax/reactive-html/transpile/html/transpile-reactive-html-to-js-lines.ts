@@ -3,7 +3,7 @@ import { transpileReactiveHTMLNodesToJSLines } from '../dom/nodes/transpile-reac
 import { IHavingPrimaryTranspilersOptions } from '../primary/primary-transpilers.type';
 
 export interface ITranspileReactiveHTMLToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  html: string;
+  readonly html: string;
 }
 
 export function transpileReactiveHTMLToJSLines(

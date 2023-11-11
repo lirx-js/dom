@@ -11,7 +11,7 @@ import {
 import { transpileReactiveHTMLStaticAttributeToJSLines } from './transpilers/static/transpile-reactive-html-static-attribute-to-js-lines';
 
 export interface ITranspileReactiveHTMLAttributeToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  attribute: Attr;
+  readonly attribute: Attr;
 }
 
 export const transpileReactiveHTMLAttributeToJSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ITranspileReactiveHTMLAttributeToJSLinesOptions]>(() => [

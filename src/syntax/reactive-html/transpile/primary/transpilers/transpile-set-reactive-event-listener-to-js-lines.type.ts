@@ -1,10 +1,10 @@
 import { ILines } from '../../../../misc/lines/lines.type';
 
 export interface ITranspileSetReactiveEventListenerToJSLinesOptions {
-  node: ILines;
-  name: ILines;
-  value: ILines;
-  observableMode: boolean;
+  readonly node: ILines;
+  readonly name: ILines;
+  readonly value: ILines;
+  readonly observableMode: boolean;
 }
 
 export interface ITranspileSetReactiveEventListenerToJSLinesFunction {
@@ -14,5 +14,5 @@ export interface ITranspileSetReactiveEventListenerToJSLinesFunction {
 }
 
 export interface ITranspileSetReactiveEventListenerToJSLinesTrait {
-  transpileSetReactiveEventListenerToJSLines: ITranspileSetReactiveEventListenerToJSLinesFunction;
+  readonly transpileSetReactiveEventListenerToJSLines: ITranspileSetReactiveEventListenerToJSLinesFunction;
 }

@@ -89,12 +89,14 @@ yarn add @lirx/core @lirx/dom
   </TabItem>
 </Tabs>
 
+- `@lirx/dom` is the framework itself which manages the DOM nodes and bind them with Observables.
+- `@lirx/core` contains all the tools to create and pipe Observables.
 
 ### Optimizing the build
 
-`@lirx/dom` embeds a JIT compiler to convert on-the-fly the `reactive-html` templates and `reactive-css` styles of our components.
+`@lirx/dom` embeds a [JIT compiler](https://en.wikipedia.org/wiki/Just-in-time_compilation) to convert on-the-fly the `reactive-html` templates and `reactive-css` styles of our components.
 
-However, it has been build from the beginning to be able to pre-compile these templates and styles, through an AOT compiler.
+However, it has been build from the beginning to be able to pre-compile these templates and styles, through an [AOT compiler](https://en.wikipedia.org/wiki/Ahead-of-time_compilation).
 
 This permits to remove entirely the JIT compiler, saving space, and the necessity to parse and compile these files on runtime, increasing drastically the performances.
 
@@ -178,14 +180,9 @@ Now we may create our first component:
 
 
 ```ts title="app.ts"
-import { createComponent, compileReactiveHTMLAsComponentTemplate, bootstrap } from '@lirx/dom';
+import { Component, compileReactiveHTMLAsComponentTemplate, bootstrap } from '@lirx/dom';
 
-
-export interface IAppMainComponentConfig {
-  element: HTMLElement;
-}
-
-const AppMainComponent = createComponent<IAppMainComponentConfig>({
+const AppMainComponent = new Component({
   name: 'app-main',
   template: compileReactiveHTMLAsComponentTemplate({
     html: `

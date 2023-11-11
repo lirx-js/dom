@@ -29,6 +29,7 @@ import {
 import { generateJSLinesForRXIf } from './generate-js-lines-for-rx-if';
 import { transpileReactiveHTMLRXIfFalseToJSLines } from './rx-if-false/transpile-reactive-html-rx-if-false-to-js-lines';
 import { transpileReactiveHTMLRXIfTrueToJSLines } from './rx-if-true/transpile-reactive-html-rx-if-true-to-js-lines';
+import { extractReactiveValueFromString } from '../../../../misc/extract-reactive-value-from-string';
 
 /*
 Syntax:
@@ -78,7 +79,7 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 ]);
 
 export interface ITranspileReactiveHTMLRXIfToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLRXIfToJSLines(
@@ -187,7 +188,7 @@ function getOnTagFunctionForRXIf(
 
     return generateJSLinesForRXIf({
       ...options,
-      condition,
+      condition: extractReactiveValueFromString(condition),
       templateTrue,
       templateFalse,
     });
@@ -211,7 +212,7 @@ function getOnCommandFunctionForRXIf(
     } else {
       return generateJSLinesForRXIf({
         ...options,
-        condition,
+        condition: extractReactiveValueFromString(condition),
         templateTrue: generateTemplate({
           argumentsLines: null,
         }),

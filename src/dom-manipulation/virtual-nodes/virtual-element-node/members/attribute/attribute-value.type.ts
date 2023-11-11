@@ -5,5 +5,7 @@ export type IAttributeReadValue =
 
 export type IAttributeWriteValue =
   | IAttributeReadValue
+  | boolean
+  | number
   | undefined
   ;

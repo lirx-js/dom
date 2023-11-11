@@ -1,7 +1,8 @@
 import { ILines } from '../../../../misc/lines/lines.type';
+import { IReactiveValue } from '../../misc/extract-reactive-value-from-string';
 
 export interface ITranspileCreateReactiveTextNodeToJSLinesOptions {
-  value: ILines;
+  readonly value: IReactiveValue;
 }
 
 export interface ITranspileCreateReactiveTextNodeToJSLinesFunction {
@@ -11,5 +12,5 @@ export interface ITranspileCreateReactiveTextNodeToJSLinesFunction {
 }
 
 export interface ITranspileCreateReactiveTextNodeToJSLinesTrait {
-  transpileCreateReactiveTextNodeToJSLines: ITranspileCreateReactiveTextNodeToJSLinesFunction;
+  readonly transpileCreateReactiveTextNodeToJSLines: ITranspileCreateReactiveTextNodeToJSLinesFunction;
 }

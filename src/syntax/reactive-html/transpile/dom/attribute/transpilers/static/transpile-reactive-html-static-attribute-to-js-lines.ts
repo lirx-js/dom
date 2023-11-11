@@ -2,7 +2,7 @@ import { ILinesOrNull } from '../../../../../../misc/lines/lines-or-null.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../primary/primary-transpilers.type';
 
 export interface ITranspileReactiveHTMLStaticAttributeToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  attribute: Attr;
+  readonly attribute: Attr;
 }
 
 export function transpileReactiveHTMLStaticAttributeToJSLines(

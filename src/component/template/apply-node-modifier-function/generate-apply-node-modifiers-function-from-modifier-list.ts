@@ -11,8 +11,8 @@ import { VirtualDOMNode } from '../../../dom-manipulation/virtual-nodes/virtual-
 export type IGenericVirtualDOMNodeModifierList = readonly IGenericVirtualDOMNodeModifier[];
 
 interface IApplyNodeModifierNormalizedEntry {
-  weight: number,
-  apply: (node: VirtualDOMNode) => VirtualDOMNode,
+  readonly weight: number,
+  readonly apply: (node: VirtualDOMNode) => VirtualDOMNode,
 }
 
 export function generateApplyNodeModifiersFunctionFromModifierList(

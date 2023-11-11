@@ -4,7 +4,7 @@ import {
   ITranspileSetReactivePropertyToJSLinesFunction,
   ITranspileSetReactivePropertyToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-property-to-js-lines.type';
-import { transpileUnknownToObservableToJSLines } from './transpile-unknown-to-observable-to-js-lines';
+import { transpileReactiveValueToJSLines } from './special/transpile-reactive-value-to-js-lines';
 
 export const transpileSetReactivePropertyToJSLines: ITranspileSetReactivePropertyToJSLinesFunction = (
   {
@@ -13,27 +13,13 @@ export const transpileSetReactivePropertyToJSLines: ITranspileSetReactivePropert
     value,
   }: ITranspileSetReactivePropertyToJSLinesOptions,
 ): ILines => {
-  // return inlineLastLines(
-  //   node,
-  //   [`.setReactiveProperty(`],
-  //   inlineLastLines(
-  //     [`getCaseInsensitiveVirtualElementNodePropertyKey(`],
-  //     node,
-  //     [', '],
-  //     name,
-  //     [')'],
-  //   ),
-  //   [', '],
-  //   transpileToObservableToJSLines({ value }),
-  //   [');'],
-  // );
   return inlineLastLines(
-    [`virtualReactiveElementNodeSetCaseInsensitiveReactiveProperty(`],
+    [`bindCaseInsensitivePropertyWithObservable(`],
     node,
     [', '],
     name,
     [', '],
-    transpileUnknownToObservableToJSLines({ value }),
+    transpileReactiveValueToJSLines(value),
     [');'],
   );
 };

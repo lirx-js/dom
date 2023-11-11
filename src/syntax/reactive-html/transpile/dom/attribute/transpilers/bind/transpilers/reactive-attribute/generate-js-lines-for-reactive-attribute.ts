@@ -1,9 +1,10 @@
 import { ILines } from '../../../../../../../../misc/lines/lines.type';
 import { IHavingPrimaryTranspilersOptions } from '../../../../../../primary/primary-transpilers.type';
+import { IReactiveValue } from '../../../../../../misc/extract-reactive-value-from-string';
 
 export interface IGenerateJSLinesForReactiveAttributeOptions extends IHavingPrimaryTranspilersOptions {
-  name: string;
-  value: string;
+  readonly name: string;
+  readonly value: IReactiveValue;
 }
 
 export function generateJSLinesForReactiveAttribute(
@@ -22,7 +23,7 @@ export function generateJSLinesForReactiveAttribute(
     ...transpileSetReactiveAttributeToJSLines({
       node: ['node'],
       name: [JSON.stringify(name)],
-      value: [value],
+      value,
     }),
   ];
 }

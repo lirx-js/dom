@@ -11,6 +11,11 @@ import {
   ITranspileCreateReactiveSwitchNodeToJSLinesFunction,
   ITranspileCreateReactiveSwitchNodeToJSLinesOptions,
 } from '../../transpilers/transpile-create-reactive-switch-node-to-js-lines.type';
+import {
+  transpileAOTReactiveValueTypeToFunctionName,
+  transpileAOTReactiveValueToJSLines,
+} from './special/transpile-reactive-value-to-js-lines';
+import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
 
 export const transpileAOTCreateReactiveSwitchNodeToJSLines: ITranspileCreateReactiveSwitchNodeToJSLinesFunction = (
   {
@@ -20,10 +25,10 @@ export const transpileAOTCreateReactiveSwitchNodeToJSLines: ITranspileCreateReac
   }: ITranspileCreateReactiveSwitchNodeToJSLinesOptions,
 ): ILines => {
   return [
-    `aot_8(`,
+    `${transpileAOTReactiveValueTypeToFunctionName('aot_8', expression.type)}(`,
     ...indentLines([
       ...inlineLastLines(
-        expression,
+        transpileAOTReactiveValueToJSLines(expression),
         [','],
       ),
       ...inlineLastLines(
@@ -52,6 +57,18 @@ export function aot_8<GValue>(
 ): VirtualReactiveSwitchNode<GValue> {
   return new VirtualReactiveSwitchNode<GValue>(
     unknownToObservableNotUndefined(value$) as IObservable<GValue>,
+    templatesMap,
+    defaultTemplate,
+  );
+}
+
+export function aot_8_computed<GValue>(
+  value: () => GValue,
+  templatesMap: ReadonlyMap<GValue, IVirtualReactiveSwitchNodeTemplate>,
+  defaultTemplate?: IVirtualReactiveSwitchNodeTemplate,
+): VirtualReactiveSwitchNode<GValue> {
+  return new VirtualReactiveSwitchNode<GValue>(
+    computedFunctionToObservable(value),
     templatesMap,
     defaultTemplate,
   );

@@ -9,8 +9,8 @@ export interface ITranspileReactiveHTMLRXInjectSlotChildNodesToLinesOptions exte
   Omit<IGenerateJSLinesForRXInjectSlotOptions, 'defaultLines'>
 //
 {
-  nodes: ArrayLike<Node>;
-  required: boolean;
+  readonly nodes: ArrayLike<Node>;
+  readonly required: boolean;
 }
 
 export function transpileReactiveHTMLRXInjectSlotChildNodesToLines(

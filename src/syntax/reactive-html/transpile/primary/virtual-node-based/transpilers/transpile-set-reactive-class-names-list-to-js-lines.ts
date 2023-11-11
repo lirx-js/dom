@@ -4,7 +4,7 @@ import {
   ITranspileSetReactiveClassNamesListToJSLinesFunction,
   ITranspileSetReactiveClassNamesListToJSLinesOptions,
 } from '../../transpilers/transpile-set-reactive-class-names-list-to-js-lines.type';
-import { transpileUnknownToObservableToJSLines } from './transpile-unknown-to-observable-to-js-lines';
+import { transpileReactiveValueToJSLines } from './special/transpile-reactive-value-to-js-lines';
 
 export const transpileSetReactiveClassNamesListToJSLines: ITranspileSetReactiveClassNamesListToJSLinesFunction = (
   {
@@ -15,7 +15,7 @@ export const transpileSetReactiveClassNamesListToJSLines: ITranspileSetReactiveC
   return inlineLastLines(
     node,
     [`.setReactiveClassNamesList(`],
-    transpileUnknownToObservableToJSLines({ value }),
+    transpileReactiveValueToJSLines(value),
     [');'],
   );
 };

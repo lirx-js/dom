@@ -2,17 +2,17 @@
 
 ```html
 <div
-  [class.name]="observable$"
+  [class.name]="$.classEnabled$"
 ></div>
 ```
 
-To toggle an **element's css class** whose state is updated by an `Observable<boolean>`, write `[class.name]`,
-where `name` is the css class name your element will have if the observable sent `true`.
+To toggle an **element's css class** whose state is updated by a [reactive value](/docs/documentation/syntax/reactive-value/) of type `boolean`, write `[class.name]`,
+where `name` is the css class name your element will have if the reactive value send `true`.
 
 It's converted to something similar to this:
 
 ```ts
-observable$((value) => div.classList.toggle('name', value));
+toObservable($.classEnabled$)((enabled) => div.classList.toggle('name', enabled));
 ```
 
 :::info
@@ -44,7 +44,7 @@ Output:
 
 ```html
 <div
-  bind-class-name="observable$"
+  bind-class-name="$.classEnabled$"
 ></div>
 ```
 

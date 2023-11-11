@@ -5,7 +5,7 @@ import {
 import { transpileReactiveStyleHostToCSSSelectorText } from './transpilers/host/transpile-reactive-style-host-to-css-selector-text';
 
 export interface ITranspileReactiveStyleCSSSelectorToCSSSelectorOptions extends IHavingHostSelectorOptions {
-  selector: string;
+  readonly selector: string;
 }
 
 export function transpileReactiveStyleCSSSelectorToCSSSelector(

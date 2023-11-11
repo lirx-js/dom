@@ -16,8 +16,8 @@ export interface ICreateOnCommandFunctionForTemplateWithoutAttributesGetArgument
 }
 
 export interface ICreateOnCommandFunctionForTemplateWithoutAttributes {
-  commandName: string;
-  getArgumentsLines?: ICreateOnCommandFunctionForTemplateWithoutAttributesGetArgumentsLinesFunction;
+  readonly commandName: string;
+  readonly getArgumentsLines?: ICreateOnCommandFunctionForTemplateWithoutAttributesGetArgumentsLinesFunction;
 }
 
 export function createOnCommandFunctionForTemplateWithoutAttributes(

@@ -14,7 +14,7 @@ import {
 } from './slots/transpile-reactive-html-custom-element-children-to-slots-of-js-lines';
 
 export interface ITranspileReactiveHTMLCustomElementToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLCustomElementToJSLines(

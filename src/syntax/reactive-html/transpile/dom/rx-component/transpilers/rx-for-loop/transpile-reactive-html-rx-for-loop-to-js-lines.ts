@@ -19,6 +19,7 @@ import {
 } from '../helpers/for-rx-template/transpile-reactive-html-rx-child-template-to-js-lines';
 import { extractRXForLoopCommand, IRXForLoopCommand } from './extract-rx-for-loop-command';
 import { generateJSLinesForRXForLoop } from './generate-js-lines-for-rx-for-loop';
+import { extractReactiveValueFromString } from '../../../../misc/extract-reactive-value-from-string';
 
 /*
 Syntax:
@@ -69,7 +70,7 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 ]);
 
 export interface ITranspileReactiveHTMLRXForLoopToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLRXForLoopToJSLines(
@@ -142,7 +143,7 @@ function getOnTagFunctionForRXForLoop(
 
     return generateJSLinesForRXForLoop({
       ...options,
-      items,
+      items: extractReactiveValueFromString(items),
       template,
       trackBy,
     });

@@ -2,11 +2,11 @@
 
 ```html
 <div
-  [style.name]="observable$"
+  [style.name]="$.style$"
 ></div>
 ```
 
-To set an **element's css style** whose value is updated by an `Observable<ISetStylePropertyOrStringOrNull>`, write `[style.name]`,
+To set an **element's css style** whose value is updated by a [reactive value](/docs/documentation/syntax/reactive-value/) of type `ISetStylePropertyOrStringOrNull`, write `[style.name]`,
 where `name` is the style's property name.
 
 If `null` is received, the property is removed. Else, the property is converted to a string and applied.
@@ -14,7 +14,7 @@ If `null` is received, the property is removed. Else, the property is converted 
 It's converted to something similar to this:
 
 ```ts
-observable$((value) => div.style.setProperty('name', value));
+toObservable($.style$)((value) => div.style.setProperty('name', value));
 ```
 
 ## Examples
@@ -57,7 +57,7 @@ Output:
 
 ```html
 <div
-  bind-style-name="observable$"
+  bind-style-name="$.style$"
 ></div>
 ```
 

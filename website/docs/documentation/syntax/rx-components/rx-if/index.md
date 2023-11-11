@@ -2,7 +2,7 @@
 
 ```html
 <rx-if
-  condition="observable$"
+  condition="$.condition$"
   true="templateReferenceTrue"
   false="templateReferenceFalse"
 ></rx-if>
@@ -11,7 +11,7 @@
 Short syntax:
 
 ```html
-<tag-mame *if="observable$">
+<tag-mame *if="$.condition$">
   ...content
 </tag-mame>
 ```
@@ -20,7 +20,7 @@ This is used to display **conditionally** an element or a node.
 
 Under the hoods, it creates a virtual Node which:
 
-- subscribes to `observable$`
+- subscribes to `$.condition$`
 - and injects `templateReferenceTrue` if it received *true*
 - or injects `templateReferenceFalse` if it received *false*
 
@@ -32,7 +32,7 @@ The previously injected template is always removed from the DOM before the new o
 
 It has the following attributes:
 
-- `condition`: the Observable to listen to
+- `condition`: the [reactive value](/docs/documentation/syntax/reactive-value/) of type `boolean` to listen to
 - `true`: the name of the template to inject if `condition` emitted *true*
 - `false`: the name of the template to inject if `condition` emitted *false*
 
@@ -44,7 +44,7 @@ It's converted to something similar to this:
 
 ```ts
 new VirtualReactiveIfNode(
-  observable$,
+  $.condition$,
   templateReferenceTrue,
   templateReferenceFalse,
 ).attach(parentNode);
@@ -77,7 +77,7 @@ Output:
 
 ```html
 <tag-mame
-  *if="observable$"
+  *if="$.condition$"
   ...otherAttributes
 >
   ...content
@@ -100,7 +100,7 @@ Output:
 </rx-template>
 
 <rx-if
-  condition="observable$"
+  condition="$.condition$"
   true="uuid"
 ></rx-if>
 ```
@@ -111,7 +111,7 @@ Output:
 
 ```html
 <rx-if
-  condition="observable$"
+  condition="$.condition$"
 >
   <rx-if-true>
     ...trueContent
@@ -127,7 +127,7 @@ Output:
 
 ```html
 <rx-if
-  condition="observable$"
+  condition="$.condition$"
 >
   <tag-mame-true
     *if-true

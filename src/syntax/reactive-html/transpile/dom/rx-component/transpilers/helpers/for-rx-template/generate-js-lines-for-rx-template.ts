@@ -4,8 +4,8 @@ import { ILinesOrNull } from '../../../../../../../misc/lines/lines-or-null.type
 import { ILines } from '../../../../../../../misc/lines/lines.type';
 
 export interface IGenerateJSLinesForRXTemplateOptions {
-  argumentsLines: ILinesOrNull;
-  bodyLines: ILinesOrNull;
+  readonly argumentsLines: ILinesOrNull;
+  readonly bodyLines: ILinesOrNull;
 }
 
 export function generateJSLinesForRXTemplate(

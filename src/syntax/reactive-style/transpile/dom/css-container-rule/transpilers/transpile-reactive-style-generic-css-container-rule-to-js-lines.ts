@@ -7,7 +7,7 @@ import {
 } from '../../css-grouping-rule/transpile-reactive-style-css-grouping-rule-to-js-lines';
 
 export interface ITranspileReactiveStyleGenericCSSContainerRuleToCSSLinesOptions extends IHavingHostSelectorOptions {
-  rule: CSSContainerRule;
+  readonly rule: CSSContainerRule;
 }
 
 export function transpileReactiveStyleGenericCSSContainerRuleToCSSLines(

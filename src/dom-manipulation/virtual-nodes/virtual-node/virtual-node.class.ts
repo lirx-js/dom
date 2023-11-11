@@ -96,7 +96,8 @@ export abstract class VirtualNode {
         distinctObservable<boolean>(
           switchMapObservable<IVirtualNodeOrNull, boolean>(this.parentNode$, (parentNode: IVirtualNodeOrNull): IObservable<boolean> => {
             if (parentNode === null) {
-              return single(this.isConnected); // faster
+              return single(false); // faster
+              // return single(this.isConnected); // faster
               // return reference((): boolean => this.isConnected);
             } else {
               return parentNode.isConnected$;

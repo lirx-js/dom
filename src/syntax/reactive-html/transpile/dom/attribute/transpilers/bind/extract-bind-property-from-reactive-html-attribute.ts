@@ -1,3 +1,5 @@
+import { IReactiveValue, extractReactiveValueFromString } from '../../../../misc/extract-reactive-value-from-string';
+
 /**
  * Syntax:
  *  - standard: ($)?[name]
@@ -6,7 +8,7 @@
 
 export interface IBindProperty {
   readonly name: string;
-  readonly value: string;
+  readonly value: IReactiveValue;
   readonly prefixMode: boolean;
   readonly inputMode: boolean;
 }
@@ -43,7 +45,7 @@ export function extractBindPropertyFromReactiveHTMLAttribute(
 
     return {
       name,
-      value,
+      value: extractReactiveValueFromString(value),
       prefixMode,
       inputMode,
     };

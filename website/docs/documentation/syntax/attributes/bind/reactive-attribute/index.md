@@ -2,19 +2,21 @@
 
 ```html
 <div
-  [attr.name]="observable$"
+  [attr.name]="$.attr$"
 ></div>
 ```
 
-To set an **element's attribute** whose value is updated by an `Observable<string | null>`, write `[attr.name]`,
+To set an **element's attribute** whose value is updated by a [reactive value](/docs/documentation/syntax/reactive-value/) of type `string | boolean | null`, write `[attr.name]`,
 where `name` is the name of the attribute.
 
-If `null` is received, the attribute is removed. Else, if a `string` is received, the attribute is set to this value.
+If `null` or `false` is received, the attribute is removed. 
+Else, if it's `true`, then the attribute is set with an empty string value.
+Finally, if a `string` is received, the attribute is set to this value.
 
 It's converted to something similar to this:
 
 ```ts
-observable$((value) => div.setAttribute('name', value));
+toObservable($.attr$)((value) => div.setAttribute('name', value));
 ```
 
 # Example
@@ -39,7 +41,7 @@ Output:
 
 ```html
 <div
-  bind-attr-name="observable$"
+  bind-attr-name="$.attr$"
 ></div>
 ```
 

@@ -5,7 +5,7 @@ import { isElementNode } from '../is/node-type/is-element-node';
 // https://github.com/whatwg/dom/issues/1081
 
 export interface IElementMatchesOptions {
-  scope?: Node;
+  readonly scope?: Node;
 }
 
 /**

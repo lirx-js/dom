@@ -6,7 +6,7 @@ import {
   ITranspileCreateReactiveSwitchNodeToJSLinesFunction,
   ITranspileCreateReactiveSwitchNodeToJSLinesOptions,
 } from '../../transpilers/transpile-create-reactive-switch-node-to-js-lines.type';
-import { transpileUnknownToObservableToJSLines } from './transpile-unknown-to-observable-to-js-lines';
+import { transpileReactiveValueToJSLines } from './special/transpile-reactive-value-to-js-lines';
 
 export const transpileCreateReactiveSwitchNodeToJSLines: ITranspileCreateReactiveSwitchNodeToJSLinesFunction = (
   {
@@ -19,7 +19,7 @@ export const transpileCreateReactiveSwitchNodeToJSLines: ITranspileCreateReactiv
     `new VirtualReactiveSwitchNode(`,
     ...indentLines([
       ...inlineLastLines(
-        transpileUnknownToObservableToJSLines({ value: expression }),
+        transpileReactiveValueToJSLines(expression),
         [','],
       ),
       ...inlineLastLines(

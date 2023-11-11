@@ -4,7 +4,7 @@ import {
   ITranspileCreateReactiveTextNodeToJSLinesFunction,
   ITranspileCreateReactiveTextNodeToJSLinesOptions,
 } from '../../transpilers/transpile-create-reactive-text-node-to-js-lines.type';
-import { transpileUnknownToObservableToJSLines } from './transpile-unknown-to-observable-to-js-lines';
+import { transpileReactiveValueToJSLines } from './special/transpile-reactive-value-to-js-lines';
 
 export const transpileCreateReactiveTextNodeToJSLines: ITranspileCreateReactiveTextNodeToJSLinesFunction = (
   {
@@ -13,7 +13,7 @@ export const transpileCreateReactiveTextNodeToJSLines: ITranspileCreateReactiveT
 ): ILines => {
   return inlineLastLines(
     [`new VirtualReactiveTextNode(`],
-    transpileUnknownToObservableToJSLines({ value }),
+    transpileReactiveValueToJSLines(value),
     [')'],
   );
 };

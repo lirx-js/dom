@@ -48,14 +48,9 @@ const sidebars = {
           id: 'documentation/component/lifecycle/index',
         },
         {
-          type: 'link',
-          label: 'Inputs',
-          href: '/docs/documentation/syntax/attributes/bind/reactive-input/',
-        },
-        {
-          type: 'link',
-          label: 'Outputs',
-          href: '/docs/documentation/syntax/attributes/event/reactive-output/',
+          type: 'doc',
+          label: 'Inputs and Outputs',
+          id: 'documentation/component/inputs-outputs/index',
         },
         {
           type: 'link',
@@ -72,6 +67,7 @@ const sidebars = {
         id: 'documentation/syntax/index',
       },
       items: [
+        'documentation/syntax/reactive-value/index',
         'documentation/syntax/reactive-text/index',
         {
           type: 'category',
@@ -128,6 +124,11 @@ const sidebars = {
         },
         'documentation/syntax/custom-element/index',
       ],
+    },
+    {
+      type: 'doc',
+      label: 'Virtual DOM',
+      id: 'documentation/virtual-dom/index',
     },
     {
       type: 'link',

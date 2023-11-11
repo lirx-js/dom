@@ -11,7 +11,7 @@ const COMMAND_NAME: string = '*async-rejected';
 const TEMPLATE_ATTRIBUTE_NAME: string = 'template';
 
 export interface ITranspileReactiveHTMLRXAsyncRejectedToJSLinesOptions extends IHavingPrimaryTranspilersOptions {
-  node: Element;
+  readonly node: Element;
 }
 
 export function transpileReactiveHTMLRXAsyncRejectedToJSLines(

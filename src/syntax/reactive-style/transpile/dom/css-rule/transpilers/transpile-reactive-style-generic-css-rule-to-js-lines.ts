@@ -14,7 +14,7 @@ import {
 } from '../../css-supports-rule/transpile-reactive-style-css-media-rule-to-js-lines';
 
 export interface ITranspileReactiveStyleGenericCSSRuleToCSSLinesOptions extends IHavingHostSelectorOptions {
-  rule: CSSRule;
+  readonly rule: CSSRule;
 }
 
 export function transpileReactiveStyleGenericCSSRuleToCSSLines(

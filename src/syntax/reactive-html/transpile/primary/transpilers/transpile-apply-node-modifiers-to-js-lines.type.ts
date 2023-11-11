@@ -7,8 +7,8 @@ export interface IRawModifier {
 }
 
 export interface ITranspileApplyNodeModifiersToJSLinesOptions {
-  node: ILines;
-  modifiers: readonly IRawModifier[];
+  readonly node: ILines;
+  readonly modifiers: readonly IRawModifier[];
 }
 
 export interface ITranspileApplyNodeModifiersToJSLinesFunction {
@@ -18,5 +18,5 @@ export interface ITranspileApplyNodeModifiersToJSLinesFunction {
 }
 
 export interface ITranspileApplyNodeModifiersToJSLinesTrait {
-  transpileApplyNodeModifiersToJSLines: ITranspileApplyNodeModifiersToJSLinesFunction;
+  readonly transpileApplyNodeModifiersToJSLines: ITranspileApplyNodeModifiersToJSLinesFunction;
 }

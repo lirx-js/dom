@@ -1,7 +1,7 @@
-import { IObservable, ComputedSignal, IComputedSignalFunction } from '@lirx/core';
+import { IObservable, ComputedSignal, IComputedSignalFunction, fromSignal } from '@lirx/core';
 
 export function computedFunctionToObservable<GValue>(
   computedFunction: IComputedSignalFunction<GValue>,
 ): IObservable<GValue> {
-  return new ComputedSignal(computedFunction).toObservable();
+  return fromSignal(new ComputedSignal(computedFunction));
 }

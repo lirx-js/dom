@@ -41,6 +41,10 @@ You set the state, and then, the DOM is updated. Well, `@lirx/dom` uses a simila
 #### Coming from Angular ?
 
 If you are an angular developer, you've probably already played with the Observables through the library: [RxJS](https://rxjs.dev/).
-Typically, you'll use them, when you have to perform an HTTP request, send an event (`@Output` and `EventEmitter`), or use the `async` pipe.
-Well, `@lirx/core` too is a Reactive Programming framework with similar functions, but far faster.
+Typically, you'll use them, when you have to perform an HTTP request, send an event (`@Output` and `EventEmitter`), use the `async` pipe, or having some *Stores*.
+Moreover, Angular recently introduced `signals` so you may start to play with them.
+
+Well, `@lirx/dom` was build from scratch for Observables and signals. This gives it a very important performance boost, with a design natively and naturally working with them.
+
+
 

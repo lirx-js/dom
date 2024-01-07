@@ -17,8 +17,16 @@ function bootstrap<GConfig extends IComponentConfig>(
 ): VirtualCustomElementNode<GConfig>
 ```
 
+### Definition
+
 The `bootstrap` function is the entry point of the application.
 It creates a component, and appends it to the root of the dom tree (usually `<body>`).
+
+:::info
+
+The `bootstrap` should be called only once with the "main" component of your application.
+
+:::
 
 ### Example
 

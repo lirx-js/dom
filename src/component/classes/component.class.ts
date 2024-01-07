@@ -20,8 +20,12 @@ import { IComponentOptions, IComponentMode } from './types/options/component-opt
 import { DEFAULT_SLOTS } from './types/slots/default-slots.constant';
 import { VirtualDOMNode } from '../../dom-manipulation/virtual-nodes/virtual-dom-node/virtual-dom-node.class';
 
-/** CLASS **/
+/* CLASS */
 
+/**
+ * This class is used to define a Component:
+ * a name, a template, some style, its inputs and outputs, and an "init" function.
+ */
 export class Component<GElement extends Element, GData extends object, GTemplateData extends object> extends AbstractComponent<GElement, GData> {
 
   // static html<GElement extends HTMLElement, GData extends object, GTemplateData extends object>(
@@ -134,7 +138,7 @@ export class Component<GElement extends Element, GData extends object, GTemplate
   }
 }
 
-/** FUNCTIONS **/
+/* FUNCTIONS */
 
 // // const h: ({a: string} extends object ? true : false);
 // const a = new Component({

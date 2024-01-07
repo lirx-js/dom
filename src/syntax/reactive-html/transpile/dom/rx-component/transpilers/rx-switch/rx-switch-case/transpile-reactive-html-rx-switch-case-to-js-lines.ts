@@ -54,7 +54,7 @@ export function transpileReactiveHTMLRXSwitchCaseToJSLines(
   });
 }
 
-/** FUNCTIONS **/
+/* FUNCTIONS */
 
 /* TEMPLATE */
 

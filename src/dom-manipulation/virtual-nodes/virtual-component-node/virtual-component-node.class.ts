@@ -65,7 +65,7 @@ export class VirtualComponentNode<GElement extends Element, GData extends object
   /* INPUTS */
 
   get inputs(): InferDataInputs<GData> {
-    return this.#data;
+    return this.#data as InferDataInputs<GData>;
   }
 
   inputValue<GKey extends InferDataInputKeys<GData>>(
@@ -98,7 +98,7 @@ export class VirtualComponentNode<GElement extends Element, GData extends object
   /* OUTPUTS */
 
   get outputs(): InferDataOutputs<GData> {
-    return this.#data;
+    return this.#data as InferDataOutputs<GData>;
   }
 
   output$<GKey extends InferDataOutputKeys<GData>>(

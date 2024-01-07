@@ -8,7 +8,7 @@ export type InferDataOutputs<GData extends object> = {
     : never;
 };
 
-export type InferDataOutputKeys<GData extends object> = keyof InferDataOutputs<GData>;
+export type InferDataOutputKeys<GData extends object> = Extract<keyof GData, keyof InferDataOutputs<GData>>;
 
 export type InferDataOutputValue<GInput> =
   GInput extends Output<infer GValue>

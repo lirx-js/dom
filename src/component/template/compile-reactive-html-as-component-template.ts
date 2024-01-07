@@ -31,6 +31,9 @@ export interface ICompileReactiveHTMLAsComponentTemplateOptions extends Omit<ITr
   readonly modifiers?: IGenericVirtualDOMNodeModifierList;
 }
 
+/**
+ * Compiles some reactive html to a component template.
+ */
 export function compileReactiveHTMLAsComponentTemplate<GData extends object>(
   {
     components,

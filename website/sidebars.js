@@ -127,7 +127,7 @@ const sidebars = {
     },
     {
       type: 'doc',
-      label: 'Virtual DOM',
+      label: '🚧 Virtual DOM',
       id: 'documentation/virtual-dom/index',
     },
     {
@@ -199,6 +199,11 @@ const sidebars = {
           id: 'documentation/comparison/angular/index',
         },
       ],
+    },
+    {
+      type: 'doc',
+      label: 'Performances',
+      id: 'documentation/performances/index',
     },
   ],
   reference: [

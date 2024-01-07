@@ -1,4 +1,5 @@
-import { IObserver, IObservable, Signal, ISignal, ISignalOptions } from '@lirx/core';
+import { IObserver, IObservable, Signal, ISignal, ISignalOptions, fromSignal } from '@lirx/core';
+import { SignalThrow } from '@lirx/core/src/signals/error/signal-throw.class';
 import { AbstractInput } from './abstract-input.class';
 
 export class SignalInput<GValue> extends AbstractInput<GValue> {
@@ -7,7 +8,7 @@ export class SignalInput<GValue> extends AbstractInput<GValue> {
   readonly #subscribe: IObservable<GValue>;
 
   constructor(
-    initialValue?: GValue | undefined,
+    initialValue: GValue | SignalThrow,
     options?: ISignalOptions<GValue>,
   ) {
     super();
@@ -19,7 +20,7 @@ export class SignalInput<GValue> extends AbstractInput<GValue> {
       this.#signal.set(value);
     };
 
-    this.#subscribe = this.#signal.toObservable();
+    this.#subscribe = fromSignal(this.#signal);
   }
 
   get signal(): ISignal<GValue> {
@@ -42,7 +43,7 @@ export class SignalInput<GValue> extends AbstractInput<GValue> {
 export type IGenericSignalInput = SignalInput<any>;
 
 export function signalInput<GValue>(
-  initialValue?: GValue | undefined,
+  initialValue: GValue | SignalThrow,
   options?: ISignalOptions<GValue>,
 ): SignalInput<GValue> {
   return new SignalInput<GValue>(initialValue, options);

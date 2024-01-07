@@ -36,6 +36,9 @@ export type IStylePropertiesMapLike =
   | IStylePropertiesMapAsRecord
   ;
 
+/**
+ * Converts a `string` or an `Iterable<[string, string]>` into a `IStylePropertiesMap`.
+ */
 export function toStylePropertiesMap(
   input: IStylePropertiesMapLike,
 ): IStylePropertiesMap {

@@ -7,15 +7,15 @@ import TabItem from '@theme/TabItem';
 ```html title="app-hello-world.component.html"
 <div class="input-container">
   <input
-    [value]="$.input$"
-    (input)="() => $.$input(node.value)"
+    [value]="$.value"
+    (input)="() => $.value.set(node.value)"
   >
 </div>
 <div
   class="max-length-container"
-  [class.valid]="$.valid$"
+  [class.valid]="$.valid"
 >
-  Length: {{ $.remaining$ }} / 10
+  Length: {{ $.remaining }} / 10
 </div>
 ```
 
@@ -37,7 +37,7 @@ import TabItem from '@theme/TabItem';
   <TabItem value="ts" label="TS">
 
 ```ts title="app-hello-world.component.ts"
-import { let$$, map$$, IObservable, IObserver } from '@lirx/core';
+import { signal, computed, ISignal } from '@lirx/core';
 import { compileReactiveHTMLAsComponentTemplate, compileStyleAsComponentStyle, Component } from '@lirx/dom';
 
 // @ts-ignore
@@ -50,10 +50,9 @@ import style from '.app-hello-world.component.scss?inline';
  */
 
 interface ITemplateData {
-  readonly $input: IObserver<string>;
-  readonly input$: IObservable<string>;
-  readonly remaining$: IObservable<number>;
-  readonly valid$: IObservable<boolean>;
+  readonly input: ISignal<string>;
+  readonly remaining: ISignal<number>;
+  readonly valid: ISignal<boolean>;
 }
 
 export const AppHelloWorldComponent = new Component<HTMLElement, object, ITemplateData>({
@@ -61,15 +60,14 @@ export const AppHelloWorldComponent = new Component<HTMLElement, object, ITempla
   template: compileReactiveHTMLAsComponentTemplate({ html }),
   styles: [compileStyleAsComponentStyle(style)],
   init: (node: VirtualCustomElementNode<HTMLElement, object>): ITemplateData => {
-    const [$input, input$] = let$$('');
-    const remaining$ = map$$(input$, (value: string) => value.length);
-    const valid$ = map$$(remaining$, (value: number) => (value <= 10));
+    const value = signal('');
+    const remaining = computed(() => value().length);
+    const valid = map$$(() => (value() <= 10));
 
     return {
-      $input,
-      input$,
-      remaining$,
-      valid$,
+      input,
+      remaining,
+      valid,
     };
   },
 });

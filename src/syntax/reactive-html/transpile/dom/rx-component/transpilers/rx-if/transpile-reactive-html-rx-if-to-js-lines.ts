@@ -94,7 +94,7 @@ export function transpileReactiveHTMLRXIfToJSLines(
   });
 }
 
-/** FUNCTIONS **/
+/* FUNCTIONS */
 
 /* TEMPLATE */
 

@@ -9,7 +9,7 @@ export type InferDataInputs<GData extends object> = {
     : never;
 };
 
-export type InferDataInputKeys<GData extends object> = keyof InferDataInputs<GData>;
+export type InferDataInputKeys<GData extends object> = Extract<keyof GData, keyof InferDataInputs<GData>>;
 
 export type InferDataInputGetValue<GInput> =
   GInput extends AbstractInput<infer GValue>

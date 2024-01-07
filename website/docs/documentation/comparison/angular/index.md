@@ -12,7 +12,7 @@ Thus, it is pretty efficient.
 
 However, it has some drawbacks:
 
-- Angular itself is heavy (50Kb minzipped)
+- Angular itself is heavy (usually around 50Kb minzipped)
 - It includes ZoneJS which patches every async functions, and cannot support async/await (meaning de-optimized code transpilation)
 - When a Zone triggers, all expressions in the html are evaluated and reflected on the nodes, even if we changed only one property.
 

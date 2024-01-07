@@ -85,7 +85,7 @@ export function transpileReactiveHTMLRXForLoopToJSLines(
   });
 }
 
-/** FUNCTIONS **/
+/* FUNCTIONS */
 
 /* TEMPLATE */
 

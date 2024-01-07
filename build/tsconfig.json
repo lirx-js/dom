@@ -3,6 +3,5 @@
   "compilerOptions": {
     "baseUrl": ".."
   },
-  "exclude": ["../dist"],
-  "include": ["../index.ts"]
+  "exclude": ["../dist"]
 }

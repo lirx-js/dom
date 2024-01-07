@@ -7,7 +7,7 @@ import { VirtualNode } from '../virtual-node/virtual-node.class';
 import { trackByIdentity } from './members/track-by/track-by-identity';
 import { IUnsubscribe } from '@lirx/unsubscribe';
 
-/** TYPES **/
+/* TYPES */
 
 export type IVirtualReactiveForLoopNodeTemplateArgument<GItem> = {
   item: GItem;
@@ -20,7 +20,7 @@ export interface IVirtualReactiveForLoopNodeOptionsTrackByFunction<GItem> {
   (item: GItem): any;
 }
 
-/** CLASS **/
+/* CLASS */
 
 /**
  * Represents an abstract Container Node in an abstract DOM,

@@ -9,6 +9,9 @@ export type IClassNamesListLike =
   | IClassNamesListAsIterable
   ;
 
+/**
+ * Converts a `string`, an `Iterable<string>` or a `Set<string>`  into a `IClassNamesList` (alias for `Set<string>`).
+ */
 export function toClassNamesList(
   input: IClassNamesListLike,
 ): IClassNamesList {

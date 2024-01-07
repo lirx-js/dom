@@ -5,7 +5,7 @@ import {
 import { IComponentVirtualComponentNode } from './types/component-virtual-component-node.type';
 import { VirtualComponentNode } from '../../dom-manipulation/virtual-nodes/virtual-component-node/virtual-component-node.class';
 
-/** CLASS **/
+/* CLASS */
 
 export abstract class AbstractComponent<GElement extends Element, GData extends object> {
   readonly #name: string;

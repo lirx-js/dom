@@ -286,7 +286,7 @@ If we do a quick and dirty comparison between Angular (left) and `@lirx/dom` (ri
 
 We may see how `@lirx/dom` only updates what's relevant and nothing more, **out-of-the-box**, where such optimizations are only possible with other frameworks, 
 if we follow specific (and sometimes painful) constraints.
-You may find a full dedicated [benchmark comparison here](https://dom.lirx.org/docs/documentation/performances/vs-angular/benchmark/).
+You may find a full dedicated [benchmark comparison here](https://dom.lirx.org/docs/documentation/comparisons/benchmarks/complex-app/).
 The goal is not to demean Angular, but to offer the best performances, by comparing and optimizing continuously as much as possible.
 Thus delivering the best possible user experience.
 

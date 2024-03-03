@@ -21,6 +21,7 @@ import {
   VirtualReactiveTextNode,
 } from '../../../../../dom-manipulation/virtual-nodes/virtual-reactive-text-node/virtual-reactive-text-node.class';
 import { VirtualTextNode } from '../../../../../dom-manipulation/virtual-nodes/virtual-text-node/virtual-text-node';
+import { computationToObservable } from '../shared/functions/computation-to-observable';
 import { SHARED_VALUES_TO_IMPORT } from '../shared/values-to-import/shared-values-to-import.constant';
 import {
   bindCaseInsensitiveOutputWithObserverLike,
@@ -45,6 +46,7 @@ export const VALUES_TO_IMPORT_FOR_VIRTUAL_NODE_BASED_REACTIVE_HTML = {
   VirtualReactiveForLoopNode,
   VirtualReactiveAsyncNode,
   unknownToObservableNotUndefined,
+  computationToObservable,
   virtualElementNodeAppendClassName,
   bindCaseInsensitivePropertyWithObservable,
   bindCaseInsensitiveInputWithObservable,

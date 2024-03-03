@@ -1,18 +1,20 @@
-import { IObserver, IObservable, Signal, ISignal, ISignalOptions, fromSignal } from '@lirx/core';
-import { SignalThrow } from '@lirx/core/src/signals/error/signal-throw.class';
+import { IObserver, IObservable, ISignal, fromSignal, ICreateSignalOptions, signal } from '@lirx/core';
 import { AbstractInput } from './abstract-input.class';
 
+/**
+ * This Input is based on Signal instead of a MulticastReplayLastSource.
+ */
 export class SignalInput<GValue> extends AbstractInput<GValue> {
   readonly #signal: ISignal<GValue>;
   readonly #emit: IObserver<GValue>;
   readonly #subscribe: IObservable<GValue>;
 
   constructor(
-    initialValue: GValue | SignalThrow,
-    options?: ISignalOptions<GValue>,
+    initialValue: GValue,
+    options?: ICreateSignalOptions<GValue>,
   ) {
     super();
-    this.#signal = new Signal<GValue>(initialValue, options);
+    this.#signal = signal<GValue>(initialValue, options);
 
     this.#emit = (
       value: GValue,
@@ -36,15 +38,15 @@ export class SignalInput<GValue> extends AbstractInput<GValue> {
   }
 
   override get value(): GValue {
-    return this.#signal.get();
+    return this.#signal();
   }
 }
 
 export type IGenericSignalInput = SignalInput<any>;
 
 export function signalInput<GValue>(
-  initialValue: GValue | SignalThrow,
-  options?: ISignalOptions<GValue>,
+  initialValue: GValue,
+  options?: ICreateSignalOptions<GValue>,
 ): SignalInput<GValue> {
   return new SignalInput<GValue>(initialValue, options);
 }

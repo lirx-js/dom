@@ -1,12 +1,12 @@
 # Reactive Programming
 
 Before going any further, you have to notice that `@lirx/dom` is a
-**[Reactive Programming](https://core.lirx.org/docs/documentation/getting-started/introduction/) based framework**.
+**[Reactive Programming](https://core.lirx.org/docs/documentation/getting-started/reactive-programming/) based framework**.
 Consequently, I strongly encourage you to read the documentation of [@lirx/core](https://core.lirx.org/) before.
 This is a necessary step, if you want to understand how this framework works, and why it is so powerful.
 
 In a few words, in the Reactive Programming world, **everything is a stream**.
-These variables are called [Observables](https://core.lirx.org/docs/documentation/getting-started/what-is-an-observable/#definition-of-an-observable),
+These variables are called [Signals](https://core.lirx.org/docs/documentation/signals/introduction) and [Observables](https://core.lirx.org/docs/documentation/observables/what-is-an-observable/#definition-of-an-observable),
 and will mutate over time. It may happen due to user interactions, api results, async tasks, timers, events, or any origin we prefer.
 
 Then, we will combine them through **data pipelines**.

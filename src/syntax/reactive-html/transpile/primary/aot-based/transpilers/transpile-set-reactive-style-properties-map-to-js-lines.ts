@@ -16,7 +16,7 @@ import {
   transpileAOTReactiveValueTypeToFunctionName,
   transpileAOTReactiveValueToJSLines,
 } from './special/transpile-reactive-value-to-js-lines';
-import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
+import { computationToObservable } from '../../shared/functions/computation-to-observable';
 
 export const transpileAOTSetReactiveStylePropertiesMapToJSLines: ITranspileSetReactiveStylePropertiesMapToJSLinesFunction = (
   {
@@ -47,7 +47,7 @@ export function aot_20_computed(
   stylePropertiesMap: () => IStylePropertiesMap,
 ): IUnsubscribe {
   return node.setReactiveStylePropertiesMap(
-    computedFunctionToObservable(stylePropertiesMap),
+    computationToObservable(stylePropertiesMap),
   );
 }
 

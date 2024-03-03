@@ -47,7 +47,7 @@ interface IVirtualDOMNodeModifierFunction<GValue, GNode extends VirtualDOMNode> 
 }
 ```
 
-It takes two arguments:
+It receives two arguments:
 
 - a `VirtualDOMNode`: this is the node being modified by this modifier. We can change its contents, its properties, its attributes, etc...
 - a `value`: usually used as a config object for the modifier.
@@ -56,7 +56,7 @@ Then, we have to return a `VirtualDOMNode`. It can be the input `node` or a new 
 
 :::caution
 
-Returning a different `VirtualDOMNode` is a very risky operation as 're swapping the current node with a new one.
+Returning a different `VirtualDOMNode` is a very risky operation as we are swapping the current node with a new one.
 It should be used **only if you master** the modifiers and perfectly now what you are doing.
 
 :::
@@ -211,7 +211,7 @@ compileReactiveHTMLAsComponentTemplate({
 });
 ```
 
-#### What appends in the template ?
+#### What happens in the template ?
 
 It is converted to something similar to this:
 

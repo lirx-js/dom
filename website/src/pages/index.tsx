@@ -33,7 +33,7 @@ function HomepageHeader() {
         <p className="hero__subtitle">{siteConfig.tagline}</p>
 
         <div className={clsx(styles.heroBannerMessage)}>
-          LiRX/dom is a high-performance, reactive system, capable of batching DOM updates in a way that leaves other frameworks, and their virtual DOMs, in the dust.
+          LiRX/dom is a high-performance, reactive system, capable of DOM updates in a way that usually beats other frameworks due to its singular paradigm.
           Experience consistent, scalable performance, no matter how complex your UI.
           {/*Create fast and optimized web applications that scale !*/}
         </div>

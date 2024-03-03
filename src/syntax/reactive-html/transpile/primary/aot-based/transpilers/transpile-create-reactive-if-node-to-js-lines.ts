@@ -14,7 +14,7 @@ import {
   transpileAOTReactiveValueToJSLines,
   transpileAOTReactiveValueTypeToFunctionName,
 } from './special/transpile-reactive-value-to-js-lines';
-import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
+import { computationToObservable } from '../../shared/functions/computation-to-observable';
 
 export const transpileAOTCreateReactiveIfNodeToJSLines: ITranspileCreateReactiveIfNodeToJSLinesFunction = (
   {
@@ -63,7 +63,7 @@ export function aot_7_computed(
   templateFalse?: IVirtualReactiveIfNodeTemplate,
 ): VirtualReactiveIfNode {
   return new VirtualReactiveIfNode(
-    computedFunctionToObservable(condition),
+    computationToObservable(condition),
     templateTrue,
     templateFalse,
   );

@@ -16,7 +16,7 @@ import {
   transpileAOTReactiveValueToJSLines,
   transpileAOTReactiveValueTypeToFunctionName,
 } from './special/transpile-reactive-value-to-js-lines';
-import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
+import { computationToObservable } from '../../shared/functions/computation-to-observable';
 
 export const transpileAOTSetReactiveClassNamesListToJSLines: ITranspileSetReactiveClassNamesListToJSLinesFunction = (
   {
@@ -47,6 +47,6 @@ export function aot_12_computed(
   classNamesList: () => IClassNamesList,
 ): IUnsubscribe {
   return node.setReactiveClassNamesList(
-    computedFunctionToObservable(classNamesList),
+    computationToObservable(classNamesList),
   );
 }

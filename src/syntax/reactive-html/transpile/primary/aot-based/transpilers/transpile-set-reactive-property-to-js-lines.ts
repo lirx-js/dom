@@ -21,7 +21,7 @@ import {
   bindCaseInsensitivePropertyWithObservable,
   InferBindCaseInsensitivePropertyWithObservableValue,
 } from '../../../../../../dom-manipulation/virtual-nodes/virtual-reactive-element-node/members/property/case-insensitive/bind/bind-case-insensitive-property-with-observable';
-import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
+import { computationToObservable } from '../../shared/functions/computation-to-observable';
 
 export const transpileAOTSetReactivePropertyToJSLines: ITranspileSetReactivePropertyToJSLinesFunction = (
   {
@@ -61,7 +61,7 @@ export function aot_19_computed<GElementNode extends Element, GCaseInsensitiveKe
   return bindCaseInsensitivePropertyWithObservable<GElementNode, GCaseInsensitiveKey>(
     node,
     caseInsensitiveKey,
-    computedFunctionToObservable(value) as InferBindCaseInsensitivePropertyWithObservableValue<GElementNode, GCaseInsensitiveKey>,
+    computationToObservable(value) as InferBindCaseInsensitivePropertyWithObservableValue<GElementNode, GCaseInsensitiveKey>,
   );
 }
 

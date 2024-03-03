@@ -1,4 +1,4 @@
-# Comparison with Angular
+# Differences with Angular
 
 Angular is based on [Zones](https://angular.io/guide/zone).
 
@@ -20,7 +20,7 @@ In a few words, Angular is powerful, but massive: we can see it in its generated
 
 ### Reactive Programming
 
-Angular uses [RxJS](https://angular.io/guide/rx-library) as a Reactive Programming library which is an essential part of its core.
+Angular uses [RxJS](https://angular.io/guide/rx-library) as a Reactive Programming library: for the `http` module or the `@Output()` decorator for example.
 It encourages its usage, but do not constrain it. In consequence, most of the developers simply avoid Observables due to their important learning curve.
 It's a shame because Observables are really powerful, and, if well-used, may strongly increase the performance of the application, especially when changing the [ChangeDetectionStrategy](https://angular.io/api/core/ChangeDetectionStrategy).
 

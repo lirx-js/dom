@@ -186,24 +186,20 @@ const sidebars = {
     // },
     {
       type: 'category',
-      label: 'Comparison',
+      label: 'Comparisons',
       items: [
+        'documentation/comparisons/introduction/index',
         {
-          type: 'doc',
-          label: 'React',
-          id: 'documentation/comparison/react/index',
+          type: 'category',
+          label: 'Benchmarks',
+          items: [
+            'documentation/comparisons/benchmarks/file-to-data-url/index',
+            'documentation/comparisons/benchmarks/complex-app/index',
+          ],
         },
-        {
-          type: 'doc',
-          label: 'Angular',
-          id: 'documentation/comparison/angular/index',
-        },
+        'documentation/comparisons/vs-angular/index',
+        'documentation/comparisons/vs-react/index',
       ],
-    },
-    {
-      type: 'doc',
-      label: 'Performances',
-      id: 'documentation/performances/index',
     },
   ],
   reference: [

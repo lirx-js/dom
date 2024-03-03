@@ -1,4 +1,4 @@
-# Comparison with React
+# Differences with React
 
 React is a UI framework based on a Virtual DOM, in consequence, we have first to give a definition of it:
 
@@ -98,16 +98,16 @@ Actually, this is exactly what does `@lirx/dom` with the help of Reactive Progra
 
 ```ts title="main.component.ts"
 // in the init function
-const [$items, items$, getItems] = let$$([]);
+const items = signal([]);
 
 const addItem = (item) => {
-  $items([...getItems(), item]);
+  items.set([...items(), item]);
 };
 ```
 
 ```html title="main.component.html"
 <app-item
-  *for="let item of $.item$"
+  *for="let item of $.items"
   [config]="item"
 ></app-item>
 ```
@@ -147,20 +147,18 @@ export const ExampleComponent = new Component({
   template: compileReactiveHTMLAsComponentTemplate({
     html: `
       <div>
-        <p>You clicked {{ $.count$ }} times</p>
-        <button (click)="() => $.$count($.getCount() + 1)">
+        <p>You clicked {{ $.count }} times</p>
+        <button (click)="() => $.count.set($.count() + 1)">
           Click me
         </button>
       </div>
     `,
   }),
   templateData: () => {
-    const [$count, count$, getCount] = let$$(0);
+    const count = signal(0);
 
     return {
-      $count,
-      count$,
-      getCount,
+      count,
     };
   },
 });
@@ -170,7 +168,7 @@ export const ExampleComponent = new Component({
 
 With React, when we'll click on the button, the function `Example` will be called again, re-generate the VDOM, apply a diffing algorithm, and update the Text Node.
 
-With `@lirx/dom`, clicking on the button will simply do: `textNode.value = $.getCount() + 1;`.
+With `@lirx/dom`, clicking on the button will simply do: `textNode.value = $.count() + 1;`.
 
 No other node is touched, nor updated; and no tree (VDOM) is generated. It simply changes what's need to be modified, and nothing more.
 This trick gives an incredible advantage in memory consumption and execution time for `@lirx/dom`.

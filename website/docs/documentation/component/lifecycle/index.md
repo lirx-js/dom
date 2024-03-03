@@ -1,16 +1,55 @@
 # Lifecycle
 
-Listening and using properly the lifecycle of a component, is a task **requiring a special attention**.
-Indeed, if this part is poorly managed, it will usually lead to memory leaks or inconsistent states of the application.
-This is something we want to avoid at all costs,
-if we want to keep a **good user experience**, and a functional application.
+```mermaid
+---
+title: Component Lifecycle
+---
+stateDiagram-v2
+    direction TB
+    Connected : Connected to the DOM
+    Disconnected : Disconnected from the DOM
+    RunTasks : Run Tasks
+    note right of RunTasks
+        ex: subscribe to an observable, start an http request, start a timer, etc.
+    end note
+    CancelTasks : Cancel Tasks
+    note right of CancelTasks
+        ex: cancel subscriptions, abort http request, clear timer, etc.
+    end note
+    [*] --> Connected : until
+    Connected --> RunTasks
+    RunTasks --> Disconnected : until
+    Disconnected --> CancelTasks
+    CancelTasks --> Connected : until
+```
 
-We'll use illustrate this particular concern, with a component displaying the current date every 1000ms.
+Understanding and employing property the lifecycle of a component is a **very important task**.
+This is one of the most essential aspect of every front-end framework, so, please, **pay a special attention** to this concept while creating your components.
+
+Every component have **two states**:
+
+- `connected to the DOM`: when entering this state, this is the perfect moment to start all async tasks related to this component.
+Like: http requests to fetch data, timers, subscriptions to Observables, etc.
+- `disconnected from the DOM`: when entering this state, this where we **MUST** *abort/cancel/unsubscribe* all our async tasks.
+If undone properly, memory leaks will occur, and our application will start to have inconsistent states.
+
+:::note technical node
+
+A component is said `connected to the DOM`, when it has a [VirtualRootNode](/docs/reference/virtual-root-node/) as parent (direct or indirect).
+This usually happens when the component has the `document` itself as one of its parents.
+
+:::
+
+---
+
+In this tutorial, we'll try to implement a component displaying the current date, with a refresh period of 1000ms.
+
+---
 
 ## Manual lifecycle handling
 
-Let's start by remembering that all the internal logic of the component,
-must be handled from the `templateData` function defined when constructing a `Component`:
+Let's start by remembering that **all the internal logic** of the component,
+**must** be handled from the `templateData` function (defined when constructing a `Component`):
 
 ```ts
 export const MyComponent = new Component({
@@ -36,23 +75,9 @@ export const MyComponent = new Component({
 ```
 
 However, in this example, if the component is removed from the DOM, the `setInterval` **won't stop**.
-It will continue to log the date, until the user refresh or close the app.
+It will continue to log the date, until the user refreshes or closes the app.
 So we have to find a solution to start this timer only when the component is connected to the DOM,
 and stop it when it is disconnected.
-
-:::note
-
-A component is said connected to the DOM, when it has a [VirtualRootNode](/docs/reference/virtual-root-node/) as parent (direct or indirect).
-
-:::
-
-:::info
-
-Actually, **every** *async tasks* happening in the context of the component **must** listen to the component's "connected" state,
-and be aborted/stopped when the component leaves the DOM.
-If not, it will create **unexpected behaviours** as seen earlier.
-
-:::
 
 Hopefully, the framework has the perfect solution to this problem: [Observables](https://core.lirx.org).
 Indeed, cancellation is one of the main concern of Reactive Programming, and is one of the essential bricks of `@lirx/dom`.
@@ -98,7 +123,8 @@ export const MyComponent = new Component({
 });
 ```
 
-However, there is a simpler manner -> using Observables and the method `onConnected(...)`:
+However, there is a simpler manner -> using Observables with the method `onConnected(...)`.
+It was specially designed for this purpose:
 
  - it takes a `function` as single input
    This function is called when the component becomes connected to the DOM. We'll subscribe to events, observable, timers, etc...
@@ -161,11 +187,12 @@ export const MyComponent = new Component({
 ```
 
 Therefore, the usage of `onConnected(...)` **should be limited to only a few cases**,
-when we have some logic, which doesn't impact the template of the component.
+when we have some logic, which doesn't directly impact the template of the component.
 
 ## Conclusion
 
-As seen during this tutorial, managing with caution the lifecycle of the component is an essential part,
-if we want to avoid inconsistent applications.
-Hopefully, using Observables allows us to handle async ressources like a breeze,
-instead of having to look after each of them manually.
+
+As seen during this tutorial, handling the lifecycle of the component is an important part, which requires to be managed with caution.
+Else, it's easy to create inconsistent applications, due to concurrent async tasks, cumulated with memory leaks.
+
+Hopefully, using Observables allows us to handle all the async ressources scoped to a component, in just a few lines of code.

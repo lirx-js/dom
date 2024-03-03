@@ -6,7 +6,8 @@ tags: [lirx/dom, reactive programming, introduction]
 
 # May I humbly submit you my front-end framework ?
 
-Hi everyone, I'll present you what I consider my best personal achievement so far: [a framework purely based on Observables](https://dom.lirx.org/docs/documentation/getting-started/introduction/) to create great web applications.
+Hi everyone, I'll present you what I consider my best personal achievement so far: [a framework purely based on Reactive Programming](https://dom.lirx.org/docs/documentation/getting-started/introduction/)
+(ak: Observables and Signals) to create great web applications.
 
 I did it because I was seeing the advantages and limits in React, Angular, and Svelte.
 
@@ -22,7 +23,7 @@ First let's define what makes a great framework, and what we want as developers 
 ### Developers wants reactivity
 
 In front-end, our interfaces **react** to changes: an event appends (like a click, a promise resoling, a websocket packet, a timer, etc...),
-and we have to update our interface (meaning update the DOM).
+and we have to update our interface (meaning update the DOM) reflecting the new data.
 So everything in front-end is fundamentally reactive.
 
 If we compare some frameworks:
@@ -32,7 +33,7 @@ However, we may see a clear requirement from the developers: it has an `async` p
 Sadly, the framework itself is not optimized at all for reactivity. It was not built for it, and checking the source code highlight these limitations.
 
 React has `useState` and `useEffect` (with others) which are essentially *reactive* variables and context.
-Now, we may consider it as a *reactive framework*, however it was not initially though for it.
+Now, we may consider it as a *reactive framework*, however it was not initially though for it, and we must use tricks like memoization using `useCallback` or `React.memo` for example.
 
 Finally, Svelte is natively based on reactivity, which provides excellent performances.
 
@@ -167,10 +168,10 @@ Templates are really similar to Angular. They are based on HTML with a special s
 It's possible to:
 
 - bind: `properties`, `attributes`, `classes`, `styles`, `events`, etc.
-- mutate the DOM nodes with prebuild helpers like: `*if`, `*for*`, `{{ text }}`, etc.
-- provide templates to child components (ak [slots](https://dom.lirx.org/docs/documentation/syntax/custom-element/#slotting---ak-provide-templates-to-our-components))
+- mutate the DOM nodes with prebuild helpers like: `*if`, `*for`, `{{ text }}`, etc.
+- provide templates to child components (ak: [slots](https://dom.lirx.org/docs/documentation/syntax/custom-element/#slotting---ak-provide-templates-to-our-components))
 
-Finally, it simply does what we expect from any front-end framework.
+In a few words: it simply does what we expect from any front-end framework.
 
 #### Styling
 
@@ -188,6 +189,7 @@ Styling is done using the same css as the one used for web components. It uses `
 ```
 
 However, the style is not purely scoped to the component itself, allowing us to style child components from a parent if necessary.
+If we prefer to limit the scope of our css, we may use [@scope](https://developer.mozilla.org/en-US/docs/Web/CSS/@scope).
 
 #### Component
 
@@ -254,15 +256,9 @@ interface ITemplateData {
 The framework subscribes to them to update only the relevant nodes of the DOM: if `disabled` changes for example,
 then `@lirx/dom` just sets the attribute `disabled` on the button and does nothing more,
 so calling `disabled.set(true)`, is as fast and direct as calling `button.disabled = true`.
-Moreover, the engine takes care to properly unsubscribe of these values when the DOM nodes leaves the DOM avoiding memory leaks and side effects.
+Moreover, the engine takes care to properly unsubscribe of these "reactive values" when the DOM nodes leave the DOM, thus, avoiding memory leaks and side effects.
 
 ---
-
-[//]: # (TODO continue here)
-
-This was quick, and I hope it created some interest for you, to go deeper, I may recommend [to start here](https://dom.lirx.org/docs/documentation/getting-started/introduction/).
-
-My goal is to get feedbacks to improve the framework
 
 For more examples, I have created a [dedicated repository](https://github.com/lirx-js/dom-examples), and it is as simple as:
 
@@ -273,6 +269,37 @@ yarn # or npm i
 yarn dev # or npm run dev
 ```
 
-#### How it differs from the others frameworks:
+---
 
-TODO
+> This was just a quick peek, the tip of the iceberg.
+If you're already interested you may [start from here](https://dom.lirx.org/docs/documentation/getting-started/introduction/).
+Else, let's jump to a comparison with the other frameworks.
+
+#### How it differs from the others frameworks ?
+
+First of all `@lirx/dom` was build for reactivity: it's deeply integrated in its core and in the manner we build the components.
+Thus, it's fast and efficient, where other frameworks added reactivity later, accepting compromises on performances.
+
+If we do a quick and dirty comparison between Angular (left) and `@lirx/dom` (right), on an autogenerated app having 3900 components (73K lines):
+
+![performances](./assets/side-by-side.png)
+
+We may see how `@lirx/dom` only updates what's relevant and nothing more, **out-of-the-box**, where such optimizations are only possible with other frameworks, 
+if we follow specific (and sometimes painful) constraints.
+You may find a full dedicated [benchmark comparison here](https://dom.lirx.org/docs/documentation/performances/vs-angular/benchmark/).
+The goal is not to demean Angular, but to offer the best performances, by comparing and optimizing continuously as much as possible.
+Thus delivering the best possible user experience.
+
+
+## What's next ?
+
+The next step is to get feedback from developers to improve the framework.
+
+Are you interested in such project ?
+Does a Reactive Programming framework feel appealing and simple enough for everyone ?
+Have you any idea of improvement, or suggestion ?
+
+If you want to help, test the framework, comment, etc., your opinion matters !
+I consider that evey feedback may only be benefit and improve what I think is already a great concept.
+
+Thanks for reading me. I hoped, I've created some interest in the community.

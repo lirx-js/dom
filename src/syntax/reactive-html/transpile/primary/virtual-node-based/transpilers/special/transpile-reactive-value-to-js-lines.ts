@@ -10,7 +10,7 @@ export function transpileReactiveValueToJSLines(
   if (type === 'raw') {
     return [`unknownToObservableNotUndefined(${value})`];
   } else if (type === 'computed') {
-    return [`computedFunctionToObservable(() => (${value}))`];
+    return [`computationToObservable(() => (${value}))`];
   } else {
     throw new Error(`Invalid reactive value mode: ${type}`);
   }

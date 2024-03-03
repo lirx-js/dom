@@ -7,6 +7,9 @@ import {
 } from '@lirx/core';
 import { AbstractInput } from './abstract-input.class';
 
+/**
+ * This is the "main" Input.
+ */
 export class Input<GValue> extends AbstractInput<GValue> {
   readonly #source: IMulticastReplayLastSource<GValue>;
 

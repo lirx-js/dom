@@ -17,11 +17,11 @@ import { aot_19, aot_19_computed } from './transpilers/transpile-set-reactive-pr
 import { aot_20, aot_20_computed } from './transpilers/transpile-set-reactive-style-properties-map-to-js-lines';
 import { aot_21, aot_21_computed } from './transpilers/transpile-set-reactive-style-property-to-js-lines';
 import { aot_22, aot_23 } from './transpilers/transpile-set-static-attribute-to-js-lines';
-import { computedFunctionToObservable } from '../shared/functions/computed-function-to-observable';
+import { computationToObservable } from '../shared/functions/computation-to-observable';
 
 export const VALUES_TO_IMPORT_FOR_AOT_BASED_REACTIVE_HTML = {
   ...SHARED_VALUES_TO_IMPORT,
-  computedFunctionToObservable,
+  computationToObservable,
   aot_0,
   aot_1,
   aot_2,

@@ -13,7 +13,7 @@ import {
   transpileAOTReactiveValueToJSLines,
   transpileAOTReactiveValueTypeToFunctionName,
 } from './special/transpile-reactive-value-to-js-lines';
-import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
+import { computationToObservable } from '../../shared/functions/computation-to-observable';
 
 export const transpileAOTSetReactiveClassToJSLines: ITranspileSetReactiveClassToJSLinesFunction = (
   {
@@ -51,6 +51,6 @@ export function aot_13_computed(
 ): IUnsubscribe {
   return node.setReactiveClass(
     name,
-    computedFunctionToObservable(enabled),
+    computationToObservable(enabled),
   );
 }

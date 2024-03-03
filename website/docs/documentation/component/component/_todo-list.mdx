@@ -123,10 +123,13 @@ export const TodoListWithSignalsComponent = new Component({
     const addItem = (
       message: string,
     ): void => {
-      items.mutate((items: Writable<ITodoListItemsList>): void => {
-        items.push({
-          message,
-        });
+      items.update((items: ITodoListItemsList): ITodoListItemsList => {
+        return [
+          ...items,
+          {
+            message,
+          },
+        ];
       });
     };
 
@@ -135,8 +138,11 @@ export const TodoListWithSignalsComponent = new Component({
     ): void => {
       const index: number = items().indexOf(item);
       if (index !== -1) {
-        items.mutate((items: Writable<ITodoListItemsList>): void => {
-          items.splice(index, 1);
+        items.update((items: ITodoListItemsList): ITodoListItemsList => {
+          return [
+            ...items.slice(0, index),
+            ...items.slice(index + 1),
+          ];
         });
       }
     };

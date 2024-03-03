@@ -26,7 +26,7 @@ const FeatureList: FeatureItem[] = [
       <>
         Embeds everything you need: a router, an aot compiler, and a bundler.
         It supports typescript and scss right out of the box.
-        And carries for you the essentials parts.
+        All the essentials parts are included !
       </>
     ),
   },

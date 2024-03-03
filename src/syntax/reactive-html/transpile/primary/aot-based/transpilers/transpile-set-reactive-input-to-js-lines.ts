@@ -26,7 +26,7 @@ import {
   transpileAOTReactiveValueToJSLines,
   transpileAOTReactiveValueTypeToFunctionName,
 } from './special/transpile-reactive-value-to-js-lines';
-import { computedFunctionToObservable } from '../../shared/functions/computed-function-to-observable';
+import { computationToObservable } from '../../shared/functions/computation-to-observable';
 
 export const transpileAOTSetReactiveInputToJSLines: ITranspileSetReactiveInputToJSLinesFunction = (
   {
@@ -66,7 +66,7 @@ export function aot_16_computed<GData extends object, GCaseInsensitiveKey extend
   return bindCaseInsensitiveInputWithObservable<GData, GCaseInsensitiveKey>(
     node,
     caseInsensitiveKey,
-    computedFunctionToObservable(value) as InferBindCaseInsensitiveInputWithObservableValue<GData, GCaseInsensitiveKey>,
+    computationToObservable(value) as InferBindCaseInsensitiveInputWithObservableValue<GData, GCaseInsensitiveKey>,
   );
 }
 

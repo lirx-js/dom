@@ -326,7 +326,7 @@ and return the data used in the template.
 This *templateData* function is called when the component is instanced, and
 receives a single argument: `node: VirtualComponentNode<HTMLElement, ITodoListItemComponentData>`.
 This is a representation of the node in the DOM.
-It has some useful methods and properties to: bind Observables with this node, listen to events, subscribes to inputs, dispatch outputs, etc.
+It has some useful methods and properties to: bind Observables with this node, listen to events, subscribe to inputs, dispatch outputs, etc.
 Then, this function returns the data required by the template.
 
 So, we'll use this function to bind the inputs and outputs with the data required by the template:
@@ -375,7 +375,7 @@ touch todo-list.component.html todo-list.component.scss todo-list.component.ts
 ```
 
 I'll give you now the content of each file. However, **do not focus yet** on the code, as I'll explain it line by line right after.
-However, I'll skip the explanation for the `.scss` file. It's only there to give a nice look to our component with just css.
+I'll skip too the explanation for the `.scss` file. It's only there to give a nice look to our component with just css.
 
 import TodoList from './_todo-list.mdx';
 
@@ -387,7 +387,7 @@ Let's start with the template:
 ```html
 <form
   class="input-form"
-  (submit)=".$onFormSubmit"
+  (submit)="$.onFormSubmit"
 >
   ...
 </form>
@@ -405,7 +405,7 @@ const onFormSubmit = (event: Event): void => {
   event.preventDefault(); // we want to prevent our form to be submitted
 
   // get the input's value
-  const value = inputValue().trim();
+  const value: string = inputValue().trim();
 
   if (value !== '') {
     // add a new entry
@@ -488,31 +488,21 @@ So mutating the data itself (like the property of an object or the content of an
 In our case, it means "*no DOM updates*".
 Instead, we have to use immutable values, and send new references when a change occurs.
 
-For a Signal, we'll have to use the `.mutate(..)` function:
+For a Signal, we'll have to use the `.update(...)` function:
 
 ```ts
 const addItem = (
   message: string,
 ): void => {
-  items.mutate((items: Writable<ITodoListItemsList>): void => {
-    items.push({
-      message,
-    });
+  items.update((items: ITodoListItemsList): ITodoListItemsList => {
+    return [
+      ...items,
+      {
+        message,
+      },
+    ];
   });
 };
-```
-
-If you prefer truly immutable values, you may replace it with:
-
-```ts
-items.update((items: ITodoListItemsList): ITodoListItemsList => {
-  return [
-    ...items,
-    {
-      message,
-    },
-  ];
-});
 ```
 
 `$[message]="item.message"`: this line sets `item.message` as the value of the '*message*' input of the component `app-todo-list-item` ([documentation](/docs/documentation/syntax/attributes/bind/reactive-input/)).
@@ -529,8 +519,11 @@ const removeItem = (
 ): void => {
   const index: number = items().indexOf(item);
   if (index !== -1) {
-    items.mutate((items: Writable<ITodoListItemsList>): void => {
-      items.splice(index, 1);
+    items.update((items: ITodoListItemsList): ITodoListItemsList => {
+      return [
+        ...items.slice(0, index),
+        ...items.slice(index + 1),
+      ];
     });
   }
 };

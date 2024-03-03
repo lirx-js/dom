@@ -54,8 +54,8 @@ Such an action is called **slotting**.
 This is a little complex to explain, but really easy to use:
 
 > A **slot** is simply an HTML template **with a specific name**, provided to a component.
-> This component may use directly this slot in its own template.
-> And, it's possible to transfer many slots to a single component.
+> Many slots having different names may be given to a child component.
+> Then, this child component may use the slots in its own template.
 
 ### Named slot
 

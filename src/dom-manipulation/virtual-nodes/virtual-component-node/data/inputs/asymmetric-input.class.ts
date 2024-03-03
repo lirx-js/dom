@@ -1,6 +1,9 @@
 import { IMapFunction, ICreateReplayLastSourceInitialValue, IObserver } from '@lirx/core';
 import { Input } from './input.class';
 
+/**
+ * This Input accepts a value with a different type in it's `emit` function.
+ */
 export class AsymmetricInput<GObserverValue, GValue extends GObserverValue> extends Input<GValue> {
   readonly #emit: IObserver<GObserverValue>;
 

@@ -1,28 +1,32 @@
 import {
   IGenericComponentTemplateWithImportsAsFirstArgument,
-} from '../../transpilers/reactive-html/html/component/component-template-with-imports-as-first-argument/component-template-with-imports-as-first-argument.type';
-import { IComponentTemplate } from '../types/options/component-template.type';
+} from '../../syntax/reactive-html/transpile/html/component/component-template-with-imports-as-first-argument/component-template-with-imports-as-first-argument.type';
+import { IComponentTemplate } from './component-template.type';
 import { ICompileReactiveHTMLAsComponentTemplateOptions } from './compile-reactive-html-as-component-template';
-import { generateApplyNodeModifierFunction } from './generate-apply-node-modifier-function';
-import { generateCreateCustomElementFunction } from './generate-create-custom-element-function';
+import {
+  generateApplyNodeModifiersFunctionFromModifierList,
+} from './apply-node-modifier-function/generate-apply-node-modifiers-function-from-modifier-list';
+import {
+  generateCreateCustomElementFunctionFromComponentList,
+} from './create-custom-element-function/generate-create-custom-element-function-from-component-list';
 
 export interface IConvertRawComponentTemplateToComponentTemplateOptions extends Omit<ICompileReactiveHTMLAsComponentTemplateOptions, 'html'> {
-  template: IGenericComponentTemplateWithImportsAsFirstArgument;
+  readonly template: IGenericComponentTemplateWithImportsAsFirstArgument;
 }
 
 export function convertRawComponentTemplateToComponentTemplate<GData extends object>(
   {
     template,
-    customElements,
+    components,
     modifiers,
   }: IConvertRawComponentTemplateToComponentTemplateOptions,
 ): IComponentTemplate<GData> {
-  const createCustomElement = generateCreateCustomElementFunction(customElements);
-  const applyNodeModifier = generateApplyNodeModifierFunction(modifiers);
+  const createCustomElement = generateCreateCustomElementFunctionFromComponentList(components);
+  const applyNodeModifiers = generateApplyNodeModifiersFunctionFromModifierList(modifiers);
 
   const valuesToImport = {
     createCustomElement,
-    applyNodeModifier,
+    applyNodeModifiers,
   };
 
   return (...args: Parameters<IComponentTemplate<GData>>): ReturnType<IComponentTemplate<GData>> => {

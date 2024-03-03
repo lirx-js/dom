@@ -2,18 +2,18 @@
 
 ```html
 <my-component
-  $[name]="observable$"
+  $[name]="$.input$"
 ></my-component>
 ```
 
-To set a **custom element's input** whose value is updated by an `Observable<any>`, write `$[name]`, where `name` is the name of this input.
+To set a **custom element's input** whose value is updated by a [reactive value](/docs/documentation/syntax/reactive-value/), write `$[name]`, where `name` is the name of this input.
 
-When the right-hand side (the Observable) emits a value, the input is set with this value. 
+When the right-hand side (the reactive value) emits a value, the input is set with this value. 
 
 It's converted to something similar to this:
 
 ```ts
-node.setReactiveInput('name', observable$);
+node.bindInputWithObservable('name', $.input$);
 ```
 
 #### Definition of a component's input
@@ -27,19 +27,17 @@ We may think, for example, of a `app-progress` component, requiring a `progress`
 Into the component file (`.ts`), the input may be defined like this:
 
 ```ts
-interface IMyComponentConfig {
-  inputs: [
-    ['name', string],
-  ];
+interface IMyComponentData {
+  readonly name: Input<string>;
 }
 
-export const MyComponent = createComponent<IMyComponentConfig>({
+export const MyComponent = new Component<HTMLElement, IMyComponentData, void>({
   name: 'my-component',
-  inputs: [
-    ['name'],
-  ],
-  init: (node: VirtualCustomElementNode<IMyComponentConfig>): void => {
-    const name$ = node.inputs.get$('name');
+  componentData: (): IMyComponentData => ({
+    name: input<string>(),
+  }),
+  templateData: (node: VirtualCustomElementNode<HTMLElement, IMyComponentData>): void => {
+    const name$ = node.input$('name');
     
     // then we may play with the observable 'name$' which reflects the data sent to the input 'name'
     name$((name: string) => {
@@ -61,7 +59,7 @@ A component may have many inputs, with different types and optional default valu
 
 ```html
 <my-component
-  bind-input-name="observable$"
+  bind-input-name="$.input$"
 ></my-element>
 ```
 

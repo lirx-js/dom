@@ -1,15 +1,15 @@
 # Text
 
 ```html
-{{ observable$ }}
+{{ $.text$ }}
 ```
 
-To create a **text Node** whose content is updated by an `Observable<string>`, put this Observable in double curly brackets, `{{}}`.
+To create a **text Node** whose content is updated by a [reactive value](/docs/documentation/syntax/reactive-value/) of type `string`, put this value in double curly brackets, `{{}}`.
 
 It's converted to something similar to this:
 
 ```ts
-observable$((value) => text.value = value);
+toObservable($.text$)((value) => text.value = value);
 ```
 
 

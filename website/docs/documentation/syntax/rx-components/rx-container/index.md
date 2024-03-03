@@ -6,7 +6,7 @@
 </rx-container>
 ```
 
-An `rx-container` is a **transparent wrapper** to group many nodes or elements, with usually one or many a specifics `*commands`: like an `*if` or a `*for`.
+An `rx-container` is a **transparent wrapper** to group many nodes or elements, with usually one or many specific `*commands`: like an `*if` or a `*for`.
 
 ## Example
 

@@ -3,7 +3,7 @@
 ```html
 
 <rx-for-loop
-  items="observable$"
+  items="$.items$"
   template="templateReference"
   track-by="trackByFunction"
 ></rx-for-loop>
@@ -13,7 +13,7 @@ Short syntax:
 
 ```html
 
-<tag-name *for="let item of observable$; index$ as i; trackBy: trackByFn">
+<tag-name *for="let item of $.items$; index$ as i; trackBy: trackByFn">
   ...content
 </tag-name>
 ```
@@ -23,7 +23,7 @@ This is used to create **repetitively** an element or a node, iterating over a l
 
 Under the hoods, it creates a virtual Node which:
 
-- subscribes to `observable$`
+- subscribes to `$.items$`
 - and injects the template `templateReference` for each received values
 
 :::note
@@ -34,7 +34,7 @@ This `rx-` component takes care to optimize the DOM and the rendering process (b
 
 Attributes:
 
-- `items`: the Observable to listen to
+- `items`: the [reactive value](/docs/documentation/syntax/reactive-value/) to listen to
 - `template`: the name of the template to inject for each values
 - `track-by` (optional): a trackByFunction to known which nodes may be re-used
 
@@ -42,7 +42,7 @@ It's converted to something similar to this:
 
 ```ts
 new VirtualReactiveForLoopNode(
-  observable$,
+  $.items$,
   templateReference,
   { tackBy: trackByFunction },
 ).attach(parentNode);
@@ -83,7 +83,7 @@ Output:
 ```html
 
 <tag-name
-  *for="let item of items$; index$ as i; trackBy: trackByFn"
+  *for="let item of $.items$; index$ as i; trackBy: trackByFn"
   ...otherAttributes
 >
   ...content
@@ -109,7 +109,7 @@ Output:
 </rx-template>
 
 <rx-for-loop
-  items="items$"
+  items="$.items$"
   template="uuid"
   track-by="trackByFn"
 ></rx-for-loop>

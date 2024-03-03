@@ -7,11 +7,11 @@ import TabItem from '@theme/TabItem';
 ```html title="todo-list/todo-list.component.html"
 <form
   class="input-form"
-  (submit)="$.$onFormSubmit"
+  (submit)="$.onFormSubmit"
 >
   <input
-    [value]="$.inputValue$"
-    (input)="$.$onInput"
+    [value]="$.inputValue"
+    (input)="$.onInput"
     placeholder="Enter task description"
   />
   <button type="submit">
@@ -21,13 +21,11 @@ import TabItem from '@theme/TabItem';
 
 <div class="list">
   <app-todo-list-item
-    *for="let item of $.items$"
+    *for="let item of $.items"
     $[message]="item.message"
     $(remove)="() => $.removeItem(item)"
   ></app-todo-list-item>
 </div>
-
-
 ```
 
   </TabItem>
@@ -83,105 +81,105 @@ import TabItem from '@theme/TabItem';
   <TabItem value="ts" label="TS">
 
 ```ts title="todo-list/todo-list.component.ts"
-import { $$map, IObservable, IObserver, let$$ } from '@lirx/core';
-import { compileReactiveHTMLAsComponentTemplate, compileStyleAsComponentStyle, createComponent } from '@lirx/dom';
-import { TodoListItemComponent } from '../todo-list-item/todo-list-item.component';
+import { signal, ISignal, $log, unknownToObservableStrict } from '@lirx/core';
+import { compileReactiveHTMLAsComponentTemplate, compileStyleAsComponentStyle, Component } from '@lirx/dom';
+import { Writable } from '@lirx/utils';
+import { TodoListItemComponent } from '../../todo-list-item/todo-list-item.component';
+import { ITodoListItemsList, ITodoListItem } from '../todo-list.types';
 
 // @ts-ignore
-import html from './todo-list.component.html?raw';
+import html from './todo-list-with-signals.component.html?raw';
 // @ts-ignore
-import style from './todo-list.component.scss?inline';
+import style from '../todo-list.component.scss?inline';
 
 /**
- * COMPONENT: 'app-todo-list'
+ * COMPONENT: 'app-todo-list-with-signals'
  **/
 
-interface ITodoListItem {
-  readonly message: string;
-}
+interface ITemplateData {
+  readonly inputValue: ISignal<string>;
+  readonly onInput: (event: Event) => void;
+  readonly onFormSubmit: (event: Event) => void;
 
-type ITodoListItemsList = readonly ITodoListItem[];
-
-interface IData {
-  readonly inputValue$: IObservable<string>;
-  readonly $onInput: IObserver<Event>;
-  readonly $onFormSubmit: IObserver<Event>;
-
-  readonly items$: IObservable<ITodoListItemsList>;
+  readonly items: ISignal<ITodoListItemsList>;
 
   readonly removeItem: (item: ITodoListItem) => void;
 }
 
-interface ITodoListComponentConfig {
-  element: HTMLElement;
-  data: IData;
-}
-
-export const TodoListComponent = createComponent<ITodoListComponentConfig>({
-  name: 'app-todo-list',
+export const TodoListWithSignalsComponent = new Component({
+  name: 'app-todo-list-with-signals',
   template: compileReactiveHTMLAsComponentTemplate({
     html,
-    customElements: [
+    components: [
       TodoListItemComponent,
     ],
   }),
   styles: [compileStyleAsComponentStyle(style)],
-  init: (): IData => {
-    const [$inputValue, inputValue$, getInputValue] = let$$<string>('');
-    const [$items, items$, getItems] = let$$<ITodoListItemsList>([]);
+  templateData: (): ITemplateData => {
+    /* ITEMS */
+
+    const items = signal<ITodoListItemsList>([]);
 
     const addItem = (
       message: string,
     ): void => {
-      $items([
-        ...getItems(),
-        {
-          message,
-        },
-      ]);
+      items.update((items: ITodoListItemsList): ITodoListItemsList => {
+        return [
+          ...items,
+          {
+            message,
+          },
+        ];
+      });
     };
 
     const removeItem = (
       item: ITodoListItem,
     ): void => {
-      const items: ITodoListItemsList = getItems();
-      const index: number = items.indexOf(item);
+      const index: number = items().indexOf(item);
       if (index !== -1) {
-        $items([
-          ...items.slice(0, index),
-          ...items.slice(index + 1),
-        ]);
+        items.update((items: ITodoListItemsList): ITodoListItemsList => {
+          return [
+            ...items.slice(0, index),
+            ...items.slice(index + 1),
+          ];
+        });
       }
-    };
-
-    const $onInput = $$map($inputValue, (event: Event): string => (event.target as HTMLInputElement).value);
-
-    const $onFormSubmit = (
-      event: Event,
-    ): void => {
-      event.preventDefault();
-
-      const inputValue: string = getInputValue().trim();
-
-      if (inputValue !== '') {
-        addItem(inputValue);
-      }
-
-      $inputValue('');
     };
 
     addItem('Check this awesome tutorial');
     addItem('Write your own components');
 
+    /* INPUT */
+
+    const inputValue = signal<string>('');
+
+    const onInput = (event: Event): void => {
+      inputValue.set((event.target as HTMLInputElement).value);
+    };
+
+    const onFormSubmit = (event: Event): void => {
+      event.preventDefault();
+
+      const value = inputValue().trim();
+
+      if (value !== '') {
+        addItem(value);
+      }
+
+      inputValue.set('');
+    };
+
     return {
-      inputValue$,
-      $onInput,
-      $onFormSubmit,
-      items$,
+      inputValue,
+      onInput,
+      onFormSubmit,
+      items,
       removeItem,
     };
   },
 });
+
 ```
 
   </TabItem>

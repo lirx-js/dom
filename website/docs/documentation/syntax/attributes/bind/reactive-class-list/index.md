@@ -2,18 +2,18 @@
 
 ```html
 <div
-  [class...]="observable$"
+  [class...]="$.classNames$"
 ></div>
 ```
 
-To define the **css classes of an element** updated by an `Observable<Set<string>>`, write `[class...]`.
+To define the **css classes of an element** updated by a [reactive value](/docs/documentation/syntax/reactive-value/) of type `Set<string>`, write `[class...]`.
 
 Only the previously received classes are removed, and the new ones added, so it's possible to cumulate this bind with `[class.my-class]` for example.
 
 It's converted to something similar to this:
 
 ```ts
-observable$((classes) => div.className = classes);
+toObservable(classNames$)((classNames) => div.className = Array.from(classNames).join(' '));
 ```
 
 :::info
@@ -52,7 +52,7 @@ To convert a "raw" list of class names into a Set of string, you may use the fun
 
 ```html
 <div
-  bind-class---="observable$"
+  bind-class---="$.classNames$"
 ></div>
 ```
 

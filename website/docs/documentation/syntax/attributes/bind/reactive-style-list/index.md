@@ -2,18 +2,18 @@
 
 ```html
 <div
-  [style...]="observable$"
+  [style...]="$.styles$"
 ></div>
 ```
 
-To define the **style of an element** updated by an `Observable<IStylePropertiesMap>`, write `[style...]`.
+To define the **style of an element** updated by a [reactive value](/docs/documentation/syntax/reactive-value/) of type `IStylePropertiesMap`, write `[style...]`.
 
 Only the previously received styles are removed, and the new ones added, so it's possible to cumulate this bind with `[style.prop-name]` for example.
 
 It's converted to something similar to this:
 
 ```ts
-observable$((styles) => div.setAttribute('style', styles));
+toObservable($.styles$)((styles) => div.setAttribute('style', styles));
 ```
 
 :::info
@@ -53,7 +53,7 @@ To convert a "raw" list of style properties into a `IStylePropertiesMap`, you ma
 
 ```html
 <div
-  bind-style---="observable$"
+  bind-style---="$.styles$"
 ></div>
 ```
 

@@ -7,15 +7,15 @@ import TabItem from '@theme/TabItem';
 ```html title="app-hello-world.component.html"
 <div class="input-container">
   <input
-    [value]="$.input$"
-    (input)="() => $.$input(node.value)"
+    [value]="$.value"
+    (input)="() => $.value.set(node.value)"
   >
 </div>
 <div
   class="max-length-container"
-  [class.valid]="$.valid$"
+  [class.valid]="$.valid"
 >
-  Length: {{ $.remaining$ }} / 10
+  Length: {{ $.remaining }} / 10
 </div>
 ```
 
@@ -37,8 +37,8 @@ import TabItem from '@theme/TabItem';
   <TabItem value="ts" label="TS">
 
 ```ts title="app-hello-world.component.ts"
-import { let$$, map$$, IObservable, IObserver } from '@lirx/core';
-import { compileReactiveHTMLAsComponentTemplate, compileStyleAsComponentStyle, createComponent } from '@lirx/dom';
+import { signal, computed, ISignal } from '@lirx/core';
+import { compileReactiveHTMLAsComponentTemplate, compileStyleAsComponentStyle, Component } from '@lirx/dom';
 
 // @ts-ignore
 import html from './app-hello-world.component.html?raw';
@@ -49,31 +49,25 @@ import style from '.app-hello-world.component.scss?inline';
  * COMPONENT: 'app-hello-world'
  */
 
-interface IData {
-  readonly $input: IObserver<string>;
-  readonly input$: IObservable<string>;
-  readonly remaining$: IObservable<number>;
-  readonly valid$: IObservable<boolean>;
+interface ITemplateData {
+  readonly input: ISignal<string>;
+  readonly remaining: ISignal<number>;
+  readonly valid: ISignal<boolean>;
 }
 
-interface IAppHelloWorldComponentConfig {
-  data: IData;
-}
-
-export const AppHelloWorldComponent = createComponent<IAppHelloWorldComponentConfig>({
+export const AppHelloWorldComponent = new Component<HTMLElement, object, ITemplateData>({
   name: 'app-hello-world',
   template: compileReactiveHTMLAsComponentTemplate({ html }),
   styles: [compileStyleAsComponentStyle(style)],
-  init: (node: VirtualCustomElementNode<IAppHelloWorldComponentConfig>): IData => {
-    const [$input, input$] = let$$('');
-    const remaining$ = map$$(input$, (value: string) => value.length);
-    const valid$ = map$$(remaining$, (value: number) => (value <= 10));
+  init: (node: VirtualCustomElementNode<HTMLElement, object>): ITemplateData => {
+    const value = signal('');
+    const remaining = computed(() => value().length);
+    const valid = map$$(() => (value() <= 10));
 
     return {
-      $input,
-      input$,
-      remaining$,
-      valid$,
+      input,
+      remaining,
+      valid,
     };
   },
 });

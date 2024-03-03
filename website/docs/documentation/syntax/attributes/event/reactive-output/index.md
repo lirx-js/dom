@@ -27,20 +27,18 @@ We may think, for example, of an `app-datepicker` component, sending a `selected
 Into the component file (`.ts`), the output may be defined like this:
 
 ```ts
-interface IMyComponentConfig {
-  outputs: [
-    ['name', string],
-  ];
+interface IMyComponentData {
+  readonly name: Output<strig>;
 }
 
-export const MyComponent = createComponent<IMyComponentConfig>({
+export const MyComponent = new Component<HTMLElement, IMyComponentData, void>({
   name: 'my-component',
-  outputs: [
-    'name',
-  ],
-  init: (node: VirtualCustomElementNode<IMyComponentConfig>): void => {
-    const $name = node.inputs.$set('name');
-    
+  componentData: (): IMyComponentData => ({
+    name: output<string>(),
+  }),
+  templateData: (node: VirtualCustomElementNode<IMyComponentConfig>): void => {
+    const $name = node.$output('name');
+
     // then we may play with the observer '$name' which reflects the emited data to the output 'name'
     node.on$('click')(() => {
       $name(`user-${Date.now()}`);

@@ -54,8 +54,8 @@ Such an action is called **slotting**.
 This is a little complex to explain, but really easy to use:
 
 > A **slot** is simply an HTML template **with a specific name**, provided to a component.
-> This component may use directly this slot in its own template.
-> And, it's possible to transfer many slots to a single component.
+> Many slots having different names may be given to a child component.
+> Then, this child component may use the slots in its own template.
 
 ### Named slot
 
@@ -280,10 +280,10 @@ You should always prefer to write a proper `reactive-html` template.
 When defining a child component, it's possible to access the different slots using the property `slots` on the incoming `node` of the `init` function:
 
 ```ts
-export const AppChildComponent = createComponent<IAppChildComponentConfig>({
+export const AppChildComponent = new Component<HTMLElement, object, void>({
   name: 'app-child',
   template,
-  init: (node: VirtualCustomElementNode<IAppChildComponentConfig>): void => {
+  templateData: (node: VirtualCustomElementNode<HTMLElement, object>): void => {
     const bodySlot: IVirtualCustomElementNodeSlotTemplate | undefined = node.slots.get('body');
     if (bodySlot !== void 0) {
       bodySlot(node, {}); // create and append bodySlot into this node

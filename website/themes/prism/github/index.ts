@@ -1,7 +1,10 @@
+import { PrismTheme } from '@site/node_modules/prism-react-renderer';
+
 // https://github.com/PrismJS/prism-themes
 // Original: https://github.com/PrismJS/prism-themes/blob/master/themes/prism-darcula.css
 // Converted automatically using ./tools/themeFromVsCode
-const theme = {
+
+const theme: PrismTheme = {
   plain: {
     color: '#24292f',
     backgroundColor: '#f6f8fa',
@@ -102,5 +105,4 @@ const theme = {
   ],
 };
 
-// export default theme;
-module.exports = theme;
+export default theme;
